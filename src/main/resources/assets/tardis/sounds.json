@@ -1,0 +1,20 @@
+{
+  "dematerialise": {
+    "subtitle": "TARDIS Dematerialising",
+    "sounds": [
+      {
+        "name": "tardis:tardis/demat",
+        "stream": false
+      }
+    ]
+  },
+  "materialise": {
+    "subtitle": "TARDIS Materialising",
+    "sounds": [
+      {
+        "name": "tardis:tardis/mat",
+        "stream": false
+      }
+    ]
+  }
+}

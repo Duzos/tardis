@@ -1,9 +1,6 @@
 package com.duzo.tardis;
 
-import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.core.init.BlockInit;
-import com.duzo.tardis.core.init.CreativeTabInit;
-import com.duzo.tardis.core.init.ItemInit;
+import com.duzo.tardis.core.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
@@ -48,7 +45,7 @@ public class TARDISMod {
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
         BlockEntityInit.BLOCK_ENTITIES.register(bus);
-        
+        SoundsInit.SOUNDS.register(bus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
