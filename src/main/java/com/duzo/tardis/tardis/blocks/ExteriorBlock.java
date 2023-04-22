@@ -1,14 +1,9 @@
 package com.duzo.tardis.tardis.blocks;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.core.util.AbsoluteBlockPos;
-import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.blocks.entities.TARDISBlockEntity;
-import com.duzo.tardis.tardis.io.TARDISTravel;
+import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,20 +11,15 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
-public class TARDISBlock extends BaseEntityBlock {
+public class ExteriorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public TARDISBlock(Properties p_49795_) {
+    public ExteriorBlock(Properties p_49795_) {
         super(p_49795_);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -63,7 +53,7 @@ public class TARDISBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
-            TARDISBlockEntity blockEntity = (TARDISBlockEntity) level.getBlockEntity(pos);
+            ExteriorBlockEntity blockEntity = (ExteriorBlockEntity) level.getBlockEntity(pos);
             blockEntity.use(state,level,pos,player,hand,hit);
         }
         return InteractionResult.SUCCESS;

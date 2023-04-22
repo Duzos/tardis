@@ -1,7 +1,7 @@
 package com.duzo.tardis.common.items;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
-import com.duzo.tardis.tardis.blocks.entities.TARDISBlockEntity;
+import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.links.LinkableItem;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import net.minecraft.core.BlockPos;
@@ -24,8 +24,8 @@ public class RemoteItem extends LinkableItem {
         Level level = context.getLevel();
         Player player = context.getPlayer();
 
-        if (player.isCrouching() && !level.isClientSide && level.getBlockEntity(pos) instanceof TARDISBlockEntity) {
-            TARDISBlockEntity entity = (TARDISBlockEntity) level.getBlockEntity(pos);
+        if (player.isCrouching() && !level.isClientSide && level.getBlockEntity(pos) instanceof ExteriorBlockEntity) {
+            ExteriorBlockEntity entity = (ExteriorBlockEntity) level.getBlockEntity(pos);
             this.link(entity.getTARDIS());
             return InteractionResult.SUCCESS;
         }

@@ -1,7 +1,7 @@
 package com.duzo.tardis.core.init;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.tardis.blocks.TARDISBlock;
+import com.duzo.tardis.tardis.blocks.ExteriorBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TARDISMod.MODID);
 
-    public static final RegistryObject<Block> TARDIS_BLOCK = register("tardis_block", () -> new TARDISBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL).strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<Block> TARDIS_BLOCK = register("tardis_block", () -> new ExteriorBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL).strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
 
     private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> supplier, Item.Properties properties){
         RegistryObject<T> block = BLOCKS.register(name, supplier);

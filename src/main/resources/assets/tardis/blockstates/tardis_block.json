@@ -1,7 +1,7 @@
 {
   "variants" : {
     "" : [
-      {"model" : "tardis:block/tardis_block"}
+      {"model" : "minecraft:block/barrier"}
     ]
   }
 }

@@ -5,25 +5,20 @@ import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.blocks.TARDISBlock;
-import com.duzo.tardis.tardis.blocks.entities.TARDISBlockEntity;
+import com.duzo.tardis.tardis.blocks.ExteriorBlock;
+import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.world.ForgeChunkManager;
-import org.apache.logging.log4j.core.jmx.Server;
 
-import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static net.minecraftforge.common.world.ForgeChunkManager.*;
 
 public class TARDISTravel {
     private final int DEMAT_AUDIO_LENGTH = 8;
@@ -124,12 +119,12 @@ public class TARDISTravel {
 
         ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
 
-        TARDISBlock block = (TARDISBlock) BlockInit.TARDIS_BLOCK.get();
-        BlockState state = block.defaultBlockState().setValue(TARDISBlock.FACING, this.destination.getDirection());
+        ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
+        BlockState state = block.defaultBlockState().setValue(ExteriorBlock.FACING, this.destination.getDirection());
         level.setBlockAndUpdate(this.destination, state);
-        level.setBlockEntity(new TARDISBlockEntity(this.destination, state));
+        level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
 
-        TARDISBlockEntity tardisBlockEntity = (TARDISBlockEntity) this.destination.getDimension().getBlockEntity(this.destination);
+        ExteriorBlockEntity tardisBlockEntity = (ExteriorBlockEntity) this.destination.getDimension().getBlockEntity(this.destination);
         if (tardisBlockEntity != null) {tardisBlockEntity.setTARDIS(this.tardis);}
 
         this.tardis.setPosition(this.destination);
