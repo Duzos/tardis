@@ -1,8 +1,14 @@
 package com.duzo.tardis.tardis;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.tardis.io.TARDISTravel;
+import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
+import com.duzo.tardis.tardis.structures.interiors.TARDISInterior;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 import java.util.UUID;
@@ -11,6 +17,7 @@ public class TARDIS {
     private AbsoluteBlockPos pos;
     private TARDISTravel travel;
     private UUID uuid;
+    private TARDISInterior interior;
 
     public TARDIS(AbsoluteBlockPos pos, TARDISTravel travel) {
         this.pos = pos;
@@ -20,6 +27,11 @@ public class TARDIS {
     public TARDIS(AbsoluteBlockPos pos) {
         this(pos, new TARDISTravel(null));
         this.travel.setTARDIS(this);
+    }
+
+    public void generateInterior(TARDISInterior interior) {
+        TARDISStructureGenerator.InteriorGenerator generator = new TARDISStructureGenerator.InteriorGenerator(this, (ServerLevel) this.getInteriorDimension(),interior);
+        generator.placeStructure((ServerLevel) this.getInteriorDimension(),new BlockPos(0,0,0), Direction.SOUTH);
     }
 
     public TARDISTravel getTravel() {
@@ -37,5 +49,17 @@ public class TARDIS {
     }
     public UUID getUuid() {
         return this.uuid;
+    }
+    public TARDISInterior getInterior() {
+        return this.interior;
+    }
+    public void setInterior(TARDISInterior interior) {
+        this.interior = interior;
+    }
+    public boolean needsInterior() {
+        return this.interior == null;
+    }
+    public Level getInteriorDimension() {
+        return this.getLevel().getServer().getLevel(DimensionsInit.TARDIS_DIM_KEY);
     }
 }

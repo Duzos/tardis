@@ -1,0 +1,12 @@
+{
+  "type": "tardis:tardis_dim",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "lakes": false,
+      "features": false,
+      "layers": [],
+      "structure_overrides": []
+    }
+  }
+}

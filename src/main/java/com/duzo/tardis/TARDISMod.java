@@ -1,8 +1,10 @@
 package com.duzo.tardis;
 
 import com.duzo.tardis.core.init.*;
+import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -35,7 +37,6 @@ public class TARDISMod {
     public static final String MODID = "tardis";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-
     public TARDISMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -46,6 +47,7 @@ public class TARDISMod {
         BlockInit.BLOCKS.register(bus);
         BlockEntityInit.BLOCK_ENTITIES.register(bus);
         SoundsInit.SOUNDS.register(bus);
+        DimensionsInit.register();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

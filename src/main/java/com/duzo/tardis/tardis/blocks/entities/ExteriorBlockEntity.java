@@ -3,7 +3,10 @@ package com.duzo.tardis.tardis.blocks.entities;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.io.TeleportHelper;
+import com.duzo.tardis.tardis.structures.interiors.CoralInterior;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -36,11 +39,11 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//        TARDISTravel travel = this.getTARDIS().getTravel();
-//
-//        BlockPos newPos = searchForNearestAirBlock(level,getRandomPosInRange(pos,2), Direction.UP);
-//        travel.setDestination(new AbsoluteBlockPos(level, newPos));
-//
-//        travel.dematerialise(true);
+        this.getTARDIS().generateInterior(new CoralInterior());
+        if (this.getTARDIS().needsInterior()) {
+            this.getTARDIS().generateInterior(new CoralInterior());
+        }
+        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getTARDIS().getInteriorDimension(),this.getTARDIS().getInterior().getEntrancePos()));
+        helper.teleport((ServerLevel) player.getLevel());
     }
 }
