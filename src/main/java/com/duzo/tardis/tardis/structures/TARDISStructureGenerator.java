@@ -55,4 +55,13 @@ public class TARDISStructureGenerator {
             case WEST -> Rotation.CLOCKWISE_90;
         };
     }
+
+    public static Direction rotationToDirection(Rotation rotation) {
+        return switch(rotation) {
+            case NONE -> Direction.NORTH;
+            case CLOCKWISE_180 -> Direction.SOUTH;
+            case CLOCKWISE_90 -> Direction.WEST;
+            case COUNTERCLOCKWISE_90 -> Direction.EAST;
+        };
+    }
 }

@@ -61,8 +61,6 @@ public class TARDISTravel {
         this.destination = pos;
     }
 
-
-
     public void dematerialise(boolean withRemat) {
         if (this.tardis.getLevel().isClientSide) {return;}
 

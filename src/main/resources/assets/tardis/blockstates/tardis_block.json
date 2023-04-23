@@ -1,7 +1,19 @@
 {
-  "variants" : {
-    "" : [
-      {"model" : "minecraft:block/barrier"}
-    ]
+  "variants": {
+    "facing=east": {
+      "model": "minecraft:block/barrier",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "minecraft:block/barrier"
+    },
+    "facing=south": {
+      "model": "minecraft:block/barrier",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft:block/barrier",
+      "y": 270
+    }
   }
 }

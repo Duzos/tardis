@@ -44,7 +44,7 @@ public class TARDIS {
     public void setPosition(AbsoluteBlockPos pos) {
         this.pos = pos;
     }
-    public BlockPos getPosition() {
+    public AbsoluteBlockPos getPosition() {
         return this.pos;
     }
     public UUID getUuid() {
