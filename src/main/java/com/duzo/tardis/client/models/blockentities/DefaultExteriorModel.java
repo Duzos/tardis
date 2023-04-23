@@ -24,22 +24,24 @@ public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 		this.bone = root.getChild("bone");
 	}
 
+
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(0, 0).addBox(-26.5F, -1.0F, -26.5F, 53.0F, 3.0F, 53.0F, new CubeDeformation(0.0F))
+		PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-26.5F, -1.0F, -26.5F, 53.0F, 3.0F, 53.0F, new CubeDeformation(0.0F)).mirror(false)
 				.texOffs(129, 57).addBox(-22.5F, -88.0F, -22.5F, 45.0F, 4.0F, 45.0F, new CubeDeformation(0.0F))
 				.texOffs(129, 57).addBox(-22.5F, -84.0F, -22.5F, 45.0F, 1.0F, 45.0F, new CubeDeformation(0.0F))
 				.texOffs(160, 0).addBox(-20.5F, -90.75F, -20.5F, 41.0F, 3.0F, 41.0F, new CubeDeformation(0.0F))
-				.texOffs(12, 26).addBox(-3.5F, -93.5F, -3.5F, 7.0F, 3.0F, 7.0F, new CubeDeformation(0.0F))
-				.texOffs(0, 37).addBox(-3.0F, -100.875F, -3.0F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
-				.texOffs(30, 63).addBox(-2.0F, -101.875F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
-				.texOffs(34, 57).addBox(-2.0F, -94.0F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
-				.texOffs(34, 22).addBox(-2.0F, -100.375F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
-				.texOffs(16, 0).addBox(-0.5F, -102.375F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-				.texOffs(14, 65).addBox(-1.5F, -98.5F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-				.texOffs(20, 79).addBox(-1.5F, -99.5F, -1.5F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+				.texOffs(364, 15).addBox(-16.5F, -91.75F, -16.5F, 33.0F, 1.0F, 33.0F, new CubeDeformation(0.0F))
+				.texOffs(12, 26).addBox(-3.5F, -94.5F, -3.5F, 7.0F, 3.0F, 7.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 37).addBox(-3.0F, -101.875F, -3.0F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+				.texOffs(30, 63).addBox(-2.0F, -102.875F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(34, 57).addBox(-2.0F, -95.0F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(34, 22).addBox(-2.0F, -101.375F, -2.0F, 4.0F, 1.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(16, 0).addBox(-0.5F, -103.375F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+				.texOffs(14, 65).addBox(-1.5F, -99.5F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
+				.texOffs(20, 79).addBox(-1.5F, -100.5F, -1.5F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
 				.texOffs(296, 298).addBox(-24.0F, -77.0F, -23.0F, 47.0F, 1.0F, 47.0F, new CubeDeformation(0.0F))
 				.texOffs(279, 427).addBox(-21.0F, -83.0F, -26.0F, 42.0F, 6.0F, 52.0F, new CubeDeformation(0.0F))
 				.texOffs(142, 387).addBox(-25.0F, -84.0F, -25.0F, 6.0F, 83.0F, 6.0F, new CubeDeformation(0.0F))
@@ -60,9 +62,9 @@ public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 
 		PartDefinition cube_r2 = bone.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(279, 368).addBox(-21.0F, -69.0F, -26.0F, 42.0F, 6.0F, 52.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -14.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
 
-		PartDefinition cube_r3 = bone.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(33, 29).addBox(0.0F, -83.0F, -4.0F, 0.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -16.75F, 0.0F, 0.0F, -0.7854F, 0.0F));
+		PartDefinition cube_r3 = bone.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(33, 29).addBox(0.0F, -83.0F, -4.0F, 0.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -17.75F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
-		PartDefinition cube_r4 = bone.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(17, 37).addBox(0.0F, -83.0F, -4.0F, 0.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -16.75F, 0.0F, 0.0F, 0.7854F, 0.0F));
+		PartDefinition cube_r4 = bone.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(17, 37).addBox(0.0F, -83.0F, -4.0F, 0.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -17.75F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
 		PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(-18.5F, -48.0F, -21.5F));
 
