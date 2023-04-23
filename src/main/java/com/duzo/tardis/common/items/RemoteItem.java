@@ -36,16 +36,16 @@ public class RemoteItem extends Item {
         return this.tardis;
     }
 
-//    @Override
-//    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-//        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-//
-//        if (this.getTARDIS() != null) {
-//            pTooltip.add(Component.translatable("Linked TARDIS: " + this.getTARDIS().getUuid()).withStyle(ChatFormatting.GREEN));
-//        } else {
-//            pTooltip.add(Component.translatable("No linked TARDIS").withStyle(ChatFormatting.RED));
-//        }
-//    }
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+
+        if (this.getTARDIS() != null) {
+            pTooltip.add(Component.translatable("Linked TARDIS: " + this.getTARDIS().getUuid()).withStyle(ChatFormatting.GREEN));
+        } else {
+            pTooltip.add(Component.translatable("No linked TARDIS").withStyle(ChatFormatting.RED));
+        }
+    }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
