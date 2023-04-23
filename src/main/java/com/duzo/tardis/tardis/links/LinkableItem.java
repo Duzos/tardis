@@ -24,16 +24,4 @@ public abstract class LinkableItem extends Item {
     protected TARDIS getTARDIS() {
         return this.tardis;
     }
-
-    @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-
-        LinkableItem item = (LinkableItem) pStack.getItem();
-        if (item.getTARDIS() != null) {
-            pTooltip.add(Component.translatable("Linked TARDIS: " + item.getTARDIS().getUuid()).withStyle(ChatFormatting.GREEN));
-        } else {
-            pTooltip.add(Component.translatable("No linked TARDIS").withStyle(ChatFormatting.RED));
-        }
-    }
 }

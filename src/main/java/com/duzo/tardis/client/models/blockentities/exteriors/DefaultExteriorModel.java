@@ -1,10 +1,11 @@
-package com.duzo.tardis.client.models.blockentities;// Made with Blockbench 4.7.0
+package com.duzo.tardis.client.models.blockentities.exteriors;// Made with Blockbench 4.7.0
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.client.models.blockentities.ExteriorModel;
+import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -13,8 +14,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -83,19 +87,42 @@ public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 
 		return LayerDefinition.create(meshdefinition, 512, 512);
 	}
-
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
 	}
 
 	@Override
+	public void renderWithEntity(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		stack.pushPose();
+		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+		if (direction == Direction.NORTH) {
+			stack.translate(-0.5,0,-0.5);
+		}
+		else if (direction == Direction.SOUTH) {
+			stack.translate(0.5,0,0.5);
+		}
+		else if (direction == Direction.WEST) {
+			stack.translate(0.5,0,-0.5);
+		}
+		else if (direction == Direction.EAST) {
+			stack.translate(-0.5,0,0.5);
+		}
+
+		super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
+		stack.popPose();
+	}
+
+	@Override
 	public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		bone.setPos(0,22,0);
 		stack.pushPose();
 		stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
 
 		stack.scale(0.5f,0.5f,0.5f);
-		stack.translate(1f, -1.5f, -1f);
+		stack.translate(0, -1.5f, 0);
+
 		bone.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();
 	}
