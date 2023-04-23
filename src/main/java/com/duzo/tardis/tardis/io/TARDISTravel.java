@@ -57,7 +57,10 @@ public class TARDISTravel {
         return new BlockPos(pos.getX() + xChange, pos.getY() + yChange, pos.getZ() + zChange);
     }
 
-    public void setDestination(AbsoluteBlockPos pos) {
+    public void setDestination(AbsoluteBlockPos pos, boolean withAirCheck) {
+        if (withAirCheck) {
+            pos = new AbsoluteBlockPos(pos.getDimension(),searchForNearestAirBlock(pos.getDimension(),pos, Direction.UP));
+        }
         this.destination = pos;
     }
 

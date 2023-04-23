@@ -19,13 +19,13 @@ public class TARDIS {
     private UUID uuid;
     private TARDISInterior interior;
 
-    public TARDIS(AbsoluteBlockPos pos, TARDISTravel travel) {
+    public TARDIS(UUID uuid, AbsoluteBlockPos pos, TARDISTravel travel) {
         this.pos = pos;
         this.travel = travel;
-        this.uuid = java.util.UUID.randomUUID();
+        this.uuid = uuid;
     }
-    public TARDIS(AbsoluteBlockPos pos) {
-        this(pos, new TARDISTravel(null));
+    public TARDIS(UUID uuid,AbsoluteBlockPos pos) {
+        this(uuid,pos, new TARDISTravel(null));
         this.travel.setTARDIS(this);
     }
 

@@ -63,7 +63,7 @@ public class RemoteItem extends Item {
 
             Direction direction = player.getDirection().getOpposite();
 
-            travel.setDestination(new AbsoluteBlockPos(level,direction, searchForNearestAirBlock(level,pos, Direction.UP)));
+            travel.setDestination(new AbsoluteBlockPos(level,direction, pos),true);
             travel.dematerialise(true);
 
             return InteractionResult.SUCCESS;

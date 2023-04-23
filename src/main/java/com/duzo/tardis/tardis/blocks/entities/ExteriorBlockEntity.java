@@ -3,6 +3,7 @@ package com.duzo.tardis.tardis.blocks.entities;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.duzo.tardis.tardis.structures.interiors.CoralInterior;
 import net.minecraft.core.BlockPos;
@@ -31,8 +32,7 @@ public class ExteriorBlockEntity extends BlockEntity {
 
     public TARDIS getTARDIS() {
         if (this.tardis == null) {
-            this.setTARDIS(new TARDIS(
-                    new AbsoluteBlockPos(this.getLevel(),this.getBlockPos()))
+                this.setTARDIS(TARDISManager.getInstance().create(new AbsoluteBlockPos(this.getLevel(),this.getBlockPos()))
             );
         }
         return this.tardis;
