@@ -31,10 +31,6 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     public TARDIS getTARDIS() {
-        if (this.tardis == null) {
-                this.setTARDIS(TARDISManager.getInstance().create(new AbsoluteBlockPos(this.getLevel(),this.getBlockPos()))
-            );
-        }
         return this.tardis;
     }
 

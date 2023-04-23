@@ -5,6 +5,7 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.links.LinkableItem;
 import com.duzo.tardis.tardis.io.TARDISTravel;
+import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,26 +23,16 @@ import java.util.List;
 
 import static com.duzo.tardis.tardis.io.TARDISTravel.searchForNearestAirBlock;
 
-public class RemoteItem extends Item {
-    private TARDIS tardis;
+public class RemoteItem extends LinkableItem {
     public RemoteItem(Properties properties) {
         super(properties);
     }
-
-    private void link(TARDIS tardis) {
-        this.tardis = tardis;
-    }
-
-    protected TARDIS getTARDIS() {
-        return this.tardis;
-    }
-
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
-        if (this.getTARDIS() != null) {
-            pTooltip.add(Component.translatable("Linked TARDIS: " + this.getTARDIS().getUuid()).withStyle(ChatFormatting.GREEN));
+        if (this.getTARDIS(pStack) != null) {
+            pTooltip.add(Component.translatable("Linked TARDIS: " + this.getTARDIS(pStack).getUuid()).withStyle(ChatFormatting.GREEN));
         } else {
             pTooltip.add(Component.translatable("No linked TARDIS").withStyle(ChatFormatting.RED));
         }
@@ -52,14 +43,15 @@ public class RemoteItem extends Item {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
         Player player = context.getPlayer();
+        ItemStack stack = context.getItemInHand();
 
         if (player.isCrouching() && !level.isClientSide && level.getBlockEntity(pos) instanceof ExteriorBlockEntity) {
             ExteriorBlockEntity entity = (ExteriorBlockEntity) level.getBlockEntity(pos);
-            this.link(entity.getTARDIS());
+            this.link(stack, TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)));
             return InteractionResult.SUCCESS;
         }
-        if (!level.isClientSide && this.getTARDIS() != null) {
-            TARDISTravel travel = this.getTARDIS().getTravel();
+        if (!level.isClientSide && this.getTARDIS(stack) != null) {
+            TARDISTravel travel = this.getTARDIS(stack).getTravel();
 
             Direction direction = player.getDirection().getOpposite();
 

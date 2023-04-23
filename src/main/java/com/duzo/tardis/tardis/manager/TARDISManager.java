@@ -35,6 +35,14 @@ public class TARDISManager {
     }
 
     public TARDIS findTARDIS(UUID uuid) {return this.tardisMap.get(uuid);}
+    public TARDIS findTARDIS(AbsoluteBlockPos pos) {
+        for (TARDIS tardis : tardisMap.values()) {
+            if (tardis.getPosition() == pos) {
+                return tardis;
+            }
+        }
+        return null;
+    }
 
     public static class Serializer {
         private static final TARDISMap.Serializer MAP_SERIALIZER = new TARDISMap.Serializer();
