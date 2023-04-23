@@ -37,7 +37,7 @@ public class TARDISManager {
     public TARDIS findTARDIS(UUID uuid) {return this.tardisMap.get(uuid);}
     public TARDIS findTARDIS(AbsoluteBlockPos pos) {
         for (TARDIS tardis : tardisMap.values()) {
-            if (tardis.getPosition() == pos) {
+            if (tardis.getPosition().equals(pos)) {
                 return tardis;
             }
         }

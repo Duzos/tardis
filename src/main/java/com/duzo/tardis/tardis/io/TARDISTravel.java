@@ -9,12 +9,14 @@ import com.duzo.tardis.tardis.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.world.ForgeChunkManager;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.Random;
 import java.util.Timer;
@@ -80,7 +82,8 @@ public class TARDISTravel {
             @Override
             public void run() {
                 // Delete the block and rematerialise if needed.
-                ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, travel.tardis.getPosition(),0, 0,true,true);
+//                ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, travel.tardis.getPosition(),0, 0,true,true);
+                level.getChunkAt(travel.destination);
 
                 level.removeBlock(travel.tardis.getPosition(), false);
                 travel.state = STATE.FLIGHT;
@@ -127,11 +130,21 @@ public class TARDISTravel {
         level.setBlockAndUpdate(this.destination, state);
         level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
 
-        ExteriorBlockEntity tardisBlockEntity = (ExteriorBlockEntity) this.destination.getDimension().getBlockEntity(this.destination);
-        if (tardisBlockEntity != null) {tardisBlockEntity.setTARDIS(this.tardis);}
-
         this.tardis.setPosition(this.destination);
         this.state = STATE.LANDED;
+
+//        if (this.tileNBT == null) {
+//            this.tileNBT = new CompoundTag();
+//        }
+//
+//        ExteriorBlockEntity tardisBlockEntity = (ExteriorBlockEntity) level.getBlockEntity(this.destination);
+//        tardisBlockEntity.load(this.tileNBT);
+//        System.out.println(this.tardis);
+//        System.out.println(tardisBlockEntity);
+//        if (tardisBlockEntity != null && this.tardis != null) {
+//            System.out.println(this.tardis.getUuid());
+//            tardisBlockEntity.setTARDIS(this.tardis.getUuid());
+//        }
     }
 
 

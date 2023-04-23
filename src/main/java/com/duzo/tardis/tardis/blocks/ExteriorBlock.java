@@ -51,6 +51,8 @@ public class ExteriorBlock extends BaseEntityBlock {
         return p_48719_.rotate(p_48720_.getRotation(p_48719_.getValue(FACING)));
     }
 
+
+
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {

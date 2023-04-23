@@ -46,7 +46,7 @@ public class RemoteItem extends LinkableItem {
         ItemStack stack = context.getItemInHand();
 
         if (player.isCrouching() && !level.isClientSide && level.getBlockEntity(pos) instanceof ExteriorBlockEntity) {
-            ExteriorBlockEntity entity = (ExteriorBlockEntity) level.getBlockEntity(pos);
+//            ExteriorBlockEntity entity = (ExteriorBlockEntity) level.getBlockEntity(pos);
             this.link(stack, TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)));
             return InteractionResult.SUCCESS;
         }
