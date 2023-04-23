@@ -27,17 +27,7 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
 
     @Override
     public void render(ExteriorBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {
-
-        if (this.model instanceof DefaultExteriorModel<?>) {
-            stack.pushPose();
-            stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
-
-            stack.scale(0.5f,0.5f,0.5f);
-            stack.translate(1f, -1.5f, -1f);
-        }
-
         this.model.renderToBuffer(stack, source.getBuffer(RenderType.entitySmoothCutout(EXTERIOR)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1,1,1,1);
-        stack.popPose();
     }
 
     @Override
