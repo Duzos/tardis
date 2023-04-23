@@ -55,11 +55,12 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        this.getTARDIS().generateInterior(new CoralInterior());
-        if (this.getTARDIS().needsInterior()) {
-            this.getTARDIS().generateInterior(new CoralInterior());
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos));
+        tardis.generateInterior(new CoralInterior());
+        if (tardis.needsInterior()) {
+            tardis.generateInterior(new CoralInterior());
         }
-        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getTARDIS().getInteriorDimension(),this.getTARDIS().getInterior().getEntrancePos()));
+        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(tardis.getInteriorDimension(),tardis.getInterior().getEntrancePos()));
         helper.teleport((ServerLevel) player.getLevel());
     }
 }
