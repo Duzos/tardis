@@ -96,8 +96,9 @@ public class TARDISTravel {
 
         Level level = this.destination.getDimension();
 
-        ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
-        level.playSound(null,this.tardis.getPosition(), SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
+//        ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
+        level.getChunkAt(this.destination);
+        level.playSound(null,this.destination, SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
 
         this.state = STATE.MAT;
 
@@ -117,7 +118,8 @@ public class TARDISTravel {
 
         Level level = this.destination.getDimension();
 
-        ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
+//        ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
+        level.getChunkAt(this.destination);
 
         ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
         BlockState state = block.defaultBlockState().setValue(ExteriorBlock.FACING, this.destination.getDirection());
