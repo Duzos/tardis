@@ -3,7 +3,7 @@ package com.duzo.tardis.tardis.blocks.entities;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.TARDISManager;
+import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.duzo.tardis.tardis.structures.interiors.CoralInterior;
 import net.minecraft.core.BlockPos;
