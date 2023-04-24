@@ -12,7 +12,7 @@ public class TARDISBuilder {
     private final UUID uuid;
     private AbsoluteBlockPos position;
     private TARDISExteriorSchema exteriorSchema;
-    public static final String DEFAULT_EXTERIOR = "classic";
+    public static final String DEFAULT_EXTERIOR = "original";
 
     public TARDISBuilder(UUID uuid) {
         this.uuid = uuid;

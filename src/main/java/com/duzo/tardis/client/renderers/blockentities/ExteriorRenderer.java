@@ -2,6 +2,7 @@ package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.impl.models.ClassicTARDISExteriorModel;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
@@ -15,13 +16,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity> {
     private final TARDISExteriorModelSchema model;
-    public static final ResourceLocation EXTERIOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/default.png");
-
     public ExteriorRenderer(BlockEntityRendererProvider.Context ctx) {
         this.model = new ClassicTARDISExteriorModel(ctx.bakeLayer(ClassicTARDISExteriorModel.LAYER_LOCATION));
     }
@@ -36,7 +36,12 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
         else if (direction == Direction.EAST) {direction = Direction.WEST;}
 
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
-        TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos())).getExteriorSchema().render(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(EXTERIOR)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+
+        TARDISExteriorSchema<?> schema = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos())).getExteriorSchema();
+
+        ResourceLocation texture = new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/" + schema.getID() + ".png");
+
+        schema.render(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(texture)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
     }
 
     @Override
