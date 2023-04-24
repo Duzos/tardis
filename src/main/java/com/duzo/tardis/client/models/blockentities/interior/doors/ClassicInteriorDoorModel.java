@@ -17,12 +17,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class DefaultInteriorDoorModel extends InteriorDoorModel {
+public class ClassicInteriorDoorModel extends InteriorDoorModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "default_interior_doors"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "classic_interior_doors"), "main");
 	private final ModelPart bone;
 
-	public DefaultInteriorDoorModel(ModelPart root) {
+	public ClassicInteriorDoorModel(ModelPart root) {
 		this.bone = root.getChild("bone");
 	}
 

@@ -2,9 +2,11 @@ package com.duzo.tardis;
 
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -43,6 +47,7 @@ public class TARDISMod {
 
         // Register the commonSetup method for modloading
         bus.addListener(this::commonSetup);
+//        bus.addListener(this::onWorldLoad);
 
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
@@ -62,6 +67,21 @@ public class TARDISMod {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
+    }
+
+    @SubscribeEvent
+    public void onWorldLoad(LevelEvent.Load event) { // When world loads
+        System.out.println("world loaded");
+        if (!event.getLevel().isClientSide()) { // Server Side Only
+            ServerLevel world = (ServerLevel) event.getLevel();
+            assert world != null;
+            System.out.println("world loaded" + world);
+            if (world.dimension().equals(ServerLevel.OVERWORLD)) {
+                TARDISMod.server = ServerLifecycleHooks.getCurrentServer();
+
+                TARDISExteriors.init();
+            }
+        }
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

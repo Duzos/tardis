@@ -24,7 +24,7 @@ public class TARDISSpawnItem extends Item {
         InteractionHand hand = context.getHand();
 
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            TARDISManager.getInstance().create(absolutePos);
+            TARDISManager.getInstance().create(absolutePos,null);
             context.getItemInHand().shrink(1);
         }
         return InteractionResult.SUCCESS;

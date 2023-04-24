@@ -3,6 +3,9 @@ package com.duzo.tardis.tardis;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.nbt.NBTSerializers;
+import com.duzo.tardis.tardis.builder.TARDISBuilder;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import com.duzo.tardis.tardis.structures.interiors.TARDISInterior;
@@ -17,20 +20,25 @@ import org.checkerframework.checker.units.qual.C;
 import java.util.UUID;
 
 public class TARDIS {
+    private TARDISExteriorSchema<?> exteriorSchema;
     private AbsoluteBlockPos pos;
     private TARDISTravel travel;
     private UUID uuid;
     private TARDISInterior interior;
 
-    public TARDIS(UUID uuid, AbsoluteBlockPos pos, TARDISTravel travel) {
+    public TARDIS(UUID uuid, AbsoluteBlockPos pos, TARDISTravel travel, TARDISExteriorSchema<?> exteriorSchema) {
         this.pos = pos;
         this.travel = travel;
         this.uuid = uuid;
+        this.exteriorSchema = exteriorSchema;
     }
 
-    public TARDIS(UUID uuid, AbsoluteBlockPos pos) {
-        this(uuid, pos, new TARDISTravel(null));
+    public TARDIS(UUID uuid, AbsoluteBlockPos pos, TARDISExteriorSchema<?> exteriorSchema) {
+        this(uuid, pos, new TARDISTravel(null), exteriorSchema);
         this.travel.setTARDIS(this);
+    }
+    public TARDIS(UUID uuid, AbsoluteBlockPos pos) {
+        this(uuid,pos, TARDISExteriors.get(TARDISBuilder.DEFAULT_EXTERIOR));
     }
 
     public void generateInterior(TARDISInterior interior) {
@@ -83,6 +91,8 @@ public class TARDIS {
     public Level getInteriorDimension() {
         return this.getLevel().getServer().getLevel(DimensionsInit.TARDIS_DIM_KEY);
     }
+    public TARDISExteriorSchema<?> getExteriorSchema() {return this.exteriorSchema;}
+    public void setExteriorSchema(TARDISExteriorSchema<?> exterior) {this.exteriorSchema = exterior;}
 
     public static class Serializer {
         private static final NBTSerializers.AbsolutePosition ABSOLUTE_POSITION_SERIALIZER = new NBTSerializers.AbsolutePosition();

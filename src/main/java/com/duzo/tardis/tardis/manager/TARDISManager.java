@@ -3,10 +3,13 @@ package com.duzo.tardis.tardis.manager;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.builder.TARDISBuilder;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.checkerframework.checker.units.qual.C;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class TARDISManager implements INBTSerializable<CompoundTag> {
@@ -22,10 +25,11 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
     /**
      * Creates a TARDIS
      * @param pos position and dimension where the TARDIS will be created
+     * @param exteriorSchema The exterior schema to use | can be null and will use a default
      * @return the new TARDIS
      */
-    public TARDIS create(AbsoluteBlockPos pos) {
-        TARDIS tardis = new TARDISBuilder(UUID.randomUUID()).at(pos).build();
+    public TARDIS create(AbsoluteBlockPos pos, @Nullable TARDISExteriorSchema<?> exteriorSchema) {
+        TARDIS tardis = new TARDISBuilder(UUID.randomUUID()).at(pos).exterior(exteriorSchema).build();
 
         this.tardisMap.put(tardis);
 

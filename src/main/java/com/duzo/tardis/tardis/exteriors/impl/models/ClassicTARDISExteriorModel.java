@@ -1,10 +1,11 @@
-package com.duzo.tardis.client.models.blockentities.exteriors;// Made with Blockbench 4.7.0
+package com.duzo.tardis.tardis.exteriors.impl.models;// Made with Blockbench 4.7.0
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -17,12 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
+public class ClassicTARDISExteriorModel extends TARDISExteriorModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "default_exterior"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "classic_exterior"), "main");
 	private final ModelPart bone;
 
-	public DefaultExteriorModel(ModelPart root) {
+	public ClassicTARDISExteriorModel(ModelPart root) {
 		this.bone = root.getChild("bone");
 	}
 
@@ -84,10 +85,6 @@ public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 
 		return LayerDefinition.create(meshdefinition, 512, 512);
 	}
-	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-	}
 
 	@Override
 	public void renderWithEntity(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -122,5 +119,10 @@ public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {
 
 		bone.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();
+	}
+
+	@Override
+	public void setupAnim(Entity p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
+
 	}
 }

@@ -4,7 +4,6 @@ import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.blocks.doors.CoralInteriorDoorBlock;
 import com.duzo.tardis.tardis.blocks.doors.InteriorDoorBlock;
-import com.duzo.tardis.tardis.blocks.rotors.RotorBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

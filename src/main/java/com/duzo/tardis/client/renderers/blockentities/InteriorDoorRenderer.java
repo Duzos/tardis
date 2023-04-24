@@ -2,7 +2,7 @@ package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.client.models.blockentities.interior.doors.InteriorDoorModel;
-import com.duzo.tardis.client.models.blockentities.interior.doors.DefaultInteriorDoorModel;
+import com.duzo.tardis.client.models.blockentities.interior.doors.ClassicInteriorDoorModel;
 import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -22,7 +22,7 @@ public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlo
     public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/default.png");
 
     public InteriorDoorRenderer(BlockEntityRendererProvider.Context ctx) {
-        this.model = new DefaultInteriorDoorModel(ctx.bakeLayer(DefaultInteriorDoorModel.LAYER_LOCATION));
+        this.model = new ClassicInteriorDoorModel(ctx.bakeLayer(ClassicInteriorDoorModel.LAYER_LOCATION));
     }
     @Override
     public void render(InteriorDoorBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {

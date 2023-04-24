@@ -1,9 +1,11 @@
 package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.client.models.blockentities.exteriors.DefaultExteriorModel;
-import com.duzo.tardis.client.models.blockentities.exteriors.ExteriorModel;
+import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.tardis.exteriors.impl.models.ClassicTARDISExteriorModel;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LightTexture;
@@ -17,15 +19,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity> {
-    private final ExteriorModel model;
+    private final TARDISExteriorModelSchema model;
     public static final ResourceLocation EXTERIOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/default.png");
 
     public ExteriorRenderer(BlockEntityRendererProvider.Context ctx) {
-        this.model = new DefaultExteriorModel(ctx.bakeLayer(DefaultExteriorModel.LAYER_LOCATION));
+        this.model = new ClassicTARDISExteriorModel(ctx.bakeLayer(ClassicTARDISExteriorModel.LAYER_LOCATION));
     }
 
     @Override
     public void render(ExteriorBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {
+
         // Switcheroo as for some reason the direction gets bugged out for east and west
         Direction direction = (entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
 
@@ -33,7 +36,7 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
         else if (direction == Direction.EAST) {direction = Direction.WEST;}
 
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
-        this.model.renderWithEntity(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(EXTERIOR)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1,1,1,1);
+        TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos())).getExteriorSchema().render(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(EXTERIOR)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
     }
 
     @Override
