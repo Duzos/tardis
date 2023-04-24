@@ -1,4 +1,4 @@
-package com.duzo.tardis.client.models.blockentities;
+package com.duzo.tardis.client.models.blockentities.exteriors;
 
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

@@ -1,7 +1,6 @@
-package com.duzo.tardis.client.models.blockentities;
+package com.duzo.tardis.client.models.blockentities.interior.doors;
 
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
-import com.duzo.tardis.tardis.blocks.entities.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;

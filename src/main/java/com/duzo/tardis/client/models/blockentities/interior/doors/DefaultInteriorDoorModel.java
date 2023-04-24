@@ -4,9 +4,7 @@ package com.duzo.tardis.client.models.blockentities.interior.doors;// Made with 
 
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.client.models.blockentities.InteriorDoorModel;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
-import com.duzo.tardis.tardis.blocks.entities.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;

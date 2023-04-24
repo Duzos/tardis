@@ -1,12 +1,9 @@
 package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.client.models.blockentities.ExteriorModel;
-import com.duzo.tardis.client.models.blockentities.InteriorDoorModel;
-import com.duzo.tardis.client.models.blockentities.exteriors.DefaultExteriorModel;
+import com.duzo.tardis.client.models.blockentities.interior.doors.InteriorDoorModel;
 import com.duzo.tardis.client.models.blockentities.interior.doors.DefaultInteriorDoorModel;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
-import com.duzo.tardis.tardis.blocks.entities.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LightTexture;

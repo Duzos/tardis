@@ -4,12 +4,10 @@ package com.duzo.tardis.client.models.blockentities.exteriors;// Made with Block
 
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.client.models.blockentities.ExteriorModel;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -17,7 +15,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class DefaultExteriorModel<T extends Entity> extends ExteriorModel<T> {

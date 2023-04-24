@@ -1,8 +1,7 @@
-package com.duzo.tardis.tardis.blocks;
+package com.duzo.tardis.tardis.blocks.doors;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
-import com.duzo.tardis.tardis.blocks.entities.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;

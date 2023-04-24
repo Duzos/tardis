@@ -1,4 +1,4 @@
-package com.duzo.tardis.tardis.blocks.entities;
+package com.duzo.tardis.tardis.blocks.doors.entities;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;

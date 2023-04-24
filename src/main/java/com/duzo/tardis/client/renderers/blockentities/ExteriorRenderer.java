@@ -2,7 +2,7 @@ package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.client.models.blockentities.exteriors.DefaultExteriorModel;
-import com.duzo.tardis.client.models.blockentities.ExteriorModel;
+import com.duzo.tardis.client.models.blockentities.exteriors.ExteriorModel;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
