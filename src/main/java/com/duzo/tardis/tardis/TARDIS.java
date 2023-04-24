@@ -38,6 +38,16 @@ public class TARDIS {
         generator.placeStructure((ServerLevel) this.getInteriorDimension(), new BlockPos(0, 0, 0), Direction.SOUTH);
     }
 
+    /**
+     * Demats this TARDIS and remats it at the specified position
+     * @param pos The position to go to
+     * @param withAirCheck Whether to land at the nearest available space if the pos is blocked
+     */
+    public void to(AbsoluteBlockPos pos, boolean withAirCheck) {
+        this.getTravel().setDestination(pos,withAirCheck);
+        this.getTravel().dematerialise(true);
+    }
+
     public TARDISTravel getTravel() {
         return this.travel;
     }

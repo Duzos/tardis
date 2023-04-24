@@ -51,12 +51,9 @@ public class RemoteItem extends LinkableItem {
             return InteractionResult.SUCCESS;
         }
         if (!level.isClientSide && this.getTARDIS(stack) != null) {
-            TARDISTravel travel = this.getTARDIS(stack).getTravel();
-
             Direction direction = player.getDirection().getOpposite();
 
-            travel.setDestination(new AbsoluteBlockPos(level,direction, pos),true);
-            travel.dematerialise(true);
+            this.getTARDIS(stack).to(new AbsoluteBlockPos(level,direction, pos),true);
 
             return InteractionResult.SUCCESS;
         }
