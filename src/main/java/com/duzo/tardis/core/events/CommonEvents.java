@@ -1,6 +1,7 @@
 package com.duzo.tardis.core.events;
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.profiling.jfr.event.WorldLoadFinishedEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -16,6 +17,7 @@ public class CommonEvents {
         if (!event.getLevel().isClientSide()) { // Server Side Only
             ServerLevel world = (ServerLevel) event.getLevel();
             assert world != null;
+            System.out.println("world loaded" + world);
             if (world.dimension().equals(ServerLevel.OVERWORLD)) {
                 TARDISMod.server = ServerLifecycleHooks.getCurrentServer();
             }

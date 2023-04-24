@@ -1,4 +1,4 @@
-package com.duzo.tardis.client.models.renderers.blockentities;
+package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.client.models.blockentities.ExteriorModel;
