@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.UUID;
 
@@ -41,17 +42,18 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
         if (this.tardisUUID != null) {
             tag.putUUID("tardisUUID", this.tardisUUID);
         }
+        return tag;
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        this.tardisUUID = tag.getUUID("tardisUUID");
+    public void deserializeNBT(CompoundTag nbt) {
+        super.deserializeNBT(nbt);
+        this.tardisUUID = nbt.getUUID("tardisUUID");
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

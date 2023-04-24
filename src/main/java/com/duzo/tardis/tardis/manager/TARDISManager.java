@@ -5,6 +5,7 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.builder.TARDISBuilder;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
+import com.duzo.tardis.tardis.nbt.TARDISSavedData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.checkerframework.checker.units.qual.C;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class TARDISManager implements INBTSerializable<CompoundTag> {
     private static final TARDISManager instance = new TARDISManager();
     private final TARDISMap tardisMap = new TARDISMap();
-//    private final TARDISSavedData savedData = new TARDISSavedData();
+    private final TARDISSavedData savedData = new TARDISSavedData();
     private static final TARDISMap.Serializer MAP_SERIALIZER = new TARDISMap.Serializer();
 
     public static TARDISManager getInstance() {
@@ -39,7 +40,7 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
     public TARDISMap getTARDISMap() {
         return this.tardisMap;
     }
-//    public TARDISSavedData getSavedData() {return this.savedData;}
+    public TARDISSavedData getSavedData() {return this.savedData;}
 
     public TARDIS findTARDIS(UUID uuid) {return this.tardisMap.get(uuid);}
     public TARDIS findTARDIS(AbsoluteBlockPos pos) {
@@ -56,7 +57,7 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
         System.out.println("Serialising NBT");
         CompoundTag nbt = new CompoundTag();
         MAP_SERIALIZER.serialize(nbt, this.getTARDISMap());
-//        this.getSavedData().setDirty(false);
+        this.getSavedData().setDirty(false);
         return nbt;
     }
 
@@ -66,24 +67,23 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
         TARDISManager manager = TARDISManager.getInstance();
 
         manager.getTARDISMap().set(MAP_SERIALIZER.deserialize(tag));
-//        manager.getSavedData().setDirty(false);
+        manager.getSavedData().setDirty(false);
     }
 
-//    public static class Serializer {
-//        private static final TARDISMap.Serializer MAP_SERIALIZER = new TARDISMap.Serializer();
-//
-//        @Override
-//        public void serializeNBT(CompoundTag tag, TARDISManager manager) {
-//            MAP_SERIALIZER.serialize(tag, manager.getTARDISMap());
-//            manager.getSavedData().setDirty(false);
-//        }
-//
-//        public TARDISManager deserialize(CompoundTag tag) {
-//            TARDISManager manager = TARDISManager.getInstance();
-//
-//            manager.getTARDISMap().set(MAP_SERIALIZER.deserialize(tag));
-//            manager.getSavedData().setDirty(false);
-//            return manager;
-//        }
-//    }
+    public static class Serializer {
+        private static final TARDISMap.Serializer MAP_SERIALIZER = new TARDISMap.Serializer();
+
+        public void serialize(CompoundTag tag, TARDISManager manager) {
+            MAP_SERIALIZER.serialize(tag, manager.getTARDISMap());
+            manager.getSavedData().setDirty(false);
+        }
+
+        public TARDISManager deserialize(CompoundTag tag) {
+            TARDISManager manager = TARDISManager.getInstance();
+
+            manager.getTARDISMap().set(MAP_SERIALIZER.deserialize(tag));
+            manager.getSavedData().setDirty(false);
+            return manager;
+        }
+    }
 }

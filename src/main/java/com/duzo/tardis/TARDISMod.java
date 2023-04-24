@@ -3,6 +3,7 @@ package com.duzo.tardis;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
+import com.duzo.tardis.tardis.nbt.TARDISSavedData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
@@ -71,15 +72,14 @@ public class TARDISMod {
 
     @SubscribeEvent
     public void onWorldLoad(LevelEvent.Load event) { // When world loads
-        System.out.println("world loaded");
         if (!event.getLevel().isClientSide()) { // Server Side Only
             ServerLevel world = (ServerLevel) event.getLevel();
             assert world != null;
-            System.out.println("world loaded" + world);
             if (world.dimension().equals(ServerLevel.OVERWORLD)) {
                 TARDISMod.server = ServerLifecycleHooks.getCurrentServer();
 
                 TARDISExteriors.init();
+                TARDISSavedData.getInstance(world);
             }
         }
     }
