@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class InteriorDoorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -31,8 +32,8 @@ public abstract class InteriorDoorBlock extends BaseEntityBlock {
         builder.add(FACING);
     }
 
-    public RenderShape getRenderShape(BlockState p_49232_) {
-        return RenderShape.INVISIBLE;
+    public @NotNull RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     @Override

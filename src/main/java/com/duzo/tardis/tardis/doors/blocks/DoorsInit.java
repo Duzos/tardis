@@ -27,7 +27,7 @@ public class DoorsInit {
     public static final DeferredRegister<Block> DOOR_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TARDISMod.MODID);
     public static final DeferredRegister<BlockEntityType<?>> DOOR_BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TARDISMod.MODID);
 
-    public static final RegistryObject<Block> CLASSIC_DOOR_BLOCK = register("classic_door_block", () -> new ClassicInteriorDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<Block> CLASSIC_DOOR_BLOCK = register("classic_door_block", () -> new ClassicInteriorDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().noCollission().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<ClassicInteriorDoorBlockEntity>> CLASSIC_DOOR_ENTITY = DOOR_BLOCK_ENTITIES.register("classic_door_block_entity", () -> BlockEntityType.Builder.of(ClassicInteriorDoorBlockEntity::new, CLASSIC_DOOR_BLOCK.get()).build(null));
 
     @Deprecated
