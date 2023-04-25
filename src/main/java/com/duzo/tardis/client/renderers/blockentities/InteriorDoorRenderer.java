@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlockEntity> {
     private final InteriorDoorModel model;
-    public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/default.png");
+    public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/classic.png");
 
     public InteriorDoorRenderer(BlockEntityRendererProvider.Context ctx) {
         this.model = new ClassicInteriorDoorModel(ctx.bakeLayer(ClassicInteriorDoorModel.LAYER_LOCATION));

@@ -1,10 +1,12 @@
 package com.duzo.tardis.tardis.exteriors;
 
+import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public abstract class TARDISExteriorSchema<T extends TARDISExteriorModelSchema> {
@@ -22,6 +24,10 @@ public abstract class TARDISExteriorSchema<T extends TARDISExteriorModelSchema> 
     public String getName() {return this.getName();}
     public void render(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
         this.model().renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,1,1,1,1);
+    }
+
+    public ResourceLocation getTexture() {
+        return new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/" + this.getID() + ".png");
     }
 
     public static class Serializer {

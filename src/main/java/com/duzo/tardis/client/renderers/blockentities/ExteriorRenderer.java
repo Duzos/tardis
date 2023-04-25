@@ -39,7 +39,7 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
 
         TARDISExteriorSchema<?> schema = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos())).getExteriorSchema();
 
-        ResourceLocation texture = new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/" + schema.getID() + ".png");
+        ResourceLocation texture = schema.getTexture();
 
         schema.render(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(texture)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
     }

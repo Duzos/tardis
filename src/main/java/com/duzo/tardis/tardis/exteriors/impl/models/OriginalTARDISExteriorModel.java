@@ -4,6 +4,7 @@ package com.duzo.tardis.tardis.exteriors.impl.models;// Made with Blockbench 4.7
 
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,8 +12,10 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class OriginalTARDISExteriorModel extends TARDISExteriorModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -41,11 +44,35 @@ public class OriginalTARDISExteriorModel extends TARDISExteriorModelSchema {
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
+	@Override
+	public void renderWithEntity(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		stack.pushPose();
+
+		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+		if (direction == Direction.NORTH) {
+			stack.translate(-0.5,0,-0.5);
+		}
+		else if (direction == Direction.SOUTH) {
+			stack.translate(0.5,0,0.5);
+		}
+		else if (direction == Direction.WEST) {
+			stack.translate(0.5,0,-0.5);
+		}
+		else if (direction == Direction.EAST) {
+			stack.translate(-0.5,0,0.5);
+		}
+
+		stack.translate(0,0.5,0);
+
+		super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		stack.popPose();
+	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		frame.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		doors.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		frame.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		doors.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
