@@ -1,6 +1,6 @@
 package com.duzo.tardis.tardis.exteriors;
 
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;

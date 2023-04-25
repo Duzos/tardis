@@ -1,20 +1,13 @@
 package com.duzo.tardis.tardis.structures;
 
-import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.structures.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.eventbus.api.Event;
-
-import javax.xml.transform.Result;
 
 public class TARDISStructureGenerator {
     public static class InteriorGenerator extends TARDISStructureGenerator {

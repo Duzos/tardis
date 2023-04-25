@@ -1,6 +1,6 @@
 //package com.duzo.tardis.client.models.blockentities.interior.rotors;
 //
-//import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+//import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 //import com.duzo.tardis.tardis.blocks.rotors.entities.RotorBlockEntity;
 //import com.mojang.blaze3d.vertex.PoseStack;
 //import com.mojang.blaze3d.vertex.VertexConsumer;

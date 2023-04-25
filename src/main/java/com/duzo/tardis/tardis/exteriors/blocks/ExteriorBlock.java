@@ -1,10 +1,9 @@
-package com.duzo.tardis.tardis.blocks;
+package com.duzo.tardis.tardis.exteriors.blocks;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

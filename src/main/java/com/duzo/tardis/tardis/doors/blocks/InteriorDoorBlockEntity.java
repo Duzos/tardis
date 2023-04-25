@@ -1,8 +1,9 @@
-package com.duzo.tardis.tardis.blocks.doors.entities;
+package com.duzo.tardis.tardis.doors.blocks;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -14,12 +15,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class InteriorDoorBlockEntity extends BlockEntity {
+public abstract class InteriorDoorBlockEntity extends BlockEntity {
     private TARDIS tardis;
-
-    public InteriorDoorBlockEntity(BlockPos pos, BlockState state) {
-        this(BlockEntityInit.INTERIOR_DOOR_BLOCK_ENTITY.get(), pos, state);
-    }
+    protected TARDISInteriorDoorSchema<?> schema;
 
     public InteriorDoorBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
@@ -28,9 +26,12 @@ public class InteriorDoorBlockEntity extends BlockEntity {
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;
     }
-
     public TARDIS getTARDIS() {
         return this.tardis;
+    }
+
+    public TARDISInteriorDoorSchema<?> getSchema() {
+        return this.schema;
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

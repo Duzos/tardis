@@ -1,11 +1,10 @@
-package com.duzo.tardis.tardis.blocks.entities;
+package com.duzo.tardis.tardis.exteriors.blocks.entities;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
-import com.duzo.tardis.tardis.structures.interiors.CoralInterior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.UUID;
 
@@ -58,9 +56,8 @@ public class ExteriorBlockEntity extends BlockEntity {
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos));
-        tardis.generateInterior(new CoralInterior());
         if (tardis.needsInterior()) {
-            tardis.generateInterior(new CoralInterior());
+            tardis.generateInterior();
         }
         TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(tardis.getInteriorDimension(),tardis.getInterior().getEntrancePos()));
         helper.teleport((ServerLevel) player.getLevel());

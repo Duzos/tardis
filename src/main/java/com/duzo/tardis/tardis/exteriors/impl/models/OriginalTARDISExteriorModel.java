@@ -4,7 +4,7 @@ package com.duzo.tardis.tardis.exteriors.impl.models;// Made with Blockbench 4.7
 
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

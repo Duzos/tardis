@@ -1,5 +1,6 @@
-package com.duzo.tardis.tardis.structures.interiors;
+package com.duzo.tardis.tardis.interiors.impl;
 
+import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.structures.TARDISStructure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -7,16 +8,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
 public class CoralInterior extends TARDISInterior {
-    public CoralInterior(ResourceLocation resourceLocation, String structureName) {
-        super(resourceLocation,structureName);
-        this.entrancePos = new BlockPos(17,1,30);
+    public CoralInterior(ResourceLocation location, String id) {
+        super(location,id);
     }
-    public CoralInterior(String structureName) {
-        super(structureName);
-        this.entrancePos = new BlockPos(17,2,30);
+    public CoralInterior(String id) {
+        super(id,new BlockPos(17,2,30));
     }
     public CoralInterior() {
-        this("coral_interior");
+        this("coral");
     }
     private static final Codec<TARDISStructure> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
@@ -24,4 +23,5 @@ public class CoralInterior extends TARDISInterior {
                 Codec.STRING.orElse("Placeholder").fieldOf("name_component").forGetter(TARDISStructure::getStructureName)
         ).apply(instance, CoralInterior::new);
     });
+
 }

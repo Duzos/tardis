@@ -1,22 +1,17 @@
 package com.duzo.tardis.tardis.io;
 
-import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.blocks.ExteriorBlock;
-import com.duzo.tardis.tardis.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.world.ForgeChunkManager;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Random;
 import java.util.Timer;

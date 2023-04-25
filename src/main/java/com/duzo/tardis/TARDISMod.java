@@ -2,7 +2,10 @@ package com.duzo.tardis;
 
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
+import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
+import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
+import com.duzo.tardis.tardis.interiors.TARDISInteriors;
 import com.duzo.tardis.tardis.nbt.TARDISSavedData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -56,6 +59,10 @@ public class TARDISMod {
         SoundsInit.SOUNDS.register(bus);
         DimensionsInit.register();
 
+        // Registering doors
+        DoorsInit.DOOR_BLOCKS.register(bus);
+        DoorsInit.DOOR_BLOCK_ENTITIES.register(bus);
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -79,6 +86,8 @@ public class TARDISMod {
                 TARDISMod.server = ServerLifecycleHooks.getCurrentServer();
 
                 TARDISExteriors.init();
+                TARDISInteriors.init();
+                TARDISInteriorDoors.init();
                 TARDISSavedData.getInstance(world);
             }
         }

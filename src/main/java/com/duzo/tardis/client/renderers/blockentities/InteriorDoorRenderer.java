@@ -1,9 +1,8 @@
 package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.client.models.blockentities.interior.doors.InteriorDoorModel;
-import com.duzo.tardis.client.models.blockentities.interior.doors.ClassicInteriorDoorModel;
-import com.duzo.tardis.tardis.blocks.doors.entities.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LightTexture;
@@ -18,14 +17,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlockEntity> {
-    private final InteriorDoorModel model;
     public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/classic.png");
 
-    public InteriorDoorRenderer(BlockEntityRendererProvider.Context ctx) {
-        this.model = new ClassicInteriorDoorModel(ctx.bakeLayer(ClassicInteriorDoorModel.LAYER_LOCATION));
-    }
+    public InteriorDoorRenderer(BlockEntityRendererProvider.Context ctx) {}
     @Override
     public void render(InteriorDoorBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {
+
         // Switcheroo as for some reason the direction gets bugged out for east and west
         Direction direction = (entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
 
@@ -33,7 +30,12 @@ public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlo
         else if (direction == Direction.EAST) {direction = Direction.WEST;}
 
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
-        this.model.renderWithEntity(entity,stack, source.getBuffer(RenderType.entitySmoothCutout(DOOR)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,1,1,1,1);
+
+        TARDISInteriorDoorSchema<?> schema = entity.getSchema();
+
+        ResourceLocation texture = schema.getTexture();
+
+        schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucent(texture)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
     }
 
     @Override

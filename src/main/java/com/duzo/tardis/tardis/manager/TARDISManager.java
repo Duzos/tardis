@@ -5,6 +5,7 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.builder.TARDISBuilder;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
+import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.nbt.TARDISSavedData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -29,8 +30,12 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
      * @param exteriorSchema The exterior schema to use | can be null and will use a default
      * @return the new TARDIS
      */
-    public TARDIS create(AbsoluteBlockPos pos, @Nullable TARDISExteriorSchema<?> exteriorSchema) {
-        TARDIS tardis = new TARDISBuilder(UUID.randomUUID()).at(pos).exterior(exteriorSchema).build();
+    public TARDIS create(AbsoluteBlockPos pos, @Nullable TARDISExteriorSchema<?> exteriorSchema, @Nullable TARDISInterior interior) {
+        TARDIS tardis = new TARDISBuilder(UUID.randomUUID())
+                .at(pos)
+                .exterior(exteriorSchema)
+                .interior(interior)
+                .build();
 
         this.tardisMap.put(tardis);
 
