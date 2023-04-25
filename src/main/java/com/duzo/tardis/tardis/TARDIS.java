@@ -8,13 +8,17 @@ import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.duzo.tardis.tardis.interiors.TARDISInteriors;
 import com.duzo.tardis.tardis.io.TARDISTravel;
+import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.UUID;
 
@@ -52,7 +56,6 @@ public class TARDIS {
         this.generateInterior(this.getInterior());
     }
     public void generateInterior(TARDISInterior interior) {
-        System.out.println(interior);
         TARDISStructureGenerator.InteriorGenerator generator = new TARDISStructureGenerator.InteriorGenerator(this, (ServerLevel) this.getInteriorDimension(), interior);
         generator.placeStructure((ServerLevel) this.getInteriorDimension(), new BlockPos(0, 0, 0), Direction.SOUTH);
     }
@@ -70,6 +73,26 @@ public class TARDIS {
     public void to(AbsoluteBlockPos pos, boolean withAirCheck) {
         this.getTravel().setDestination(pos,withAirCheck);
         this.getTravel().dematerialise(true);
+    }
+
+    public void teleportToDoor(Player player) {
+        if (this.needsInterior()) {
+            this.generateInterior();
+        }
+
+        BlockPos doorPos = this.getInterior().getDoorPosition();
+        Direction doorDirection = this.getInteriorDimension().getBlockState(doorPos).getValue(BlockStateProperties.HORIZONTAL_FACING);
+        BlockPos adjustedPos = doorPos;
+
+        switch(doorDirection) {
+            case NORTH -> adjustedPos = doorPos.north(1);
+            case SOUTH -> adjustedPos = doorPos.south(1);
+            case EAST -> adjustedPos = doorPos.east(1);
+            case WEST -> adjustedPos = doorPos.west(1);
+        }
+
+        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getInteriorDimension(),adjustedPos));
+        helper.teleport((ServerLevel) player.getLevel());
     }
 
     public TARDISTravel getTravel() {

@@ -1,13 +1,18 @@
 package com.duzo.tardis.tardis.structures;
 
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TARDISStructureGenerator {
     public static class InteriorGenerator extends TARDISStructureGenerator {
@@ -22,12 +27,14 @@ public class TARDISStructureGenerator {
         @Override
         public void placeStructure(ServerLevel level, BlockPos pos, Direction direction) {
             super.placeStructure(level, pos, direction);
+//            this.interior.findDoorPosition(this.template);
+            this.interior.setDoorPosition(findTargetBlockPosInTemplate(this.template,pos,direction, TARDISInteriorDoors.INTERIOR_DOOR_BLOCK_LIST).get(0));
             this.tardis.setInterior(this.interior);
         }
     }
     private TARDISStructure structure;
     private String structureName;
-    private StructureTemplate template;
+    protected StructureTemplate template;
 
     public TARDISStructureGenerator(ServerLevel level, TARDISStructure structure) {
         this.structure = structure;
@@ -36,7 +43,30 @@ public class TARDISStructureGenerator {
     }
 
     public void placeStructure(ServerLevel level, BlockPos pos, Direction direction) {
-        this.template.placeInWorld(level,pos,pos,new StructurePlaceSettings().setRotation(this.directionToRotation(direction)),level.getRandom(),2);
+        this.template.placeInWorld(level,pos,pos,new StructurePlaceSettings(),level.getRandom(),2); // .setRotation(this.directionToRotation(direction))
+    }
+
+    protected BlockPos findTargetBlockPosInTemplate(StructureTemplate template,BlockPos pos, Direction direction, Block targetBlock) {
+        List<StructureTemplate.StructureBlockInfo> list = template.filterBlocks(
+                pos, new StructurePlaceSettings().setRotation(directionToRotation(direction)), targetBlock);
+        return list.get(0).pos;
+    }
+
+    /**
+     * Recommended usage is for finding the first door pos etc
+     *
+     * @param targetBlocks Blocks to search for
+     * @return A list of blockpos' for the FIRST instance of each block
+     */
+    protected List<BlockPos> findTargetBlockPosInTemplate(StructureTemplate template, BlockPos pos, Direction direction, List<Block> targetBlocks) {
+        List<BlockPos> posList = new ArrayList<>();
+        for (Block block : targetBlocks) {
+            BlockPos foundPos = this.findTargetBlockPosInTemplate(template,pos,direction,block);
+            if (foundPos != null) {
+                posList.add(foundPos);
+            }
+        }
+        return posList;
     }
 
     private Rotation directionToRotation(Direction direction) {

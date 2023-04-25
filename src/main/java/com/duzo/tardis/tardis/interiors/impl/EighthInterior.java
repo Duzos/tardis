@@ -11,15 +11,6 @@ public class EighthInterior extends TARDISInterior {
     public EighthInterior(String structureName) {
         super(structureName);
     }
-
-    public EighthInterior(String structureName, BlockPos blockpos) {
-        super(structureName, blockpos);
-    }
-
-    public EighthInterior(ResourceLocation location, String id, BlockPos pos) {
-        super(location, id, pos);
-    }
-
     public EighthInterior(ResourceLocation location, String structurename) {
         super(location, structurename);
     }

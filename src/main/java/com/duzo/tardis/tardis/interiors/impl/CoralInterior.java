@@ -12,7 +12,7 @@ public class CoralInterior extends TARDISInterior {
         super(location,id);
     }
     public CoralInterior(String id) {
-        super(id,new BlockPos(17,2,30));
+        super(id);
     }
     public CoralInterior() {
         this("coral");
