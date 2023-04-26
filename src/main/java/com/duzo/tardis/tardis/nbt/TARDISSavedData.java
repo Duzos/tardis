@@ -12,6 +12,8 @@ public class TARDISSavedData extends SavedData {
     @Override
     public CompoundTag save(CompoundTag tag) {
         MANAGER_SERIALIZER.serialize(tag, TARDISManager.getInstance());
+        System.out.println(tag);
+        System.out.println("SAVING");
         return tag;
     }
 
@@ -22,6 +24,8 @@ public class TARDISSavedData extends SavedData {
     public static TARDISSavedData load(CompoundTag tag) {
         TARDISSavedData data = create();
         MANAGER_SERIALIZER.deserialize(tag);
+        System.out.println(tag);
+        System.out.println("LOADIng");
         return data;
     }
     /*

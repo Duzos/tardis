@@ -14,15 +14,18 @@ import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.checkerframework.checker.units.qual.A;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -174,8 +177,12 @@ public class TARDIS {
     public List<AbsoluteBlockPos> getInteriorCornerPositions() {
         return this.interiorCornerPositions;
     }
+    public void setInteriorCornerPositions(List<AbsoluteBlockPos> list) {
+        this.interiorCornerPositions = list;
+    }
     public static class Serializer {
         private static final NBTSerializers.AbsolutePosition ABSOLUTE_POSITION_SERIALIZER = new NBTSerializers.AbsolutePosition();
+        private static final TARDISTravel.Serializer TRAVEL_SERIALIZER = new TARDISTravel.Serializer();
         public CompoundTag serialize(TARDIS tardis) {
             CompoundTag tag = new CompoundTag();
             this.serialize(tag,tardis);
@@ -186,10 +193,30 @@ public class TARDIS {
             nbt.putString("exteriorSchema", tardis.getExteriorSchema().getID());
             nbt.putString("interiorID", tardis.getInterior().getID());
             ABSOLUTE_POSITION_SERIALIZER.serialize(nbt,tardis.pos);
+            if (tardis.interiorCornerPositions != null) {
+                nbt.put("bottomLeft", NbtUtils.writeBlockPos(tardis.interiorCornerPositions.get(0)));
+                nbt.put("topRight", NbtUtils.writeBlockPos(tardis.interiorCornerPositions.get(1)));
+            }
+
+            nbt.put("tardisTravel",TRAVEL_SERIALIZER.serialize(tardis.getTravel()));
         }
 
         public TARDIS deserialize(CompoundTag nbt) {
-            return new TARDIS(nbt.getUUID("uuid"), ABSOLUTE_POSITION_SERIALIZER.deserialize(nbt), TARDISExteriors.get(nbt.getString("exteriorSchema")), TARDISInteriors.get(nbt.getString("interiorID")));
+            TARDIS tardis = new TARDIS(nbt.getUUID("uuid"), ABSOLUTE_POSITION_SERIALIZER.deserialize(nbt), TARDISExteriors.get(nbt.getString("exteriorSchema")), TARDISInteriors.get(nbt.getString("interiorID")));
+
+            AbsoluteBlockPos bottomLeft = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("bottomRight")));
+            AbsoluteBlockPos topRight = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("topRight")));
+            List<AbsoluteBlockPos> list = new ArrayList<>();
+            list.add(bottomLeft);
+            list.add(topRight);
+            tardis.setInteriorCornerPositions(list);
+
+            tardis.travel = TRAVEL_SERIALIZER.deserialize(nbt.getCompound("tardisTravel"));
+            tardis.travel.setTARDIS(tardis);
+
+            System.out.println(tardis);
+
+            return tardis;
         }
     }
 }

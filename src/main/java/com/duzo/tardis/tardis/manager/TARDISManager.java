@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class TARDISManager implements INBTSerializable<CompoundTag> {
+public class TARDISManager {
     private static final TARDISManager instance = new TARDISManager();
     private final TARDISMap tardisMap = new TARDISMap();
     private final TARDISSavedData savedData = new TARDISSavedData();
@@ -96,8 +96,13 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
     public TARDIS findTARDISFromInteriorCoordinate(AbsoluteBlockPos pos) {
         if (pos.getDimension() != TARDISUtil.getTARDISLevel()) {return null;}
 
+        // Checks if the position is inside the area
         for (TARDIS tardis : tardisMap.values()) {
-            if (tardis.getInteriorCornerPositions().contains(pos)) {
+            List<AbsoluteBlockPos> list = tardis.getInteriorCornerPositions();
+            BlockPos bottomLeft = list.get(0);
+            BlockPos topRight = list.get(1);
+            boolean flag = (bottomLeft.getX() <= pos.getX()) && (bottomLeft.getZ() <= pos.getZ()) && (topRight.getX() >= pos.getX()) && (topRight.getZ() >= pos.getZ());
+            if (flag) {
                 return tardis;
             }
         }
@@ -122,24 +127,6 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
         int z = random.nextInt(100000);
         AbsoluteBlockPos pos = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(),new BlockPos(x,0,z));
         return pos;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        System.out.println("Serialising NBT");
-        CompoundTag nbt = new CompoundTag();
-        MAP_SERIALIZER.serialize(nbt, this.getTARDISMap());
-        this.getSavedData().setDirty(false);
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag tag) {
-        System.out.println("Deserialising NBT");
-        TARDISManager manager = TARDISManager.getInstance();
-
-        manager.getTARDISMap().set(MAP_SERIALIZER.deserialize(tag));
-        manager.getSavedData().setDirty(false);
     }
 
     /**
@@ -174,7 +161,7 @@ public class TARDISManager implements INBTSerializable<CompoundTag> {
 
         public void serialize(CompoundTag tag, TARDISManager manager) {
             MAP_SERIALIZER.serialize(tag, manager.getTARDISMap());
-            manager.getSavedData().setDirty(false);
+            manager.getSavedData().setDirty(true);
         }
 
         public TARDISManager deserialize(CompoundTag tag) {

@@ -3,11 +3,15 @@ package com.duzo.tardis.tardis.io;
 import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.nbt.NBTSerializers;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -142,10 +146,31 @@ public class TARDISTravel {
 //        }
     }
 
-
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;
     }
+
+    public static class Serializer {
+        private static final NBTSerializers.AbsolutePosition ABSOLUTE_POSITION_SERIALIZER = new NBTSerializers.AbsolutePosition();
+
+        public CompoundTag serialize(TARDISTravel travel) {
+            CompoundTag tag = new CompoundTag();
+            this.serialize(tag,travel);
+            return tag;
+        }
+        public void serialize(CompoundTag nbt, TARDISTravel travel) {
+            nbt.putUUID("uuid",travel.tardis.getUuid());
+            ABSOLUTE_POSITION_SERIALIZER.serialize(nbt,travel.destination);
+//            nbt.put("destination", NbtUtils.writeBlockPos(travel.destination));
+        }
+        public TARDISTravel deserialize(CompoundTag nbt) {
+            TARDISTravel travel = new TARDISTravel(TARDISManager.getInstance().findTARDIS(nbt.getUUID("uuid")));
+//            travel.destination = NbtUtils.readBlockPos(nbt.getCompound("destination"));
+            travel.destination = ABSOLUTE_POSITION_SERIALIZER.deserialize(nbt);
+            return travel;
+        }
+    }
+
 
     public enum STATE {
         DEMAT,
