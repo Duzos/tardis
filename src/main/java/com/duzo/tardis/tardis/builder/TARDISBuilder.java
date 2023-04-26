@@ -50,6 +50,7 @@ public class TARDISBuilder {
             tardis.getTravel().setDestination(this.position, true);
             tardis.getTravel().materialise();
         }
+        tardis.generateInterior();
 
         return tardis;
     }

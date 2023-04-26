@@ -1,6 +1,7 @@
 package com.duzo.tardis.client.renderers.blockentities;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.manager.TARDISManager;
@@ -25,7 +26,11 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
 
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
-        TARDISExteriorSchema<?> schema = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos())).getExteriorSchema();
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(entity.getLevel(),entity.getBlockPos()));
+
+        if (tardis == null) {return;}
+
+        TARDISExteriorSchema<?> schema = tardis.getExteriorSchema();
 
         ResourceLocation texture = schema.getTexture();
 
