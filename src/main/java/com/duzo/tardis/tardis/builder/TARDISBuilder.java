@@ -37,13 +37,19 @@ public class TARDISBuilder {
     }
 
     public TARDIS build() {
+        return this.build(true);
+    }
+    public TARDIS build(boolean withMaterialise) {
         if (this.position == null) {throw new IllegalArgumentException("TARDIS Position is null!");}
         if (this.exteriorSchema == null) {this.exteriorSchema = TARDISExteriors.get(DEFAULT_EXTERIOR);}
         if (this.interior == null) {this.interior = TARDISInteriors.get(DEFAULT_INTERIOR);}
 
         TARDIS tardis = new TARDIS(this.uuid,this.position, this.exteriorSchema, this.interior);
-        tardis.getTravel().setDestination(this.position,true);
-        tardis.getTravel().materialise();
+
+        if (withMaterialise) {
+            tardis.getTravel().setDestination(this.position, true);
+            tardis.getTravel().materialise();
+        }
 
         return tardis;
     }

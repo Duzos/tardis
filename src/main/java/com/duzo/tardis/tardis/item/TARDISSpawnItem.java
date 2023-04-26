@@ -1,6 +1,9 @@
 package com.duzo.tardis.tardis.item;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
+import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
+import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -10,9 +13,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class TARDISSpawnItem extends Item {
-    public TARDISSpawnItem(Properties p_41383_) {
-        super(p_41383_);
+public abstract class TARDISSpawnItem extends Item {
+    public TARDISSpawnItem(Properties properties) {
+        super(properties);
+    }
+
+    protected TARDISExteriorSchema<?> getExterior() {
+        return null;
+    }
+    protected TARDISInterior getInterior() {
+        return null;
     }
 
     @Override
@@ -24,7 +34,7 @@ public class TARDISSpawnItem extends Item {
         InteractionHand hand = context.getHand();
 
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            TARDISManager.getInstance().create(absolutePos,null, null);
+            TARDISManager.getInstance().create(absolutePos,this.getExterior(), this.getInterior());
             context.getItemInHand().shrink(1);
         }
         return InteractionResult.SUCCESS;

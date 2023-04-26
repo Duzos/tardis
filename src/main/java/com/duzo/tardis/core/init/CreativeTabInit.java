@@ -8,7 +8,7 @@ public class CreativeTabInit {
     public static final CreativeModeTab TARDIS_TAB = new CreativeModeTab("tardis_tab") {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(ItemInit.TARDIS_ITEM.get());
+            return new ItemStack(ItemInit.CLASSIC_TARDIS_ITEM.get());
         }
     };
 }
