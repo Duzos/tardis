@@ -1,5 +1,6 @@
 package com.duzo.tardis.tardis.interiors;
 
+import com.duzo.tardis.tardis.interiors.impl.BakerInterior;
 import com.duzo.tardis.tardis.interiors.impl.CoralInterior;
 import com.duzo.tardis.tardis.interiors.impl.EighthInterior;
 
@@ -15,6 +16,7 @@ public class TARDISInteriors {
     public static void init() {
         TARDISInteriors.register(new CoralInterior());
         TARDISInteriors.register(new EighthInterior());
+        TARDISInteriors.register(new BakerInterior());
     }
     public static void register(TARDISInterior interior) {interiors.put(interior.getID(),interior);}
     public static TARDISInterior get(String id) {
