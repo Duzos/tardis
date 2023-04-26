@@ -91,10 +91,18 @@ public class ClassicTARDISExteriorModel extends TARDISExteriorModelSchema {
 		stack.pushPose();
 		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-		if (direction == Direction.NORTH) {
+//		if (direction == Direction.SOUTH) {
+//			direction = Direction.NORTH;
+//		} else if (direction == Direction.NORTH) {
+//			direction = Direction.SOUTH;
+//		}
+
+		stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
+
+		if (direction == Direction.SOUTH) {
 			stack.translate(-0.5,0,-0.5);
 		}
-		else if (direction == Direction.SOUTH) {
+		else if (direction == Direction.NORTH) {
 			stack.translate(0.5,0,0.5);
 		}
 		else if (direction == Direction.WEST) {
@@ -116,6 +124,7 @@ public class ClassicTARDISExteriorModel extends TARDISExteriorModelSchema {
 
 		stack.scale(0.5f,0.5f,0.5f);
 		stack.translate(0, -1.5f, 0);
+
 
 		bone.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();

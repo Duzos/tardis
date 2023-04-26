@@ -21,12 +21,7 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
 
     @Override
     public void render(ExteriorBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {
-
-        // Switcheroo as for some reason the direction gets bugged out for east and west
         Direction direction = (entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
-
-        if (direction == Direction.WEST) {direction = Direction.EAST;}
-        else if (direction == Direction.EAST) {direction = Direction.WEST;}
 
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
