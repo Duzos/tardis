@@ -126,7 +126,7 @@ public class ClassicInteriorDoorModel extends TARDISInteriorDoorModelSchema {
 	public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		stack.pushPose();
 		stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
-//
+
 		stack.scale(0.5f,0.5f,0.5f);
 		stack.translate(1f, -1.5f, -1f);
 		bone.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

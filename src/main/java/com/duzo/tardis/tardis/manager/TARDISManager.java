@@ -155,7 +155,6 @@ public class TARDISManager {
 
         return null;
     }
-
     public static class Serializer {
         private static final TARDISMap.Serializer MAP_SERIALIZER = new TARDISMap.Serializer();
 

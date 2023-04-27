@@ -4,6 +4,8 @@ import com.duzo.tardis.config.TARDISModClientConfigs;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
+import com.duzo.tardis.tardis.controls.TARDISControls;
+import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
@@ -67,6 +69,10 @@ public class TARDISMod {
         DoorsInit.DOOR_BLOCKS.register(bus);
         DoorsInit.DOOR_BLOCK_ENTITIES.register(bus);
 
+        // Controls
+        ControlsInit.CONTROL_BLOCKS.register(bus);
+        ControlsInit.CONTROL_BLOCK_ENTITIES.register(bus);
+
         // Configs
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, TARDISModClientConfigs.SPEC, "tardis-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TARDISModCommonConfigs.SPEC, "tardis-common.toml");
@@ -96,6 +102,7 @@ public class TARDISMod {
                 TARDISExteriors.init();
                 TARDISInteriors.init();
                 TARDISInteriorDoors.init();
+                TARDISControls.init();
                 TARDISSavedData.getInstance(world);
             }
         }

@@ -69,6 +69,9 @@ public class TARDISTravel {
         this.destination = pos;
     }
 
+    public void dematerialise() {
+        this.dematerialise(false);
+    }
     public void dematerialise(boolean withRemat) {
         if (this.tardis.getLevel().isClientSide) {return;}
 
@@ -162,6 +165,10 @@ public class TARDISTravel {
 //            System.out.println(this.tardis.getUuid());
 //            tardisBlockEntity.setTARDIS(this.tardis.getUuid());
 //        }
+    }
+
+    public boolean inFlight() {
+        return this.state == STATE.FLIGHT;
     }
 
     public void setTARDIS(TARDIS tardis) {

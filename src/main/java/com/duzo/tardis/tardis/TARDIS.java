@@ -108,7 +108,12 @@ public class TARDIS {
      */
     public void to(AbsoluteBlockPos pos, boolean withAirCheck) {
         this.getTravel().setDestination(pos,withAirCheck);
-        this.getTravel().dematerialise(true);
+
+        if (this.getTravel().inFlight()) {
+            this.getTravel().materialise();
+        } else {
+            this.getTravel().dematerialise(true);
+        }
     }
 
     public void teleportToDoor(Player player) {
