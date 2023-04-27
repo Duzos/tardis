@@ -16,5 +16,23 @@
         "stream": false
       }
     ]
+  },
+  "fail_land": {
+    "subtitle": "TARDIS Failing to land",
+    "sounds": [
+      {
+        "name": "tardis:tardis/fail_land",
+        "stream": false
+      }
+    ]
+  },
+  "emergency_land": {
+    "subtitle": "TARDIS Emergency Landing",
+    "sounds": [
+      {
+        "name": "tardis:tardis/emergency_land",
+        "stream": false
+      }
+    ]
   }
 }

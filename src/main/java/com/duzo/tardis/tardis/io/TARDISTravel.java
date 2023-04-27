@@ -1,13 +1,16 @@
 package com.duzo.tardis.tardis.io;
 
+import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.nbt.NBTSerializers;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.manager.TARDISManager;
+import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +26,7 @@ import java.util.TimerTask;
 
 public class TARDISTravel {
     private final int DEMAT_AUDIO_LENGTH = 8;
-    private final int MAT_AUDIO_LENGTH = 10;
+    private int MAT_AUDIO_LENGTH = 10;
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
@@ -101,7 +104,20 @@ public class TARDISTravel {
 
 //        ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, this.destination,0, 0,true,true);
         level.getChunkAt(this.destination);
-        level.playSound(null,this.destination, SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
+        if (level == TARDISUtil.getTARDISLevel()) {
+            if (TARDISModCommonConfigs.CAN_LAND_IN_TARDIS_DIM.get()) {
+                level.playSound(null, this.destination, SoundsInit.EMERGENCY_LAND.get(), SoundSource.BLOCKS, 1f,1f);
+                MAT_AUDIO_LENGTH = 16;
+            } else {
+                level.playSound(null, this.destination, SoundsInit.FAIL_LAND.get(), SoundSource.BLOCKS, 1f,1f);
+                this.setDestination(tardis.getPosition(),false);
+                this.materialise();
+                return;
+            }
+        } else {
+            level.playSound(null, this.destination, SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f, 1f);
+            MAT_AUDIO_LENGTH = 8;
+        }
 
         this.state = STATE.MAT;
 

@@ -1,5 +1,7 @@
 package com.duzo.tardis;
 
+import com.duzo.tardis.config.TARDISModClientConfigs;
+import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
@@ -24,7 +26,9 @@ import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -62,6 +66,10 @@ public class TARDISMod {
         // Registering doors
         DoorsInit.DOOR_BLOCKS.register(bus);
         DoorsInit.DOOR_BLOCK_ENTITIES.register(bus);
+
+        // Configs
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, TARDISModClientConfigs.SPEC, "tardis-client.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TARDISModCommonConfigs.SPEC, "tardis-common.toml");
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
