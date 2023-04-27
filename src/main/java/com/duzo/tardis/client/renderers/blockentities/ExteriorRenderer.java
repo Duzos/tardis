@@ -30,6 +30,8 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
 
         if (tardis == null) {return;}
 
+//        tardis.logDebug();
+
         TARDISExteriorSchema<?> schema = tardis.getExteriorSchema();
 
         ResourceLocation texture = schema.getTexture();

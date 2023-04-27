@@ -1,5 +1,6 @@
 package com.duzo.tardis.tardis.exteriors.blocks.entities;
 
+import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
@@ -40,22 +41,23 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (this.tardisUUID != null) {
             tag.putUUID("tardisUUID", this.tardisUUID);
         }
-        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.tardisUUID = nbt.getUUID("tardisUUID");
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.tardisUUID = tag.getUUID("tardisUUID");
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos));
-        tardis.teleportToDoor(player);
+        if (this.getTARDIS() == null) {
+            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+        }
+        this.getTARDIS().teleportToDoor(player);
     }
 }

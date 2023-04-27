@@ -1,5 +1,7 @@
 package com.duzo.tardis.tardis;
 
+import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.nbt.NBTSerializers;
@@ -8,6 +10,7 @@ import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlock;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.interiors.TARDISInteriors;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.io.TeleportHelper;
@@ -15,6 +18,7 @@ import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.util.TARDISUtil;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,8 +26,10 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.checkerframework.checker.units.qual.A;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +84,21 @@ public class TARDIS {
     public void generateInteriorDEPRECATED() {
         this.getInterior().place((ServerLevel) this.getInteriorDimension(),new BlockPos(0,0,0));
         this.hasInterior = true;
+    }
+
+    public void logDebug() {
+        Logger logger = LogUtils.getLogger();
+        logger.debug(this.toString());
+        logger.debug(this.pos.toString());
+        logger.debug(this.travel.toString());
+        logger.debug(this.uuid.toString());
+        logger.debug(this.exteriorSchema.getID());
+        logger.debug(this.interior.getID());
+        logger.debug(this.interiorCornerPositions.toString());
+
+        if (this.interiorDoorPos != null) {
+            logger.debug(this.interiorDoorPos.toString());
+        }
     }
 
     /**
@@ -187,6 +208,14 @@ public class TARDIS {
         return adjustedPos;
     }
 
+    public void updateBlockEntity() {
+        BlockEntity entity = this.getLevel().getBlockEntity(this.getPosition());
+        if (!(entity instanceof ExteriorBlockEntity)) {
+            LogUtils.getLogger().error("Could not find Exterior Block Entity at " + this.pos.toString() + " when trying to update!\nInstead got: " + entity);
+            return;
+        }
+        ((ExteriorBlockEntity) entity).setTARDIS(this);
+    }
 
     public TARDISExteriorSchema<?> getExteriorSchema() {return this.exteriorSchema;}
     public void setExteriorSchema(TARDISExteriorSchema<?> exterior) {this.exteriorSchema = exterior;}
@@ -220,12 +249,15 @@ public class TARDIS {
         public TARDIS deserialize(CompoundTag nbt) {
             TARDIS tardis = new TARDIS(nbt.getUUID("uuid"), ABSOLUTE_POSITION_SERIALIZER.deserialize(nbt), TARDISExteriors.get(nbt.getString("exteriorSchema")), TARDISInteriors.get(nbt.getString("interiorID")));
 
-            AbsoluteBlockPos bottomLeft = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("bottomRight")));
-            AbsoluteBlockPos topRight = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("topRight")));
-            List<AbsoluteBlockPos> list = new ArrayList<>();
-            list.add(bottomLeft);
-            list.add(topRight);
-            tardis.setInteriorCornerPositions(list);
+            if (nbt.getCompound("bottomRight") != null) {
+                AbsoluteBlockPos bottomLeft = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("bottomRight")));
+                AbsoluteBlockPos topRight = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), NbtUtils.readBlockPos(nbt.getCompound("topRight")));
+                List<AbsoluteBlockPos> list = new ArrayList<>();
+                list.add(bottomLeft);
+                list.add(topRight);
+                tardis.setInteriorCornerPositions(list);
+            }
+            tardis.interiorDoorPos = null;
 
             tardis.travel = TRAVEL_SERIALIZER.deserialize(nbt.getCompound("tardisTravel"));
             tardis.travel.setTARDIS(tardis);

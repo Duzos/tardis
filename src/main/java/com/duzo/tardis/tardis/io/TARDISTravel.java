@@ -19,6 +19,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Random;
 import java.util.Timer;
@@ -141,12 +142,13 @@ public class TARDISTravel {
         level.getChunkAt(this.destination);
 
         ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
-        BlockState state = block.defaultBlockState().setValue(ExteriorBlock.FACING, this.destination.getDirection());
+        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.destination.getDirection());
         level.setBlockAndUpdate(this.destination, state);
         level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
 
         this.tardis.setPosition(this.destination);
         this.state = STATE.LANDED;
+        this.tardis.updateBlockEntity();
 
 //        if (this.tileNBT == null) {
 //            this.tileNBT = new CompoundTag();
