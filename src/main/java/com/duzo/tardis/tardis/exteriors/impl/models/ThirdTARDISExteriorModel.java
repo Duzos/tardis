@@ -88,17 +88,18 @@ public class ThirdTARDISExteriorModel extends TARDISExteriorModelSchema {
 		stack.pushPose();
 
 		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+		stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
-		if (direction == Direction.NORTH) {
+		if (direction == Direction.SOUTH) {
 			stack.translate(-0.5,0,-0.5);
 		}
-		else if (direction == Direction.SOUTH) {
+		else if (direction == Direction.NORTH) {
 			stack.translate(0.5,0,0.5);
 		}
-		else if (direction == Direction.WEST) {
+		else if (direction == Direction.EAST) {
 			stack.translate(0.5,0,-0.5);
 		}
-		else if (direction == Direction.EAST) {
+		else if (direction == Direction.WEST) {
 			stack.translate(-0.5,0,0.5);
 		}
 
