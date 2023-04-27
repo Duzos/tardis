@@ -74,12 +74,11 @@ public class TARDISTravel {
     }
     public void dematerialise(boolean withRemat) {
         if (this.tardis.getLevel().isClientSide) {return;}
+        this.state = STATE.DEMAT;
 
         Level level = this.tardis.getLevel();
 
         level.playSound(null,this.tardis.getPosition(), SoundsInit.DEMATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
-
-        this.state = STATE.DEMAT;
 
         // Timer code for waiting for sound to finish
         TARDISTravel travel = this;
@@ -89,10 +88,10 @@ public class TARDISTravel {
             public void run() {
                 // Delete the block and rematerialise if needed.
 //                ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, travel.tardis.getPosition(),0, 0,true,true);
+                travel.state = STATE.FLIGHT;
                 level.getChunkAt(travel.destination);
 
                 level.removeBlock(travel.tardis.getPosition(), false);
-                travel.state = STATE.FLIGHT;
 
                 if (withRemat) {
                     travel.materialise();
@@ -103,6 +102,8 @@ public class TARDISTravel {
 
     public void materialise() {
         if (this.destination == null || this.destination.getDimension().isClientSide) {return;}
+
+        this.state = STATE.MAT;
 
         Level level = this.destination.getDimension();
 
@@ -122,8 +123,6 @@ public class TARDISTravel {
             level.playSound(null, this.destination, SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f, 1f);
             MAT_AUDIO_LENGTH = 8;
         }
-
-        this.state = STATE.MAT;
 
         // Timer code for waiting for sound to finish
         TARDISTravel travel = this;
@@ -170,6 +169,8 @@ public class TARDISTravel {
     public boolean inFlight() {
         return this.state == STATE.FLIGHT;
     }
+    public boolean isMaterialising() {return this.state == STATE.MAT;}
+    public boolean isDematerialising() {return this.state == STATE.DEMAT;}
 
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;

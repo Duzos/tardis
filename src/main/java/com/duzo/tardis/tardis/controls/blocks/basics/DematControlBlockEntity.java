@@ -14,6 +14,8 @@ public class DematControlBlockEntity extends ControlBlockEntity {
     @Override
     protected void run() {
         TARDISTravel travel = this.getTARDIS().getTravel();
+        if (travel.isMaterialising() || travel.isDematerialising()) {return;}
+
         if (travel.inFlight()) {
             travel.materialise();
         } else {
