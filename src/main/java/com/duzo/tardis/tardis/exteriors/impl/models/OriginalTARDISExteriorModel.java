@@ -8,6 +8,7 @@ import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorModelSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -50,17 +51,21 @@ public class OriginalTARDISExteriorModel extends TARDISExteriorModelSchema {
 
 		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-		if (direction == Direction.NORTH) {
+		if (direction == Direction.SOUTH) {
+			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
 			stack.translate(-0.5,0,-0.5);
 		}
-		else if (direction == Direction.SOUTH) {
+		else if (direction == Direction.NORTH) {
+			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
 			stack.translate(0.5,0,0.5);
 		}
 		else if (direction == Direction.WEST) {
-			stack.translate(0.5,0,-0.5);
+//			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
+			stack.translate(-0.5,0,0.5);
 		}
 		else if (direction == Direction.EAST) {
-			stack.translate(-0.5,0,0.5);
+//			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
+			stack.translate(0.5,0,-0.5);
 		}
 
 		stack.translate(0,0.5,0);

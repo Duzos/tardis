@@ -114,6 +114,22 @@ public class TARDIS {
     public AbsoluteBlockPos getPosition() {
         return this.pos;
     }
+    public AbsoluteBlockPos getPositionForTeleporting() {
+        BlockPos doorPos = this.getPosition();
+        BlockPos adjustedPos = doorPos;
+        Direction doorDirection = this.getPosition().getDimension()
+                .getBlockState(
+                        doorPos)
+                .getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+        switch(doorDirection) {
+            case NORTH -> adjustedPos = doorPos.north(1);
+            case SOUTH -> adjustedPos = doorPos.south(1);
+            case EAST -> adjustedPos = doorPos.east(1);
+            case WEST -> adjustedPos = doorPos.west(1);
+        }
+        return new AbsoluteBlockPos(this.getPosition().getDimension(),adjustedPos);
+    }
 
     public UUID getUuid() {
         return this.uuid;

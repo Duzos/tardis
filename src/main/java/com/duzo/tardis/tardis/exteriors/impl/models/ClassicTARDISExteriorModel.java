@@ -97,19 +97,21 @@ public class ClassicTARDISExteriorModel extends TARDISExteriorModelSchema {
 //			direction = Direction.SOUTH;
 //		}
 
-		stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
+//		stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
-		if (direction == Direction.SOUTH) {
+		if (direction == Direction.NORTH) {
 			stack.translate(-0.5,0,-0.5);
 		}
-		else if (direction == Direction.NORTH) {
+		else if (direction == Direction.SOUTH) {
 			stack.translate(0.5,0,0.5);
 		}
-		else if (direction == Direction.WEST) {
-			stack.translate(0.5,0,-0.5);
-		}
 		else if (direction == Direction.EAST) {
+			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
 			stack.translate(-0.5,0,0.5);
+		}
+		else if (direction == Direction.WEST) {
+			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
+			stack.translate(0.5,0,-0.5);
 		}
 
 		super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);

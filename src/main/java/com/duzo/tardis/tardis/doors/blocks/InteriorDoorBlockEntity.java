@@ -39,7 +39,7 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
             return;
         }
 
-        TeleportHelper helper = new TeleportHelper(player.getUUID(), this.getTARDIS().getPosition());
+        TeleportHelper helper = new TeleportHelper(player.getUUID(), this.getTARDIS().getPositionForTeleporting());
         helper.teleport((ServerLevel) player.getLevel());
     }
 }
