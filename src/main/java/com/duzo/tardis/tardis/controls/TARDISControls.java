@@ -1,6 +1,7 @@
 package com.duzo.tardis.tardis.controls;
 
 import com.duzo.tardis.tardis.controls.impl.CoralDematLeverSchema;
+import com.duzo.tardis.tardis.controls.impl.VanillaDematLeverSchema;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
@@ -19,6 +20,7 @@ public class TARDISControls {
      */
     public static void init() {
         TARDISControls.register(new CoralDematLeverSchema());
+        TARDISControls.register(new VanillaDematLeverSchema());
     }
 
     public static void register(TARDISControlSchema<?> control) {
