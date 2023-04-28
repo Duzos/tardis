@@ -22,21 +22,22 @@ public class VanillaDematLeverModelSchema extends TARDISControlModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "vanilla_demat_lever"), "main");
 	private final ModelPart dematlever;
+	private final ModelPart bone3;
 
 	public VanillaDematLeverModelSchema(ModelPart root) {
 		this.dematlever = root.getChild("dematlever");
+		this.bone3 = root.getChild("bone3");
 	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition dematlever = partdefinition.addOrReplaceChild("dematlever", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, 0.0F, -5.0F, 6.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-2.0F, 2.0F, -5.0F, 6.0F, 1.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 21.0F, 1.0F));
+		PartDefinition dematlever = partdefinition.addOrReplaceChild("dematlever", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -10.0F, -5.0F, 6.0F, 3.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 31.0F, 1.0F));
 
-		PartDefinition bone3 = dematlever.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(1.0F, 1.018F, -1.018F));
+		PartDefinition bone3 = partdefinition.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(0.0F, 32.018F, -0.018F));
 
-		PartDefinition cube_r1 = bone3.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 10).addBox(-1.0F, -9.0F, -1.0F, 2.0F, 9.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.018F, 0.018F, -0.7854F, 0.0F, 0.0F));
+		PartDefinition cube_r1 = bone3.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 11).addBox(-1.0F, -10.0F, -1.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -9.018F, 0.018F, -0.7854F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
@@ -70,6 +71,7 @@ public class VanillaDematLeverModelSchema extends TARDISControlModelSchema {
 		stack.translate(0,-1.5f,0);
 
 		dematlever.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		bone3.render(stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
 		stack.popPose();
 	}
 
