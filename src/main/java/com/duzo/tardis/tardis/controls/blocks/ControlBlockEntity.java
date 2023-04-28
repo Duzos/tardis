@@ -48,11 +48,11 @@ public abstract class ControlBlockEntity extends BlockEntity {
         return this.schema;
     }
 
-    protected void run() {}
+    protected void run(Player player) {}
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide) {
-            this.run();
+        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
+            this.run(player);
         }
     }
 }
