@@ -21,11 +21,11 @@ public abstract class LinkableItem extends Item {
         super(properties);
     }
 
-    protected void link(CompoundTag tag, TARDIS tardis) {
+    public void link(CompoundTag tag, TARDIS tardis) {
         this.tardis = tardis;
         tag.putUUID("tardisUUID",tardis.getUuid());
     }
-    protected void link(ItemStack stack, TARDIS tardis) {
+    public void link(ItemStack stack, TARDIS tardis) {
         this.link(stack.getOrCreateTag(), tardis);
     }
 

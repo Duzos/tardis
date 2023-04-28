@@ -3,8 +3,10 @@ package com.duzo.tardis.tardis.controls.blocks;
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.CreativeTabInit;
 import com.duzo.tardis.tardis.controls.blocks.impl.CoralDematLeverBlock;
+import com.duzo.tardis.tardis.controls.blocks.impl.CoralRotorBlock;
 import com.duzo.tardis.tardis.controls.blocks.impl.VanillaDematLeverBlock;
 import com.duzo.tardis.tardis.controls.blocks.impl.entities.CoralDematLeverBlockEntity;
+import com.duzo.tardis.tardis.controls.blocks.impl.entities.CoralRotorBlockEntity;
 import com.duzo.tardis.tardis.controls.blocks.impl.entities.VanillaDematLeverBlockEntity;
 import com.duzo.tardis.tardis.doors.blocks.impl.ClassicInteriorDoorBlock;
 import com.duzo.tardis.tardis.doors.blocks.impl.entities.ClassicInteriorDoorBlockEntity;
@@ -28,5 +30,8 @@ public class ControlsInit {
 
     public static final RegistryObject<Block> VANILLA_DEMAT_LEVER = register("vanilla_demat_lever", () -> new VanillaDematLeverBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<VanillaDematLeverBlockEntity>> VANILLA_DEMAT_LEVER_ENTITY = CONTROL_BLOCK_ENTITIES.register("vanilla_demat_lever_entity", () -> BlockEntityType.Builder.of(VanillaDematLeverBlockEntity::new, VANILLA_DEMAT_LEVER.get()).build(null));
+
+    public static final RegistryObject<Block> CORAL_ROTOR = register("coral_rotor", () -> new CoralRotorBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<CoralRotorBlockEntity>> CORAL_ROTOR_ENTITY = CONTROL_BLOCK_ENTITIES.register("coral_rotor_entity", () -> BlockEntityType.Builder.of(CoralRotorBlockEntity::new, CORAL_ROTOR.get()).build(null));
 }
 

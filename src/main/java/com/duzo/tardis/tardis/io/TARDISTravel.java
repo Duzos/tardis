@@ -68,6 +68,9 @@ public class TARDISTravel {
         }
         this.destination = pos;
     }
+    public AbsoluteBlockPos getDestination() {
+        return this.destination;
+    }
 
     public void dematerialise() {
         this.dematerialise(false);
@@ -171,6 +174,9 @@ public class TARDISTravel {
     }
     public boolean isMaterialising() {return this.state == STATE.MAT;}
     public boolean isDematerialising() {return this.state == STATE.DEMAT;}
+    public STATE getState() {
+        return this.state;
+    }
 
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;
