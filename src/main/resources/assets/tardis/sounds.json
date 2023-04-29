@@ -3,8 +3,7 @@
     "subtitle": "TARDIS Dematerialising",
     "sounds": [
       {
-        "name": "tardis:tardis/demat",
-        "stream": false
+        "name": "tardis:tardis/demat"
       }
     ]
   },
@@ -12,8 +11,7 @@
     "subtitle": "TARDIS Materialising",
     "sounds": [
       {
-        "name": "tardis:tardis/mat",
-        "stream": false
+        "name": "tardis:tardis/mat"
       }
     ]
   },
@@ -21,8 +19,7 @@
     "subtitle": "TARDIS Failing to land",
     "sounds": [
       {
-        "name": "tardis:tardis/fail_land",
-        "stream": false
+        "name": "tardis:tardis/fail_land"
       }
     ]
   },
@@ -30,8 +27,7 @@
     "subtitle": "TARDIS Emergency Landing",
     "sounds": [
       {
-        "name": "tardis:tardis/emergency_land",
-        "stream": false
+        "name": "tardis:tardis/emergency_land"
       }
     ]
   }
