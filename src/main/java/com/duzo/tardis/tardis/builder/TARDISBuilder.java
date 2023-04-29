@@ -12,10 +12,10 @@ import java.util.UUID;
 public class TARDISBuilder {
     private final UUID uuid;
     private AbsoluteBlockPos position;
-    private TARDISExteriorSchema exteriorSchema;
+    private TARDISExteriorSchema<?> exteriorSchema;
     private TARDISInterior interior;
     public static final String DEFAULT_EXTERIOR = "classic";
-    public static final String DEFAULT_INTERIOR = "coral";
+    public static final String DEFAULT_INTERIOR = "eighth";
 
     public TARDISBuilder(UUID uuid) {
         this.uuid = uuid;
