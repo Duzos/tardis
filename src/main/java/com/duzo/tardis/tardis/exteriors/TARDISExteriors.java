@@ -1,9 +1,6 @@
 package com.duzo.tardis.tardis.exteriors;
 
-import com.duzo.tardis.tardis.exteriors.impl.BakerExteriorSchema;
-import com.duzo.tardis.tardis.exteriors.impl.ClassicExteriorSchema;
-import com.duzo.tardis.tardis.exteriors.impl.OriginalExteriorSchema;
-import com.duzo.tardis.tardis.exteriors.impl.ThirdExteriorSchema;
+import com.duzo.tardis.tardis.exteriors.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +15,7 @@ public class TARDISExteriors {
         TARDISExteriors.register(new ClassicExteriorSchema());
         TARDISExteriors.register(new OriginalExteriorSchema());
         TARDISExteriors.register(new ThirdExteriorSchema());
+        TARDISExteriors.register(new SecondExteriorSchema());
         TARDISExteriors.register(new BakerExteriorSchema());
     }
     public static void register(TARDISExteriorSchema<?> exterior) {exteriors.put(exterior.getID(),exterior);}
