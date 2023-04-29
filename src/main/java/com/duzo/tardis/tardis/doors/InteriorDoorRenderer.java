@@ -1,4 +1,4 @@
-package com.duzo.tardis.client.renderers.blockentities;
+package com.duzo.tardis.tardis.doors;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;

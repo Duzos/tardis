@@ -1,4 +1,4 @@
-package com.duzo.tardis.client.renderers.blockentities;
+package com.duzo.tardis.tardis.exteriors;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
