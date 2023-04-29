@@ -7,13 +7,13 @@ import com.duzo.tardis.tardis.controls.impl.models.CoralDematLeverModelSchema;
 import com.duzo.tardis.tardis.doors.impl.models.ClassicInteriorDoorModel;
 import net.minecraft.client.Minecraft;
 
-public class CoralDematLeverSchema extends TARDISControlSchema {
+public class CoralDematLeverSchema extends TARDISControlSchema<CoralDematLeverModelSchema> {
     public CoralDematLeverSchema() {
         super("coral_demat", "controls.tardis.coral_demat");
     }
 
     @Override
-    protected TARDISControlModelSchema model() {
+    protected CoralDematLeverModelSchema model() {
         return new CoralDematLeverModelSchema(Minecraft.getInstance().getEntityModels().bakeLayer(CoralDematLeverModelSchema.LAYER_LOCATION));
     }
 }

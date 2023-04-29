@@ -4,6 +4,7 @@ import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.ControlRenderer;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.controls.impl.models.CoralDematLeverModelSchema;
+import com.duzo.tardis.tardis.controls.impl.models.CoralRotorModelSchema;
 import com.duzo.tardis.tardis.controls.impl.models.VanillaDematLeverModelSchema;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.doors.impl.models.ClassicInteriorDoorModel;
@@ -31,6 +32,7 @@ public class ClientEvents {
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
+        renderers.registerBlockEntityRenderer(ControlsInit.CORAL_ROTOR_ENTITY.get(), ControlRenderer::new);
 
         // Rotors
 //        renderers.registerBlockEntityRenderer(RotorInit.ROTOR_BLOCK_ENTITY.get(), RotorRenderer::new);
@@ -41,11 +43,14 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ClassicTARDISExteriorModel.LAYER_LOCATION, ClassicTARDISExteriorModel::createBodyLayer);
-        event.registerLayerDefinition(ClassicInteriorDoorModel.LAYER_LOCATION, ClassicInteriorDoorModel::createBodyLayer);
+        // Coral
+        event.registerLayerDefinition(CoralDematLeverModelSchema.LAYER_LOCATION, CoralDematLeverModelSchema::createBodyLayer); // Demat lever
+        event.registerLayerDefinition(ClassicTARDISExteriorModel.LAYER_LOCATION, ClassicTARDISExteriorModel::createBodyLayer); // Exterior
+        event.registerLayerDefinition(ClassicInteriorDoorModel.LAYER_LOCATION, ClassicInteriorDoorModel::createBodyLayer); // Interior door
+        event.registerLayerDefinition(CoralRotorModelSchema.LAYER_LOCATION, CoralRotorModelSchema::createBodyLayer); // Rotor
+
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
-        event.registerLayerDefinition(CoralDematLeverModelSchema.LAYER_LOCATION, CoralDematLeverModelSchema::createBodyLayer);
         event.registerLayerDefinition(VanillaDematLeverModelSchema.LAYER_LOCATION, VanillaDematLeverModelSchema::createBodyLayer);
 //        event.registerLayerDefinition(CoralTimeRotorModel.LAYER_LOCATION, CoralTimeRotorModel::createBodyLayer);
     }

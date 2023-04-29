@@ -73,6 +73,7 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RotorControlBlockEntity pBlockEntity) {
         if (pLevel.isClientSide) {return;}
+        if (pLevel != TARDISUtil.getTARDISLevel()) {return;}
 
         pBlockEntity.updateState();
     }
