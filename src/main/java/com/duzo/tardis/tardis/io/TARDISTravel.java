@@ -133,7 +133,7 @@ public class TARDISTravel {
             }
         } else {
             level.playSound(null, this.destination, SoundsInit.MATERIALISE.get(), SoundSource.BLOCKS, 1f, 1f);
-            MAT_AUDIO_LENGTH = 8;
+            MAT_AUDIO_LENGTH = 10;
         }
 
         // Timer code for waiting for sound to finish
