@@ -12,10 +12,7 @@ import com.duzo.tardis.tardis.doors.impl.models.CoralInteriorDoorModel;
 import com.duzo.tardis.tardis.exteriors.ExteriorRenderer;
 import com.duzo.tardis.tardis.doors.InteriorDoorRenderer;
 import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.tardis.exteriors.impl.models.BakerTARDISExteriorModel;
-import com.duzo.tardis.tardis.exteriors.impl.models.CoralTARDISExteriorModel;
-import com.duzo.tardis.tardis.exteriors.impl.models.OriginalTARDISExteriorModel;
-import com.duzo.tardis.tardis.exteriors.impl.models.ThirdTARDISExteriorModel;
+import com.duzo.tardis.tardis.exteriors.impl.models.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,6 +54,9 @@ public class ClientEvents {
 
         // Baker
         event.registerLayerDefinition(BakerTARDISExteriorModel.LAYER_LOCATION, BakerTARDISExteriorModel::createBodyLayer); // Exterior
+
+        // War
+        event.registerLayerDefinition(WarTARDISExteriorModel.LAYER_LOCATION, WarTARDISExteriorModel::createBodyLayer); // Exterior
 
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
