@@ -1,7 +1,6 @@
 package com.duzo.tardis.tardis.exteriors.impl;
 
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
-import com.duzo.tardis.tardis.exteriors.impl.models.ClassicTARDISExteriorModel;
 import com.duzo.tardis.tardis.exteriors.impl.models.OriginalTARDISExteriorModel;
 import net.minecraft.client.Minecraft;
 

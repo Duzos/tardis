@@ -8,20 +8,18 @@ import com.duzo.tardis.tardis.controls.impl.models.CoralRotorModelSchema;
 import com.duzo.tardis.tardis.controls.impl.models.EighthRotorModelSchema;
 import com.duzo.tardis.tardis.controls.impl.models.VanillaDematLeverModelSchema;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
-import com.duzo.tardis.tardis.doors.impl.models.ClassicInteriorDoorModel;
+import com.duzo.tardis.tardis.doors.impl.models.CoralInteriorDoorModel;
 import com.duzo.tardis.tardis.exteriors.ExteriorRenderer;
 import com.duzo.tardis.tardis.doors.InteriorDoorRenderer;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.tardis.exteriors.impl.models.BakerTARDISExteriorModel;
-import com.duzo.tardis.tardis.exteriors.impl.models.ClassicTARDISExteriorModel;
+import com.duzo.tardis.tardis.exteriors.impl.models.CoralTARDISExteriorModel;
 import com.duzo.tardis.tardis.exteriors.impl.models.OriginalTARDISExteriorModel;
 import com.duzo.tardis.tardis.exteriors.impl.models.ThirdTARDISExteriorModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import javax.naming.ldap.Control;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = TARDISMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
@@ -31,7 +29,7 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), ExteriorRenderer::new);
         // Doors
 //        DoorsInit.DOOR_ENTITIES_LIST.forEach((door) -> renderers.registerBlockEntityRenderer(door,InteriorDoorRenderer::new));
-        renderers.registerBlockEntityRenderer(DoorsInit.CLASSIC_DOOR_ENTITY.get(),InteriorDoorRenderer::new);
+        renderers.registerBlockEntityRenderer(DoorsInit.CORAL_DOOR_ENTITY.get(),InteriorDoorRenderer::new);
 
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
@@ -50,8 +48,8 @@ public class ClientEvents {
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         // Coral
         event.registerLayerDefinition(CoralDematLeverModelSchema.LAYER_LOCATION, CoralDematLeverModelSchema::createBodyLayer); // Demat lever
-        event.registerLayerDefinition(ClassicTARDISExteriorModel.LAYER_LOCATION, ClassicTARDISExteriorModel::createBodyLayer); // Exterior
-        event.registerLayerDefinition(ClassicInteriorDoorModel.LAYER_LOCATION, ClassicInteriorDoorModel::createBodyLayer); // Interior door
+        event.registerLayerDefinition(CoralTARDISExteriorModel.LAYER_LOCATION, CoralTARDISExteriorModel::createBodyLayer); // Exterior
+        event.registerLayerDefinition(CoralInteriorDoorModel.LAYER_LOCATION, CoralInteriorDoorModel::createBodyLayer); // Interior door
         event.registerLayerDefinition(CoralRotorModelSchema.LAYER_LOCATION, CoralRotorModelSchema::createBodyLayer); // Rotor
 
         // Eighth

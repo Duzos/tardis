@@ -12,7 +12,7 @@ public class TARDISExteriors {
      * TARDIS Exteriors are registered here:
      */
     public static void init() {
-        TARDISExteriors.register(new ClassicExteriorSchema());
+        TARDISExteriors.register(new CoralExteriorSchema());
         TARDISExteriors.register(new OriginalExteriorSchema());
         TARDISExteriors.register(new ThirdExteriorSchema());
         TARDISExteriors.register(new SecondExteriorSchema());

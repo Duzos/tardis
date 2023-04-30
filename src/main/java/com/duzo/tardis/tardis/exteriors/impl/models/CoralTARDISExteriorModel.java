@@ -18,12 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class ClassicTARDISExteriorModel extends TARDISExteriorModelSchema {
+public class CoralTARDISExteriorModel extends TARDISExteriorModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "classic_exterior"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "coral_exterior"), "main");
 	private final ModelPart bone;
 
-	public ClassicTARDISExteriorModel(ModelPart root) {
+	public CoralTARDISExteriorModel(ModelPart root) {
 		this.bone = root.getChild("bone");
 	}
 

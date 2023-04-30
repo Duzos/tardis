@@ -10,8 +10,6 @@ import com.duzo.tardis.tardis.controls.blocks.impl.entities.CoralDematLeverBlock
 import com.duzo.tardis.tardis.controls.blocks.impl.entities.CoralRotorBlockEntity;
 import com.duzo.tardis.tardis.controls.blocks.impl.entities.EighthRotorBlockEntity;
 import com.duzo.tardis.tardis.controls.blocks.impl.entities.VanillaDematLeverBlockEntity;
-import com.duzo.tardis.tardis.doors.blocks.impl.ClassicInteriorDoorBlock;
-import com.duzo.tardis.tardis.doors.blocks.impl.entities.ClassicInteriorDoorBlockEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;

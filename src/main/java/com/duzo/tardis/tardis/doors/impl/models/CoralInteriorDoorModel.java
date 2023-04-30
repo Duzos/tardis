@@ -18,12 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class ClassicInteriorDoorModel extends TARDISInteriorDoorModelSchema {
+public class CoralInteriorDoorModel extends TARDISInteriorDoorModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "classic_interior_doors"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "coral_interior_doors"), "main");
 	private final ModelPart bone;
 
-	public ClassicInteriorDoorModel(ModelPart root) {
+	public CoralInteriorDoorModel(ModelPart root) {
 		this.bone = root.getChild("bone");
 	}
 

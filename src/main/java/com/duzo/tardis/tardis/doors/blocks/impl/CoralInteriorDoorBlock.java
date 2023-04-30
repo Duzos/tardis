@@ -7,14 +7,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class ClassicInteriorDoorBlock extends InteriorDoorBlock {
-    public ClassicInteriorDoorBlock(Properties p_49224_) {
+public class CoralInteriorDoorBlock extends InteriorDoorBlock {
+    public CoralInteriorDoorBlock(Properties p_49224_) {
         super(p_49224_);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return DoorsInit.CLASSIC_DOOR_ENTITY.get().create(pos,state);
+        return DoorsInit.CORAL_DOOR_ENTITY.get().create(pos,state);
     }
 }

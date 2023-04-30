@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlockEntity> {
-    public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/classic.png");
+    public static final ResourceLocation DOOR = new ResourceLocation(TARDISMod.MODID, "textures/tardis/interior/door/coral.png");
 
     public InteriorDoorRenderer(BlockEntityRendererProvider.Context ctx) {}
     @Override

@@ -4,14 +4,8 @@ import com.duzo.tardis.tardis.controls.impl.CoralDematLeverSchema;
 import com.duzo.tardis.tardis.controls.impl.CoralRotorSchema;
 import com.duzo.tardis.tardis.controls.impl.EighthRotorSchema;
 import com.duzo.tardis.tardis.controls.impl.VanillaDematLeverSchema;
-import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
-import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
-import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
-import com.duzo.tardis.tardis.doors.impl.ClassicInteriorDoorSchema;
-import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TARDISControls {

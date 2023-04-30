@@ -6,6 +6,8 @@ import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.interiors.TARDISInteriors;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
 import java.util.UUID;
 
@@ -14,8 +16,8 @@ public class TARDISBuilder {
     private AbsoluteBlockPos position;
     private TARDISExteriorSchema<?> exteriorSchema;
     private TARDISInterior interior;
-    public static final String DEFAULT_EXTERIOR = "classic";
-    public static final String DEFAULT_INTERIOR = "eighth";
+    public static final String DEFAULT_EXTERIOR = "coral";
+    public static final String DEFAULT_INTERIOR = "coral";
 
     public TARDISBuilder(UUID uuid) {
         this.uuid = uuid;
@@ -51,6 +53,14 @@ public class TARDISBuilder {
             tardis.getTravel().materialise();
         }
         tardis.generateInterior();
+
+        Logger logger = LogUtils.getLogger();
+
+        logger.info("Created a new TARDIS:");
+        logger.info("UUID: " + tardis.getUuid());
+        logger.info("Exterior: " + tardis.getExteriorSchema().getID());
+        logger.info("Interior: " + tardis.getInterior().getID());
+        logger.info("Position: " + tardis.getPosition());
 
         return tardis;
     }

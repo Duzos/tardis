@@ -6,14 +6,14 @@ import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.duzo.tardis.tardis.interiors.TARDISInteriors;
 import com.duzo.tardis.tardis.item.TARDISSpawnItem;
 
-public class ClassicTARDISSpawnItem extends TARDISSpawnItem {
-    public ClassicTARDISSpawnItem(Properties properties) {
+public class CoralTARDISSpawnItem extends TARDISSpawnItem {
+    public CoralTARDISSpawnItem(Properties properties) {
         super(properties);
     }
 
     @Override
     protected TARDISExteriorSchema<?> getExterior() {
-        return TARDISExteriors.get("classic");
+        return TARDISExteriors.get("coral");
     }
 
     @Override
