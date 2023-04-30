@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'com.duzo.tardis'
-version = '0.5-ALPHA'
+version = '0.5569-ALPHA'
 
 java {
     archivesBaseName = 'TARDIS'
