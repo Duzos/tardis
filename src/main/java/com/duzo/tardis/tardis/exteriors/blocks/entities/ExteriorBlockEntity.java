@@ -4,6 +4,8 @@ import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.animation.ExteriorAnimation;
+import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.mojang.logging.LogUtils;
@@ -23,6 +25,7 @@ import java.util.UUID;
 
 public class ExteriorBlockEntity extends BlockEntity {
     private UUID tardisUUID;
+    private ExteriorAnimation animation;
 
     public ExteriorBlockEntity(BlockPos pos, BlockState state) {
         this(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), pos, state);
@@ -39,7 +42,13 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     public TARDIS getTARDIS() {
-        return TARDISManager.getInstance().findTARDIS(this.tardisUUID);
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisUUID);
+
+        if (tardis == null) {
+            return TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
+        } else {
+            return tardis;
+        }
     }
 
     @Override
@@ -61,7 +70,10 @@ public class ExteriorBlockEntity extends BlockEntity {
             logger.error(error.toString());
             logger.error("Failed to load data for TARDIS Exterior block! Pulling from TARDISManager instead!");
             TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
-            this.setTARDIS(tardis);
+
+            if (tardis != null) {
+                this.setTARDIS(tardis);
+            }
         }
     }
 
@@ -73,5 +85,23 @@ public class ExteriorBlockEntity extends BlockEntity {
             TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
         this.getTARDIS().teleportToDoor(player);
+    }
+
+    public float getAlpha() {
+        return this.getAnimation().getAlpha();
+    }
+    public ExteriorAnimation getAnimation() {
+        if (this.animation == null) {
+//            this.animation = this.getTARDIS().getExteriorAnimation();
+            this.animation = new ClassicAnimation(this);
+            LogUtils.getLogger().debug("Created new CLASSIC ANIMATION for " + this);
+        }
+        return this.animation;
+    }
+
+    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T entity) {
+        if (!(entity instanceof ExteriorBlockEntity exterior)) {return;}
+
+        exterior.getAnimation().tick();
     }
 }

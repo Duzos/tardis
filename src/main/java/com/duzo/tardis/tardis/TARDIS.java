@@ -5,6 +5,8 @@ import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.nbt.NBTSerializers;
+import com.duzo.tardis.tardis.animation.ExteriorAnimation;
+import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
 import com.duzo.tardis.tardis.builder.TARDISBuilder;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlock;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
@@ -239,6 +241,11 @@ public class TARDIS {
     public void setInteriorCornerPositions(List<AbsoluteBlockPos> list) {
         this.interiorCornerPositions = list;
     }
+
+    public ExteriorAnimation getExteriorAnimation() {
+        return new ClassicAnimation((ExteriorBlockEntity) this.getLevel().getBlockEntity(this.getPosition()));
+    }
+
     public static class Serializer {
         private static final NBTSerializers.AbsolutePosition ABSOLUTE_POSITION_SERIALIZER = new NBTSerializers.AbsolutePosition();
         private static final TARDISTravel.Serializer TRAVEL_SERIALIZER = new TARDISTravel.Serializer();

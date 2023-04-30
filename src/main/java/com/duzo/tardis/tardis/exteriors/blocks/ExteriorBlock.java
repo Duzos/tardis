@@ -1,6 +1,9 @@
 package com.duzo.tardis.tardis.exteriors.blocks;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
+import com.duzo.tardis.core.init.BlockInit;
+import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
+import com.duzo.tardis.tardis.controls.blocks.basics.RotorControlBlockEntity;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +14,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -48,6 +53,12 @@ public class ExteriorBlock extends BaseEntityBlock {
 
     public BlockState mirror(BlockState p_48719_, Mirror p_48720_) {
         return p_48719_.rotate(p_48720_.getRotation(p_48719_.getValue(FACING)));
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> type) {
+        return type == BlockEntityInit.TARDIS_BLOCK_ENTITY.get() ? ExteriorBlockEntity::tick : null;
     }
 
     @Override

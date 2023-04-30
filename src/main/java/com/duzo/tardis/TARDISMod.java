@@ -4,6 +4,7 @@ import com.duzo.tardis.config.TARDISModClientConfigs;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
+import com.duzo.tardis.network.Network;
 import com.duzo.tardis.tardis.controls.TARDISControls;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
@@ -82,7 +83,7 @@ public class TARDISMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        Network.register();
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

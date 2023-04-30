@@ -22,7 +22,9 @@ public abstract class TARDISExteriorSchema<T extends TARDISExteriorModelSchema> 
     public String getID() {return this.id;}
     public String getName() {return this.getName();}
     public void render(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
-        this.model().renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,1,1,1,1);
+//        System.out.println(entity.getLevel().isClientSide);
+//        System.out.println(entity.getAlpha());
+        this.model().renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,1,1,1,entity.getAlpha());
     }
 
     public ResourceLocation getTexture() {

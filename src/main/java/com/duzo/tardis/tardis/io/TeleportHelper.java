@@ -32,6 +32,6 @@ public class TeleportHelper {
         else if (!(entity instanceof Player)) {
             entity.changeDimension((ServerLevel) this.destination.getDimension());
         }
-        LOGGER.debug("Teleported " + entity + " to " + this.destination);
+        LOGGER.info("Teleported " + entity + " to " + this.destination);
     }
 }

@@ -18,6 +18,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
@@ -82,6 +83,14 @@ public class TARDISTravel {
         Level level = this.tardis.getLevel();
 
         level.playSound(null,this.tardis.getPosition(), SoundsInit.DEMATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
+
+        // Animating the demat
+        level.getChunkAt(this.tardis.getPosition());
+        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
+        System.out.println(entity);
+        if (entity instanceof ExteriorBlockEntity) {
+            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+        }
 
         // Timer code for waiting for sound to finish
         TARDISTravel travel = this;
@@ -152,8 +161,14 @@ public class TARDISTravel {
         level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
 
         this.tardis.setPosition(this.destination);
-        this.state = STATE.LANDED;
         this.tardis.updateBlockEntity();
+
+        // Animating the mat
+        level.getChunkAt(this.tardis.getPosition());
+        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
+        if (entity instanceof ExteriorBlockEntity) {
+            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+        }
 
 //        if (this.tileNBT == null) {
 //            this.tileNBT = new CompoundTag();
@@ -177,7 +192,9 @@ public class TARDISTravel {
     public STATE getState() {
         return this.state;
     }
-
+    public void setState(STATE state) {
+        this.state = state;
+    }
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;
     }
