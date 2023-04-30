@@ -6,6 +6,7 @@ import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.slf4j.Logger;
 
 import java.util.UUID;
 
@@ -51,10 +53,22 @@ public class ExteriorBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.tardisUUID = tag.getUUID("tardisUUID");
+
+        try {
+            this.tardisUUID = tag.getUUID("tardisUUID");
+        } catch (Exception error) {
+            Logger logger = LogUtils.getLogger();
+            logger.error(error.toString());
+            logger.error("Failed to load data for TARDIS Exterior block! Pulling from TARDISManager instead!");
+            TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
+            this.setTARDIS(tardis);
+        }
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide || hand != InteractionHand.MAIN_HAND) {return;}
+
+
         if (this.getTARDIS() == null) {
             TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }

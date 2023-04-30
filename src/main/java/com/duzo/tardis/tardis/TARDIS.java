@@ -53,6 +53,9 @@ public class TARDIS {
         this.uuid = uuid;
         this.exteriorSchema = exteriorSchema;
         this.interior = interior;
+
+        System.out.println(this.exteriorSchema);
+        this.logDebug();
     }
 
     public TARDIS(UUID uuid, AbsoluteBlockPos pos, TARDISExteriorSchema<?> exteriorSchema, TARDISInterior interior) {
@@ -94,7 +97,9 @@ public class TARDIS {
         logger.debug(this.uuid.toString());
         logger.debug(this.exteriorSchema.getID());
         logger.debug(this.interior.getID());
-        logger.debug(this.interiorCornerPositions.toString());
+        if (this.interiorCornerPositions != null) {
+            logger.debug(this.interiorCornerPositions.toString());
+        }
 
         if (this.interiorDoorPos != null) {
             logger.debug(this.interiorDoorPos.toString());
@@ -214,11 +219,15 @@ public class TARDIS {
     }
 
     public void updateBlockEntity() {
+        if (this.getLevel().isClientSide) {return;}
+
         BlockEntity entity = this.getLevel().getBlockEntity(this.getPosition());
+
         if (!(entity instanceof ExteriorBlockEntity)) {
             LogUtils.getLogger().error("Could not find Exterior Block Entity at " + this.pos.toString() + " when trying to update!\nInstead got: " + entity);
             return;
         }
+
         ((ExteriorBlockEntity) entity).setTARDIS(this);
     }
 
