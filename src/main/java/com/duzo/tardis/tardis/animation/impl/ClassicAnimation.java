@@ -13,6 +13,8 @@ public class ClassicAnimation extends ExteriorAnimation {
 
     @Override
     public void tick() {
+        if (exterior.getTARDIS() == null) return;
+
         TARDISTravel.STATE state = exterior.getTARDIS().getTravel().getState();
 
         if (state == TARDISTravel.STATE.DEMAT) {
