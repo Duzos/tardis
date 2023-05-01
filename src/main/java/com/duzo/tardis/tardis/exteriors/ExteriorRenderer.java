@@ -35,8 +35,10 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
         TARDISExteriorSchema<?> schema = tardis.getExteriorSchema();
 
         ResourceLocation texture = schema.getTexture();
+        ResourceLocation emission = schema.getEmission();
 
         schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentCull(texture)), packedLight, OverlayTexture.NO_OVERLAY);
+        schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentEmissive(emission)), packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     @Override

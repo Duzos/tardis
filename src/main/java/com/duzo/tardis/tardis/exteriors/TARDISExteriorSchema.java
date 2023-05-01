@@ -2,6 +2,7 @@ package com.duzo.tardis.tardis.exteriors;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
+import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +31,10 @@ public abstract class TARDISExteriorSchema<T extends TARDISExteriorModelSchema> 
     public ResourceLocation getTexture() {
         return new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/" + this.getID() + ".png");
     }
+    public ResourceLocation getEmission() {
+        return new ResourceLocation(TARDISMod.MODID, "textures/tardis/exterior/" + this.getID() + "_emission.png");
+    }
+
 
     public static class Serializer {
         public void serialize(CompoundTag nbt, TARDISExteriorSchema<?> exterior) {
