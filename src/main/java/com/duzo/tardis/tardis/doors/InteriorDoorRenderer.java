@@ -33,6 +33,8 @@ public class InteriorDoorRenderer implements BlockEntityRenderer<InteriorDoorBlo
 
         TARDISInteriorDoorSchema<?> schema = entity.getSchema();
 
+        if (schema == null) {return;}
+
         ResourceLocation texture = schema.getTexture();
 
         schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucent(texture)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
