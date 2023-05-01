@@ -124,6 +124,7 @@ public class CoralTARDISExteriorModel extends TARDISExteriorModelSchema {
 		stack.pushPose();
 		stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
 
+//		stack.scale(0.3f,0.175f,0.3f); funny square block TARDIS
 		stack.scale(0.5f,0.5f,0.5f);
 		stack.translate(0, -1.5f, 0);
 
