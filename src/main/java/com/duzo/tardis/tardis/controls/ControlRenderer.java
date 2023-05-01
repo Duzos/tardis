@@ -37,6 +37,6 @@ public class ControlRenderer implements BlockEntityRenderer<ControlBlockEntity> 
 
         ResourceLocation texture = schema.getTexture();
 
-        schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucent(texture)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);
     }
 }
