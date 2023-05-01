@@ -19,11 +19,11 @@ public class ClassicAnimation extends ExteriorAnimation {
 
         if (state == TARDISTravel.STATE.DEMAT) {
             this.updateClient();
-            alpha = alpha - 0.005f;
+            alpha = alpha - alphaChangeAmount;
             timeLeft--;
         } else if (state == TARDISTravel.STATE.MAT) {
             this.updateClient();
-            alpha = alpha + 0.005f;
+            alpha = alpha + alphaChangeAmount;
             timeLeft--;
             if (alpha >= 1f) {
                 exterior.getTARDIS().getTravel().setState(TARDISTravel.STATE.LANDED);

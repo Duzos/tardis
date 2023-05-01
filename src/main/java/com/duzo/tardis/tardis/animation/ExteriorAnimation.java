@@ -11,6 +11,7 @@ public abstract class ExteriorAnimation {
     protected float alpha;
     protected ExteriorBlockEntity exterior;
     protected int timeLeft;
+    protected float alphaChangeAmount = 0.005f;
 
     public ExteriorAnimation(ExteriorBlockEntity exterior) {
         this.exterior = exterior;
@@ -27,6 +28,10 @@ public abstract class ExteriorAnimation {
     public void setAlpha(float alpha) {
         this.alpha = Mth.clamp(alpha,0.0F,1.0F);
 //        System.out.println("set alpha to " + alpha);
+    }
+
+    public void setAlphaChangeAmount(float amount) {
+        this.alphaChangeAmount = amount;
     }
 
     public void updateClient() {

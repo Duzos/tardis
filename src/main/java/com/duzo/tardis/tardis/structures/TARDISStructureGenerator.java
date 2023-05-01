@@ -50,6 +50,11 @@ public class TARDISStructureGenerator {
     protected BlockPos findTargetBlockPosInTemplate(StructureTemplate template,BlockPos pos, Direction direction, Block targetBlock) {
         List<StructureTemplate.StructureBlockInfo> list = template.filterBlocks(
                 pos, new StructurePlaceSettings().setRotation(directionToRotation(direction)), targetBlock);
+
+        if (list.size() == 0) {
+            return new BlockPos(0,0,0);
+        }
+
         return list.get(0).pos;
     }
 

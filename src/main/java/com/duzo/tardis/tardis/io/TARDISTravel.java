@@ -124,7 +124,7 @@ public class TARDISTravel {
         if (level == TARDISUtil.getTARDISLevel()) {
             if (TARDISModCommonConfigs.CAN_LAND_IN_TARDIS_DIM.get()) {
                 level.playSound(null, this.destination, SoundsInit.EMERGENCY_LAND.get(), SoundSource.BLOCKS, 1f,1f);
-                MAT_AUDIO_LENGTH = 12;
+                MAT_AUDIO_LENGTH = 16;
             } else {
                 level.playSound(null, this.destination, SoundsInit.FAIL_LAND.get(), SoundSource.BLOCKS, 1f,1f);
                 this.setDestination(tardis.getPosition(),false);
@@ -168,6 +168,11 @@ public class TARDISTravel {
         BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
         if (entity instanceof ExteriorBlockEntity) {
             ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+
+            // If failing to land (checking it via the audio length for now.)
+//            if (MAT_AUDIO_LENGTH == 16) {
+//                ((ExteriorBlockEntity) entity).getAnimation().setAlphaChangeAmount(0.5f);
+//            }
         }
 
 //        if (this.tileNBT == null) {
