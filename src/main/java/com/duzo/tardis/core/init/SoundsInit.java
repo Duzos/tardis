@@ -14,4 +14,6 @@ public class SoundsInit {
     public static final RegistryObject<SoundEvent> MATERIALISE = SOUNDS.register("materialise", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "materialise")));
     public static final RegistryObject<SoundEvent> EMERGENCY_LAND = SOUNDS.register("emergency_land", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "emergency_land")));
     public static final RegistryObject<SoundEvent> FAIL_LAND = SOUNDS.register("fail_land", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "fail_land")));
+    public static final RegistryObject<SoundEvent> HOP_TAKEOFF = SOUNDS.register("hop_takeoff", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "hop_takeoff")));
+    public static final RegistryObject<SoundEvent> HOP_LAND = SOUNDS.register("hop_land", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "hop_land")));
 }

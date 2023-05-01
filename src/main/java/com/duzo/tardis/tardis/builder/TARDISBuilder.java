@@ -52,6 +52,7 @@ public class TARDISBuilder {
         if (withMaterialise) {
             tardis.getTravel().setDestination(this.position, true);
             tardis.getTravel().materialise();
+            tardis.getTravel().startHopping();
         }
         tardis.getInterior().generate();
 

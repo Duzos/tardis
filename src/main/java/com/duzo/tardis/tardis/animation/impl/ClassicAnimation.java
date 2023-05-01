@@ -17,13 +17,24 @@ public class ClassicAnimation extends ExteriorAnimation {
 
         TARDISTravel.STATE state = exterior.getTARDIS().getTravel().getState();
 
-        if (state == TARDISTravel.STATE.DEMAT) {
+        if (state == TARDISTravel.STATE.DEMAT)   {
             this.updateClient();
             alpha = alpha - alphaChangeAmount;
+            timeLeft--;
+        } else if (state == TARDISTravel.STATE.HOP_TAKEOFF) {
+            this.updateClient();
+            alpha = alpha - (alphaChangeAmount);
             timeLeft--;
         } else if (state == TARDISTravel.STATE.MAT) {
             this.updateClient();
             alpha = alpha + alphaChangeAmount;
+            timeLeft--;
+            if (alpha >= 1f) {
+                exterior.getTARDIS().getTravel().setState(TARDISTravel.STATE.LANDED);
+            }
+        }else if (state == TARDISTravel.STATE.HOP_LAND) {
+            this.updateClient();
+            alpha = alpha + (alphaChangeAmount * 2);
             timeLeft--;
             if (alpha >= 1f) {
                 exterior.getTARDIS().getTravel().setState(TARDISTravel.STATE.LANDED);

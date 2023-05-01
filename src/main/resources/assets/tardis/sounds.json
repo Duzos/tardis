@@ -30,5 +30,21 @@
         "name": "tardis:tardis/emergency_land"
       }
     ]
+  },
+  "hop_takeoff": {
+    "subtitle": "TARDIS Hopping",
+    "sounds": [
+      {
+        "name": "tardis:tardis/hop_takeoff"
+      }
+    ]
+  },
+  "hop_land": {
+    "subtitle": "TARDIS Hopping",
+    "sounds": [
+      {
+        "name": "tardis:tardis/hop_land"
+      }
+    ]
   }
 }

@@ -29,6 +29,8 @@ import java.util.TimerTask;
 public class TARDISTravel {
     private final int DEMAT_AUDIO_LENGTH = 8;
     private int MAT_AUDIO_LENGTH = 10;
+    private final long SECONDS = 1000L;
+    private final long MINUTES = SECONDS * 60;
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
@@ -53,24 +55,128 @@ public class TARDISTravel {
         return testingPos;
     }
 
+    public static BlockPos checkForNearestNonAirBlock(Level level, BlockPos pos, Direction direction) {
+        if (direction != Direction.UP && direction != Direction.DOWN) {direction = Direction.UP;}
+
+        BlockPos testingPos = pos;
+
+        if (direction == Direction.UP) {
+            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR) {
+                testingPos = testingPos.above();
+            }
+        } else {
+            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR) {
+                testingPos = testingPos.below();
+            }
+        }
+
+        return testingPos.above();
+    }
+
     public static BlockPos getRandomPosInRange(BlockPos pos, int range) {
         Random random = new Random();
 
         int xChange = random.nextInt(-range, range);
         int yChange = random.nextInt(-range, range);
-        int zChange = random.nextInt(-range, range);
+        int zChange = random.nextInt(-range, 0);
 
         return new BlockPos(pos.getX() + xChange, pos.getY() + yChange, pos.getZ() + zChange);
     }
 
-    public void setDestination(AbsoluteBlockPos pos, boolean withAirCheck) {
-        if (withAirCheck) {
-            pos = new AbsoluteBlockPos(pos.getDimension(),pos.getDirection(),searchForNearestAirBlock(pos.getDimension(),pos, Direction.UP));
+    public void setDestination(AbsoluteBlockPos pos, boolean withChecks) {
+        if (withChecks) {
+            pos = new AbsoluteBlockPos(pos.getDimension(),pos.getDirection(),
+                    checkForNearestNonAirBlock(pos.getDimension(),
+                    searchForNearestAirBlock(pos.getDimension(),pos, Direction.UP),
+                            Direction.DOWN)
+            );
         }
         this.destination = pos;
     }
     public AbsoluteBlockPos getDestination() {
         return this.destination;
+    }
+
+    public void startHopping() {
+        Random random = new Random();
+        TARDISTravel travel = this;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                travel.__hopTakeoff();
+            }
+        }, random.nextInt(1,30) * SECONDS);
+    }
+
+    private void __hopTakeoff() {
+        if (this.tardis.getLevel().isClientSide) {return;}
+        if (this.state != STATE.LANDED) {
+            this.startHopping();
+            return;
+        }
+
+        this.state = STATE.HOP_TAKEOFF;
+
+        Level level = this.tardis.getLevel();
+
+        level.playSound(null,this.tardis.getPosition(), SoundsInit.HOP_TAKEOFF.get(), SoundSource.BLOCKS, 1f,1f);
+
+        // Animating the demat
+        level.getChunkAt(this.tardis.getPosition());
+        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
+        if (entity instanceof ExteriorBlockEntity) {
+            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+        }
+
+        this.setDestination(new AbsoluteBlockPos(this.tardis.getPosition().getDimension(),getRandomPosInRange(this.tardis.getPosition(), 10)),true);
+
+        // Timer code for waiting for sound to finish
+        TARDISTravel travel = this;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // Delete the block and rematerialise if needed.
+//                ForgeChunkManager.forceChunk((ServerLevel) level, TARDISMod.MODID, travel.tardis.getPosition(),0, 0,true,true);
+                travel.state = STATE.FLIGHT;
+                level.getChunkAt(travel.destination);
+
+                level.removeBlock(travel.tardis.getPosition(), false);
+
+                travel.__hopLand();
+            }
+        }, 11 * SECONDS);
+    }
+
+    private void __hopLand() {
+        if (this.destination == null || this.destination.getDimension().isClientSide) {
+            return;
+        }
+
+        this.state = STATE.HOP_LAND;
+
+        Level level = this.destination.getDimension();
+
+        level.getChunkAt(this.destination);
+
+        ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
+        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.destination.getDirection());
+        level.setBlockAndUpdate(this.destination, state);
+        level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
+        level.playSound(null, this.destination, SoundsInit.HOP_LAND.get(), SoundSource.BLOCKS, 1f, 1f);
+
+        this.tardis.setPosition(this.destination);
+        this.tardis.updateBlockEntity();
+
+        // Animating the mat
+        level.getChunkAt(this.tardis.getPosition());
+        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
+        if (entity instanceof ExteriorBlockEntity) {
+            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+        }
+
+        this.startHopping();
     }
 
     public void dematerialise() {
@@ -109,7 +215,7 @@ public class TARDISTravel {
                     travel.materialise();
                 }
             }
-        }, DEMAT_AUDIO_LENGTH * 1000L);
+        }, DEMAT_AUDIO_LENGTH * SECONDS);
     }
 
     public void materialise() {
@@ -144,7 +250,7 @@ public class TARDISTravel {
             public void run() {
                 travel.__materialise();
             }
-        }, MAT_AUDIO_LENGTH * 1000L);
+        }, MAT_AUDIO_LENGTH * SECONDS);
     }
 
     private void __materialise() {
@@ -227,6 +333,8 @@ public class TARDISTravel {
 
 
     public enum STATE {
+        HOP_TAKEOFF,
+        HOP_LAND,
         DEMAT,
         MAT,
         LANDED,

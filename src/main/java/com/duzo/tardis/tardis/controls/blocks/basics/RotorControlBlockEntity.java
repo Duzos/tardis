@@ -54,6 +54,14 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
         runMaterialise(this.getTARDIS(),this.getLevel(),this.getBlockPos());
     }
 
+    private void runHopLanding() {
+        this.level.playSound(null,this.getBlockPos(), SoundsInit.HOP_LAND.get(), SoundSource.BLOCKS, 1f,1f);
+    }
+
+    private void runHopTakeoff() {
+        this.level.playSound(null,this.getBlockPos(), SoundsInit.HOP_TAKEOFF.get(), SoundSource.BLOCKS, 1f,1f);
+    }
+
     private void updateState() {
         TARDISTravel travel = this.getTARDIS().getTravel();
 
@@ -67,6 +75,10 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
         }
         else if (this.state == TARDISTravel.STATE.MAT) {
             this.runMaterialise();
+        } else if (this.state == TARDISTravel.STATE.HOP_TAKEOFF) {
+            this.runHopTakeoff();
+        } else if (this.state == TARDISTravel.STATE.HOP_LAND) {
+            this.runHopLanding();
         }
     }
 
