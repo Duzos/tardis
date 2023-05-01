@@ -27,6 +27,7 @@ public class ClientEvents {
         // Doors
 //        DoorsInit.DOOR_ENTITIES_LIST.forEach((door) -> renderers.registerBlockEntityRenderer(door,InteriorDoorRenderer::new));
         renderers.registerBlockEntityRenderer(DoorsInit.CORAL_DOOR_ENTITY.get(),InteriorDoorRenderer::new);
+        renderers.registerBlockEntityRenderer(DoorsInit.WAR_DOOR_ENTITY.get(),InteriorDoorRenderer::new);
 
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);

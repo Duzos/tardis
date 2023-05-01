@@ -2,6 +2,7 @@ package com.duzo.tardis.tardis.doors;
 
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.doors.impl.CoralInteriorDoorSchema;
+import com.duzo.tardis.tardis.doors.impl.WarInteriorDoorSchema;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
@@ -16,7 +17,8 @@ public class TARDISInteriorDoors {
             "tardis:coral_door_block"
     };
     public static final List<Block> INTERIOR_DOOR_BLOCK_LIST = List.of(new Block[]{
-            DoorsInit.CORAL_DOOR_BLOCK.get()
+            DoorsInit.CORAL_DOOR_BLOCK.get(),
+            DoorsInit.WAR_DOOR_BLOCK.get()
     });
 
     /**
@@ -24,6 +26,7 @@ public class TARDISInteriorDoors {
      */
     public static void init() {
         TARDISInteriorDoors.register(new CoralInteriorDoorSchema());
+        TARDISInteriorDoors.register(new WarInteriorDoorSchema());
     }
 
     public static void register(TARDISInteriorDoorSchema<?> exterior) {

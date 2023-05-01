@@ -4,7 +4,9 @@ import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.CreativeTabInit;
 import com.duzo.tardis.core.init.ItemInit;
 import com.duzo.tardis.tardis.doors.blocks.impl.CoralInteriorDoorBlock;
+import com.duzo.tardis.tardis.doors.blocks.impl.WarInteriorDoorBlock;
 import com.duzo.tardis.tardis.doors.blocks.impl.entities.CoralInteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.doors.blocks.impl.entities.WarInteriorDoorBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +30,9 @@ public class DoorsInit {
 
     public static final RegistryObject<Block> CORAL_DOOR_BLOCK = register("coral_door_block", () -> new CoralInteriorDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().noCollission().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<CoralInteriorDoorBlockEntity>> CORAL_DOOR_ENTITY = DOOR_BLOCK_ENTITIES.register("coral_door_block_entity", () -> BlockEntityType.Builder.of(CoralInteriorDoorBlockEntity::new, CORAL_DOOR_BLOCK.get()).build(null));
+
+    public static final RegistryObject<Block> WAR_DOOR_BLOCK = register("war_door_block", () -> new WarInteriorDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().noCollission().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<WarInteriorDoorBlockEntity>> WAR_DOOR_ENTITY = DOOR_BLOCK_ENTITIES.register("war_door_block_entity", () -> BlockEntityType.Builder.of(WarInteriorDoorBlockEntity::new, WAR_DOOR_BLOCK.get()).build(null));
 
     @Deprecated
     // Doesnt even work bruh "Registry Object not present"
