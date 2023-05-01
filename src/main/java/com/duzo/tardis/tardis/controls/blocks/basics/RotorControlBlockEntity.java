@@ -25,7 +25,7 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
 
     @Override
     protected void run(Player player) {
-        if (player.isCrouching() && player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof RemoteItem) {
+        if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof RemoteItem) {
             ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
             RemoteItem item = (RemoteItem) stack.getItem();
             item.link(stack, this.getTARDIS());
