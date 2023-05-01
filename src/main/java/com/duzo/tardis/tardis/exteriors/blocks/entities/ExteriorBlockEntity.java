@@ -87,7 +87,7 @@ public class ExteriorBlockEntity extends BlockEntity {
         if (this.getTARDIS() == null) {
             TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
-        this.getTARDIS().teleportToDoor(player);
+        this.getTARDIS().getInterior().teleportToDoor(player);
     }
 
     public float getAlpha() {

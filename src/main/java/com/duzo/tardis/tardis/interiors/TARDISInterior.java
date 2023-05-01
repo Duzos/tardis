@@ -1,87 +1,143 @@
 package com.duzo.tardis.tardis.interiors;
 
-import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
-import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
-import com.duzo.tardis.tardis.structures.TARDISStructure;
-import com.duzo.tardis.tardis.util.TARDISUtil;
+import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlock;
+import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
+import com.duzo.tardis.tardis.io.TeleportHelper;
+import com.duzo.tardis.tardis.manager.TARDISManager;
+import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import org.checkerframework.checker.units.qual.C;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class TARDISInterior extends TARDISStructure {
-    protected BlockPos doorPosition;
-    protected String id;
-    protected StructureTemplate template;
+public class TARDISInterior {
+    private TARDISInteriorSchema schema;
+    private TARDIS tardis;
+    private List<AbsoluteBlockPos> interiorCornerPositions;
+    private BlockPos interiorDoorPos;
 
-    public TARDISInterior(ResourceLocation location, String id) {
-        super(id);
-        this.location = location;
-        this.id = id;
-    }
-    public TARDISInterior(String structureName) {
-        this(new ResourceLocation(TARDISMod.MODID,"interiors/" + structureName), structureName);
+    public TARDISInterior(TARDISInteriorSchema schema) {this.schema =schema;}
+    public TARDISInterior(CompoundTag tag,TARDISInteriorSchema schema) {
+        this.schema = schema;
+        this.loadCorners(tag);
     }
 
-    @Deprecated
-    public void findDoorPosition(StructureTemplate template) {
-        CompoundTag tag = template.save(new CompoundTag());
-
-        AtomicInteger i = new AtomicInteger();
-        AtomicInteger interiorDoorNumberState = new AtomicInteger();
-
-        tag.getList("pallete", Tag.TAG_COMPOUND).forEach((inbt -> {
-            CompoundTag nbt = (CompoundTag) inbt;
-            String name = nbt.getString("Name");
-
-            // If the name is in the door list
-
-//            if (Arrays.stream(TARDISInteriorDoors.INTERIOR_DOOR_BLOCK_ID_LIST).toArray(door -> name.equals(door))) {
-//                interiorDoorNumberState.set(i.intValue());
-//            }
-
-            i.getAndIncrement();
-        }));
-
-        tag.getList("blocks", Tag.TAG_COMPOUND).forEach((inbt -> {
-            CompoundTag nbt = (CompoundTag) inbt;
-            int state = nbt.getInt("state");
-
-            if (state == interiorDoorNumberState.get()) {
-                ListTag posList = nbt.getList("pos", Tag.TAG_INT);
-                doorPosition = new BlockPos(posList.getInt(0),posList.getInt(1),posList.getInt(2));
-            }
-        }));
-    }
-    @Deprecated
-    public void place(ServerLevel level, BlockPos pos) {
-        this.template.placeInWorld(level,pos,pos,new StructurePlaceSettings(), RandomSource.create(),2);
+    public void link(TARDIS tardis) {
+        this.tardis = tardis;
     }
 
-    @Deprecated
-    /**
-     * This is to be ran when the TARDIS level loads so that the TARDIS level isnt returned as null
-     */
-    public void generateTemplate() {
-        this.template = TARDISUtil.getTARDISLevel().getStructureManager().getOrCreate(location);
+    public TARDISInteriorSchema getSchema() {return this.schema;}
+
+    public Level getInteriorDimension() {
+        return this.tardis.getLevel().getServer().getLevel(DimensionsInit.TARDIS_DIM_KEY);
     }
 
-    public void setDoorPosition(BlockPos pos) {
-        this.doorPosition = pos;
+    public BlockPos getInteriorDoorPos() {
+        if (this.interiorDoorPos != null && this.getInteriorDimension().getBlockEntity(this.interiorDoorPos) instanceof InteriorDoorBlockEntity) {return this.interiorDoorPos;}
+
+        return this.searchForDoorPosAndUpdate();
     }
-    public BlockPos getDoorPosition() {
-        return this.doorPosition;
+    private BlockPos searchForDoorPosAndUpdate() {
+        BlockPos doorPos = this.interiorCornerPositions.get(0).offset(this.getSchema().getDoorPosition());
+        System.out.println(doorPos);
+
+        if (!(this.getInteriorDimension().getBlockState(doorPos).getBlock() instanceof InteriorDoorBlock)) {
+            doorPos = TARDISManager.getInstance().searchForDoorBlock(this.interiorCornerPositions);
+        }
+
+        InteriorDoorBlockEntity door = (InteriorDoorBlockEntity) this.getInteriorDimension().getBlockEntity(doorPos);
+        assert door != null;
+        door.setTARDIS(this.tardis);
+
+        this.interiorDoorPos = doorPos;
+
+        return doorPos;
     }
-    public String getID() {return this.id;}
+    private BlockPos getOffsetDoorPosition() {
+        BlockPos doorPos = this.getInteriorDoorPos();
+        BlockPos adjustedPos = doorPos;
+        Direction doorDirection = this.getInteriorDimension()
+                .getBlockState(
+                        doorPos)
+                .getValue(BlockStateProperties.HORIZONTAL_FACING);
+        switch(doorDirection) {
+            case NORTH -> adjustedPos = doorPos.north(1);
+            case SOUTH -> adjustedPos = doorPos.south(1);
+            case EAST -> adjustedPos = doorPos.east(1);
+            case WEST -> adjustedPos = doorPos.west(1);
+        }
+        return adjustedPos;
+    }
+
+    public List<AbsoluteBlockPos> getInteriorCornerPositions() {
+        return this.interiorCornerPositions;
+    }
+    public void setInteriorCornerPositions(List<AbsoluteBlockPos> list) {
+        this.interiorCornerPositions = list;
+    }
+
+    public void teleportToDoor(Player player) {
+        if (this.needsGeneration()) {
+            this.generate();
+        }
+
+        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getInteriorDimension(),this.getOffsetDoorPosition()));
+        helper.teleport((ServerLevel) player.getLevel());
+    }
+
+    public void generate() {
+        this.generate(this.getSchema());
+    }
+    public void generate(TARDISInteriorSchema interior) {
+        this.interiorCornerPositions = TARDISManager.getInstance().getNextAvailableInteriorSpot();
+
+        TARDISStructureGenerator.InteriorGenerator generator = new TARDISStructureGenerator.InteriorGenerator(this.tardis, (ServerLevel) this.getInteriorDimension(), interior);
+        generator.placeStructure((ServerLevel) this.getInteriorDimension(), this.interiorCornerPositions.get(0), Direction.SOUTH);
+    }
+
+    public boolean needsGeneration() {
+        return this.interiorCornerPositions == null;
+    }
+
+    public void setSchema(TARDISInteriorSchema schema) {
+        this.schema = schema;
+    }
+
+    private void loadCorners(CompoundTag tag) {
+        AbsoluteBlockPos bottomLeft = new AbsoluteBlockPos(this.getInteriorDimension(),NbtUtils.readBlockPos(tag.getCompound("bottomLeft")));
+        AbsoluteBlockPos topRight = new AbsoluteBlockPos(this.getInteriorDimension(),NbtUtils.readBlockPos(tag.getCompound("topRight")));
+
+        this.interiorCornerPositions.set(0, bottomLeft);
+        this.interiorCornerPositions.set(1, topRight);
+    }
+
+    public static class Serializer {
+        private static final TARDISInteriorSchema.Serializer SCHEMA_SERIALIZER = new TARDISInteriorSchema.Serializer();
+
+        public void serialize(CompoundTag tag, TARDISInterior interior) {
+            CompoundTag schema = new CompoundTag();
+            SCHEMA_SERIALIZER.serialize(schema, interior.schema);
+
+            tag.put("doorPos",NbtUtils.writeBlockPos(interior.interiorDoorPos));
+
+            tag.put("bottomLeft", NbtUtils.writeBlockPos(interior.interiorCornerPositions.get(0)));
+            tag.put("topRight", NbtUtils.writeBlockPos(interior.interiorCornerPositions.get(1)));
+
+            tag.put("schema", schema);
+        }
+        public TARDISInterior deserialize(CompoundTag nbt) {
+            return new TARDISInterior(nbt,SCHEMA_SERIALIZER.deserialize(nbt.getCompound("schema")));
+        }
+
+    }
 }

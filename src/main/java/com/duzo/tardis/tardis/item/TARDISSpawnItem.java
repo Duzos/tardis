@@ -1,9 +1,8 @@
 package com.duzo.tardis.tardis.item;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
-import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
-import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInteriorSchema;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -21,7 +20,7 @@ public abstract class TARDISSpawnItem extends Item {
     protected TARDISExteriorSchema<?> getExterior() {
         return null;
     }
-    protected TARDISInterior getInterior() {
+    protected TARDISInteriorSchema getInterior() {
         return null;
     }
 

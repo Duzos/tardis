@@ -5,6 +5,7 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInteriorSchema;
 import com.duzo.tardis.tardis.interiors.TARDISInteriors;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ public class TARDISBuilder {
     private final UUID uuid;
     private AbsoluteBlockPos position;
     private TARDISExteriorSchema<?> exteriorSchema;
-    private TARDISInterior interior;
+    private TARDISInteriorSchema interior;
     public static final String DEFAULT_EXTERIOR = "coral";
     public static final String DEFAULT_INTERIOR = "coral";
 
@@ -33,7 +34,7 @@ public class TARDISBuilder {
         return this;
     }
 
-    public TARDISBuilder interior(TARDISInterior interior) {
+    public TARDISBuilder interior(TARDISInteriorSchema interior) {
         this.interior = interior;
         return this;
     }
@@ -46,20 +47,20 @@ public class TARDISBuilder {
         if (this.exteriorSchema == null) {this.exteriorSchema = TARDISExteriors.get(DEFAULT_EXTERIOR);}
         if (this.interior == null) {this.interior = TARDISInteriors.get(DEFAULT_INTERIOR);}
 
-        TARDIS tardis = new TARDIS(this.uuid,this.position, this.exteriorSchema, this.interior);
+        TARDIS tardis = new TARDIS(this.uuid,this.position, this.exteriorSchema, new TARDISInterior(this.interior));
 
         if (withMaterialise) {
             tardis.getTravel().setDestination(this.position, true);
             tardis.getTravel().materialise();
         }
-        tardis.generateInterior();
+        tardis.getInterior().generate();
 
         Logger logger = LogUtils.getLogger();
 
         logger.info("Created a new TARDIS:");
         logger.info("UUID: " + tardis.getUuid());
         logger.info("Exterior: " + tardis.getExteriorSchema().getID());
-        logger.info("Interior: " + tardis.getInterior().getID());
+        logger.info("Interior: " + tardis.getInterior().getSchema().getID());
         logger.info("Position: " + tardis.getPosition());
 
         return tardis;

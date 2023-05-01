@@ -2,7 +2,7 @@ package com.duzo.tardis.tardis.structures;
 
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
-import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInteriorSchema;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,8 +17,8 @@ import java.util.List;
 public class TARDISStructureGenerator {
     public static class InteriorGenerator extends TARDISStructureGenerator {
         private TARDIS tardis;
-        private TARDISInterior interior;
-        public InteriorGenerator(TARDIS tardis, ServerLevel level, TARDISInterior interior) {
+        private TARDISInteriorSchema interior;
+        public InteriorGenerator(TARDIS tardis, ServerLevel level, TARDISInteriorSchema interior) {
             super(level,interior);
             this.tardis = tardis;
             this.interior = interior;
@@ -27,9 +27,10 @@ public class TARDISStructureGenerator {
         @Override
         public void placeStructure(ServerLevel level, BlockPos pos, Direction direction) {
             super.placeStructure(level, pos, direction);
-//            this.interior.findDoorPosition(this.template);
             this.interior.setDoorPosition(findTargetBlockPosInTemplate(this.template,pos,direction, TARDISInteriorDoors.INTERIOR_DOOR_BLOCK_LIST).get(0));
-            this.tardis.setInterior(this.interior);
+            this.tardis.getInterior().setSchema(this.interior);
+
+//            this.tardis.setInterior(this.interior);
         }
     }
     private TARDISStructure structure;

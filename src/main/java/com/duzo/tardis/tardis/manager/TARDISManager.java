@@ -5,14 +5,12 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.builder.TARDISBuilder;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlock;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
-import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInteriorSchema;
 import com.duzo.tardis.tardis.nbt.TARDISSavedData;
 import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class TARDISManager {
      * @param exteriorSchema The exterior schema to use | can be null and will use a default
      * @return the new TARDIS
      */
-    public TARDIS create(AbsoluteBlockPos pos, @Nullable TARDISExteriorSchema<?> exteriorSchema, @Nullable TARDISInterior interior) {
+    public TARDIS create(AbsoluteBlockPos pos, @Nullable TARDISExteriorSchema<?> exteriorSchema, @Nullable TARDISInteriorSchema interior) {
         TARDIS tardis = new TARDISBuilder(UUID.randomUUID())
                 .at(pos)
                 .exterior(exteriorSchema)
@@ -81,7 +79,7 @@ public class TARDISManager {
      */
     public TARDIS findTARDIS(List<AbsoluteBlockPos> cornerPositions) {
         for (TARDIS tardis : tardisMap.values()) {
-            if (tardis.getInteriorCornerPositions().equals(cornerPositions)) {
+            if (tardis.getInterior().getInteriorCornerPositions().equals(cornerPositions)) {
                 return tardis;
             }
         }
@@ -98,7 +96,7 @@ public class TARDISManager {
 
         // Checks if the position is inside the area
         for (TARDIS tardis : tardisMap.values()) {
-            List<AbsoluteBlockPos> list = tardis.getInteriorCornerPositions();
+            List<AbsoluteBlockPos> list = tardis.getInterior().getInteriorCornerPositions();
             BlockPos bottomLeft = list.get(0);
             BlockPos topRight = list.get(1);
             boolean flag = (bottomLeft.getX() <= pos.getX()) && (bottomLeft.getZ() <= pos.getZ()) && (topRight.getX() >= pos.getX()) && (topRight.getZ() >= pos.getZ());

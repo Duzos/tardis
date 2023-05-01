@@ -1,27 +1,25 @@
 package com.duzo.tardis.tardis.interiors.impl;
 
-import com.duzo.tardis.tardis.interiors.TARDISInterior;
+import com.duzo.tardis.tardis.interiors.TARDISInteriorSchema;
 import com.duzo.tardis.tardis.structures.TARDISStructure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-public class EighthInterior extends TARDISInterior {
-    public EighthInterior(String structureName) {
-        super(structureName);
+public class BakerInteriorSchema extends TARDISInteriorSchema {
+    public BakerInteriorSchema(ResourceLocation location, String id) {
+        super(location,id);
     }
-    public EighthInterior(ResourceLocation location, String structurename) {
-        super(location, structurename);
+    public BakerInteriorSchema(String id) {
+        super(id);
     }
-    public EighthInterior() {
-        this("eighth");
+    public BakerInteriorSchema() {
+        this("baker");
     }
-
     private static final Codec<TARDISStructure> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
                 ResourceLocation.CODEC.fieldOf("structure").forGetter(TARDISStructure::getLocation),
                 Codec.STRING.orElse("Placeholder").fieldOf("name_component").forGetter(TARDISStructure::getStructureName)
-        ).apply(instance, EighthInterior::new);
+        ).apply(instance, CoralInteriorSchema::new);
     });
 }
