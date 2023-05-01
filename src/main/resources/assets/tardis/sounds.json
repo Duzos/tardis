@@ -46,5 +46,13 @@
         "name": "tardis:tardis/hop_land"
       }
     ]
+  },
+  "fail_takeoff": {
+    "subtitle": "TARDIS Takeoff Failing",
+    "sounds": [
+      {
+        "name": "tardis:tardis/fail_takeoff"
+      }
+    ]
   }
 }

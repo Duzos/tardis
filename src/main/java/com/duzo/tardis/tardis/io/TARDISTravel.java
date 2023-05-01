@@ -96,6 +96,9 @@ public class TARDISTravel {
     public AbsoluteBlockPos getDestination() {
         return this.destination;
     }
+    private boolean canTakeoff() {
+        return (this.state == STATE.LANDED);
+    }
 
     public void startHopping() {
         Random random = new Random();
@@ -111,7 +114,7 @@ public class TARDISTravel {
 
     private void __hopTakeoff() {
         if (this.tardis.getLevel().isClientSide) {return;}
-        if (this.state != STATE.LANDED) {
+        if (!(this.canTakeoff())) {
             this.startHopping();
             return;
         }
@@ -184,6 +187,10 @@ public class TARDISTravel {
     }
     public void dematerialise(boolean withRemat) {
         if (this.tardis.getLevel().isClientSide) {return;}
+        if (!(this.canTakeoff())) {
+            return;
+        }
+
         this.state = STATE.DEMAT;
 
         Level level = this.tardis.getLevel();
