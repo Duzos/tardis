@@ -18,6 +18,6 @@ public class WarTARDISSpawnItem extends TARDISSpawnItem {
 
     @Override
     protected TARDISInteriorSchema getInterior() {
-        return TARDISInteriors.get("coral");
+        return TARDISInteriors.get("war");
     }
 }

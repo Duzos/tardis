@@ -3,6 +3,7 @@ package com.duzo.tardis.tardis.interiors;
 import com.duzo.tardis.tardis.interiors.impl.BakerInteriorSchema;
 import com.duzo.tardis.tardis.interiors.impl.CoralInteriorSchema;
 import com.duzo.tardis.tardis.interiors.impl.EighthInteriorSchema;
+import com.duzo.tardis.tardis.interiors.impl.WarInteriorSchema;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class TARDISInteriors {
         TARDISInteriors.register(new CoralInteriorSchema());
         TARDISInteriors.register(new EighthInteriorSchema());
         TARDISInteriors.register(new BakerInteriorSchema());
+        TARDISInteriors.register(new WarInteriorSchema());
     }
     public static void register(TARDISInteriorSchema interior) {interiors.put(interior.getID(),interior);}
     public static TARDISInteriorSchema get(String id) {

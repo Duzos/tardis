@@ -3,10 +3,7 @@ package com.duzo.tardis.core.events;
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.ControlRenderer;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
-import com.duzo.tardis.tardis.controls.impl.models.CoralDematLeverModelSchema;
-import com.duzo.tardis.tardis.controls.impl.models.CoralRotorModelSchema;
-import com.duzo.tardis.tardis.controls.impl.models.EighthRotorModelSchema;
-import com.duzo.tardis.tardis.controls.impl.models.VanillaDematLeverModelSchema;
+import com.duzo.tardis.tardis.controls.impl.models.*;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.doors.impl.models.CoralInteriorDoorModel;
 import com.duzo.tardis.tardis.exteriors.ExteriorRenderer;
@@ -33,6 +30,7 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_ROTOR_ENTITY.get(), ControlRenderer::new);
+        renderers.registerBlockEntityRenderer(ControlsInit.WAR_ROTOR_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.EIGHTH_ROTOR_ENTITY.get(), ControlRenderer::new);
 
         // Rotors
@@ -58,6 +56,8 @@ public class ClientEvents {
 
         // War
         event.registerLayerDefinition(WarTARDISExteriorModel.LAYER_LOCATION, WarTARDISExteriorModel::createBodyLayer); // Exterior
+        event.registerLayerDefinition(WarRotorModelSchema.LAYER_LOCATION, WarRotorModelSchema::createBodyLayer); // Rotor
+
 
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
