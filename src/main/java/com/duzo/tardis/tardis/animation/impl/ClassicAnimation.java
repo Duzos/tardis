@@ -26,6 +26,9 @@ public class ClassicAnimation extends ExteriorAnimation {
             if (alpha >= 1f) {
                 exterior.getTARDIS().getTravel().setState(TARDISTravel.STATE.LANDED);
             }
+        } else if (state == TARDISTravel.STATE.LANDED) {
+            this.updateClient();
+            alpha = 1F;
         }
     }
 

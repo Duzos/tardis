@@ -54,6 +54,8 @@ public class ExteriorBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        tag.putFloat("alpha",this.getAlpha());
+
         if (this.tardisUUID != null) {
             tag.putUUID("tardisUUID", this.tardisUUID);
         }
@@ -62,18 +64,19 @@ public class ExteriorBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        this.getAnimation().setAlpha(tag.getFloat("alpha"));
 
         try {
             this.tardisUUID = tag.getUUID("tardisUUID");
         } catch (Exception error) {
             Logger logger = LogUtils.getLogger();
             logger.error(error.toString());
-            logger.error("Failed to load data for TARDIS Exterior block! Pulling from TARDISManager instead!");
-            TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
-
-            if (tardis != null) {
-                this.setTARDIS(tardis);
-            }
+//            logger.error("Failed to load data for TARDIS Exterior block! Pulling from TARDISManager instead!");
+//            TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
+//
+//            if (tardis != null) {
+//                this.setTARDIS(tardis);
+//            }
         }
     }
 
