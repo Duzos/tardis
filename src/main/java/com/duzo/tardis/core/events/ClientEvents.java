@@ -1,6 +1,8 @@
 package com.duzo.tardis.core.events;
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.client.models.blockentities.CoralRampModel;
+import com.duzo.tardis.client.renderers.GenericRenderer;
 import com.duzo.tardis.tardis.controls.ControlRenderer;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.controls.impl.models.*;
@@ -33,6 +35,9 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(ControlsInit.WAR_ROTOR_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.EIGHTH_ROTOR_ENTITY.get(), ControlRenderer::new);
 
+        // ETC
+        renderers.registerBlockEntityRenderer(BlockEntityInit.CORAL_RAMP_ENTITY.get(), GenericRenderer::new);
+
         // Rotors
 //        renderers.registerBlockEntityRenderer(RotorInit.ROTOR_BLOCK_ENTITY.get(), RotorRenderer::new);
 //        RotorInit.ROTORS.forEach((rotor,block) -> {
@@ -47,6 +52,7 @@ public class ClientEvents {
         event.registerLayerDefinition(CoralTARDISExteriorModel.LAYER_LOCATION, CoralTARDISExteriorModel::createBodyLayer); // Exterior
         event.registerLayerDefinition(CoralInteriorDoorModel.LAYER_LOCATION, CoralInteriorDoorModel::createBodyLayer); // Interior door
         event.registerLayerDefinition(CoralRotorModelSchema.LAYER_LOCATION, CoralRotorModelSchema::createBodyLayer); // Rotor
+        event.registerLayerDefinition(CoralRampModel.LAYER_LOCATION, CoralRampModel::createBodyLayer); // Ramp
 
         // Eighth
         event.registerLayerDefinition(EighthRotorModelSchema.LAYER_LOCATION, EighthRotorModelSchema::createBodyLayer); // Rotor
