@@ -31,6 +31,7 @@ public class ClientEvents {
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
+        renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_HANDBRAKE_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_ROTOR_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.WAR_ROTOR_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.EIGHTH_ROTOR_ENTITY.get(), ControlRenderer::new);
@@ -67,7 +68,9 @@ public class ClientEvents {
 
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
+
         event.registerLayerDefinition(VanillaDematLeverModelSchema.LAYER_LOCATION, VanillaDematLeverModelSchema::createBodyLayer);
+        event.registerLayerDefinition(VanillaHandbrakeModelSchema.LAYER_LOCATION, VanillaHandbrakeModelSchema::createBodyLayer);
 //        event.registerLayerDefinition(CoralTimeRotorModel.LAYER_LOCATION, CoralTimeRotorModel::createBodyLayer);
     }
 }

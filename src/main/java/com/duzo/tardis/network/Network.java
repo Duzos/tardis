@@ -1,7 +1,7 @@
 package com.duzo.tardis.network;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.network.packets.UpdateExteriorDataS2CPacket;
+import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -27,10 +27,10 @@ public class Network {
 
         INSTANCE = net;
 
-        net.messageBuilder(UpdateExteriorDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(UpdateExteriorDataS2CPacket::decode)
-                .encoder(UpdateExteriorDataS2CPacket::encode)
-                .consumerMainThread(UpdateExteriorDataS2CPacket::handle)
+        net.messageBuilder(UpdateExteriorAnimationS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateExteriorAnimationS2CPacket::decode)
+                .encoder(UpdateExteriorAnimationS2CPacket::encode)
+                .consumerMainThread(UpdateExteriorAnimationS2CPacket::handle)
                 .add();
     }
 

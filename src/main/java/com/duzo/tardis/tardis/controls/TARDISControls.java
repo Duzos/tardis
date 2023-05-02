@@ -14,6 +14,7 @@ public class TARDISControls {
     public static void init() {
         TARDISControls.register(new CoralDematLeverSchema());
         TARDISControls.register(new VanillaDematLeverSchema());
+        TARDISControls.register(new VanillaHandbrakeSchema());
         TARDISControls.register(new CoralRotorSchema());
         TARDISControls.register(new WarRotorSchema());
         TARDISControls.register(new EighthRotorSchema());

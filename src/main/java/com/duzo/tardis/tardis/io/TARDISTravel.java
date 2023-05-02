@@ -4,7 +4,6 @@ import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
-import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.nbt.NBTSerializers;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
@@ -14,7 +13,6 @@ import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -34,8 +32,10 @@ public class TARDISTravel {
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
+    private boolean handbrakeOn;
     public TARDISTravel(TARDIS tardis) {
         this.tardis = tardis;
+        this.handbrakeOn = false;
     }
     public static BlockPos searchForNearestAirBlock(Level level,BlockPos pos, Direction direction) {
         if (direction != Direction.UP && direction != Direction.DOWN) {direction = Direction.UP;}
@@ -97,7 +97,26 @@ public class TARDISTravel {
         return this.destination;
     }
     private boolean canTakeoff() {
-        return (this.state == STATE.LANDED);
+        return (this.state == STATE.LANDED) && !(this.handbrakeOn);
+    }
+    private boolean runHandbrakeChecks() {
+        if (this.handbrakeOn && this.state == STATE.LANDED) {
+            this.state = STATE.FAIL_TAKOFF;
+            this.tardis.getLevel().playSound(null, this.tardis.getPosition(), SoundsInit.FAIL_TAKEOFF.get(), SoundSource.BLOCKS, 1f,1f);
+            this.runAnimations();
+            this.startHopping();
+            return true;
+        }
+        return false;
+    }
+
+    private void runAnimations() {
+        Level level = this.tardis.getLevel();
+        level.getChunkAt(this.tardis.getPosition());
+        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
+        if (entity instanceof ExteriorBlockEntity) {
+            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
+        }
     }
 
     public void startHopping() {
@@ -114,6 +133,11 @@ public class TARDISTravel {
 
     private void __hopTakeoff() {
         if (this.tardis.getLevel().isClientSide) {return;}
+
+        if (this.runHandbrakeChecks()) {
+            return;
+        }
+
         if (!(this.canTakeoff())) {
             this.startHopping();
             return;
@@ -125,12 +149,7 @@ public class TARDISTravel {
 
         level.playSound(null,this.tardis.getPosition(), SoundsInit.HOP_TAKEOFF.get(), SoundSource.BLOCKS, 1f,1f);
 
-        // Animating the demat
-        level.getChunkAt(this.tardis.getPosition());
-        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
-        if (entity instanceof ExteriorBlockEntity) {
-            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
-        }
+        this.runAnimations();
 
         this.setDestination(new AbsoluteBlockPos(this.tardis.getPosition().getDimension(),getRandomPosInRange(this.tardis.getPosition(), 10)),true);
 
@@ -172,12 +191,7 @@ public class TARDISTravel {
         this.tardis.setPosition(this.destination);
         this.tardis.updateBlockEntity();
 
-        // Animating the mat
-        level.getChunkAt(this.tardis.getPosition());
-        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
-        if (entity instanceof ExteriorBlockEntity) {
-            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
-        }
+        this.runAnimations();
 
         this.startHopping();
     }
@@ -187,23 +201,22 @@ public class TARDISTravel {
     }
     public void dematerialise(boolean withRemat) {
         if (this.tardis.getLevel().isClientSide) {return;}
+
+        Level level = this.tardis.getLevel();
+
+        if (this.runHandbrakeChecks()) {
+            return;
+        }
+
         if (!(this.canTakeoff())) {
             return;
         }
 
         this.state = STATE.DEMAT;
 
-        Level level = this.tardis.getLevel();
-
         level.playSound(null,this.tardis.getPosition(), SoundsInit.DEMATERIALISE.get(), SoundSource.BLOCKS, 1f,1f);
 
-        // Animating the demat
-        level.getChunkAt(this.tardis.getPosition());
-        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
-        System.out.println(entity);
-        if (entity instanceof ExteriorBlockEntity) {
-            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
-        }
+        this.runAnimations();
 
         // Timer code for waiting for sound to finish
         TARDISTravel travel = this;
@@ -276,30 +289,7 @@ public class TARDISTravel {
         this.tardis.setPosition(this.destination);
         this.tardis.updateBlockEntity();
 
-        // Animating the mat
-        level.getChunkAt(this.tardis.getPosition());
-        BlockEntity entity = level.getBlockEntity(this.tardis.getPosition());
-        if (entity instanceof ExteriorBlockEntity) {
-            ((ExteriorBlockEntity) entity).getAnimation().setupAnimation(this.state);
-
-            // If failing to land (checking it via the audio length for now.)
-//            if (MAT_AUDIO_LENGTH == 16) {
-//                ((ExteriorBlockEntity) entity).getAnimation().setAlphaChangeAmount(0.5f);
-//            }
-        }
-
-//        if (this.tileNBT == null) {
-//            this.tileNBT = new CompoundTag();
-//        }
-//
-//        ExteriorBlockEntity tardisBlockEntity = (ExteriorBlockEntity) level.getBlockEntity(this.destination);
-//        tardisBlockEntity.load(this.tileNBT);
-//        System.out.println(this.tardis);
-//        System.out.println(tardisBlockEntity);
-//        if (tardisBlockEntity != null && this.tardis != null) {
-//            System.out.println(this.tardis.getUuid());
-//            tardisBlockEntity.setTARDIS(this.tardis.getUuid());
-//        }
+        this.runAnimations();
     }
 
     public boolean inFlight() {
@@ -315,6 +305,10 @@ public class TARDISTravel {
     }
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;
+    }
+
+    public void changeHandbrake() {
+        this.handbrakeOn = !this.handbrakeOn;
     }
 
     public static class Serializer {
@@ -340,6 +334,7 @@ public class TARDISTravel {
 
 
     public enum STATE {
+        FAIL_TAKOFF,
         HOP_TAKEOFF,
         HOP_LAND,
         DEMAT,

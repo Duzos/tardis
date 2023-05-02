@@ -33,5 +33,8 @@ public class ControlsInit {
 
     public static final RegistryObject<Block> EIGHTH_ROTOR = register("eighth_rotor", () -> new EighthRotorBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<EighthRotorBlockEntity>> EIGHTH_ROTOR_ENTITY = CONTROL_BLOCK_ENTITIES.register("eighth_rotor_entity", () -> BlockEntityType.Builder.of(EighthRotorBlockEntity::new, EIGHTH_ROTOR.get()).build(null));
+
+    public static final RegistryObject<Block> VANILLA_HANDBRAKE = register("vanilla_handbrake", () -> new VanillaHandbrakeBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<VanillaHandbrakeBlockEntity>> VANILLA_HANDBRAKE_ENTITY = CONTROL_BLOCK_ENTITIES.register("vanilla_handbrake", () -> BlockEntityType.Builder.of(VanillaHandbrakeBlockEntity::new, VANILLA_HANDBRAKE.get()).build(null));
 }
 

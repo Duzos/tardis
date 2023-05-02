@@ -2,9 +2,7 @@ package com.duzo.tardis.tardis.controls.blocks;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.controls.TARDISControlModelSchema;
 import com.duzo.tardis.tardis.controls.TARDISControlSchema;
-import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +12,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.checkerframework.checker.units.qual.A;
 
 public abstract class ControlBlockEntity extends BlockEntity {
     private TARDIS tardis;
@@ -48,7 +45,7 @@ public abstract class ControlBlockEntity extends BlockEntity {
         return this.schema;
     }
 
-    protected void run(Player player) {}
+    protected abstract void run(Player player);
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {

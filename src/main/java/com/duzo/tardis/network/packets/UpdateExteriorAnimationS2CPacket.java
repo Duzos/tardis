@@ -1,5 +1,7 @@
 package com.duzo.tardis.network.packets;
 
+import com.duzo.tardis.tardis.animation.ExteriorAnimation;
+import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -11,30 +13,38 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class UpdateExteriorDataS2CPacket {
+public class UpdateExteriorAnimationS2CPacket {
     public boolean messageIsValid;
 
     private float alpha;
     private BlockPos pos;
+    private boolean firstRun;
 
-    public UpdateExteriorDataS2CPacket(BlockPos pos, float alpha) {
+    public UpdateExteriorAnimationS2CPacket(BlockPos pos, float alpha, boolean firstRun) {
         this.pos = pos;
         this.alpha = alpha;
+        this.firstRun = firstRun;
         this.messageIsValid = true;
-//        System.out.println("created new update exterior data packet with info + " + alpha + " " + pos);
     }
-    public UpdateExteriorDataS2CPacket() {
+    public UpdateExteriorAnimationS2CPacket(BlockPos pos, float alpha) {
+        this.pos = pos;
+        this.alpha = alpha;
+        this.firstRun = false;
+        this.messageIsValid = true;
+    }
+    public UpdateExteriorAnimationS2CPacket() {
         this.messageIsValid = false;
     }
 
-    public static UpdateExteriorDataS2CPacket decode(FriendlyByteBuf buf) {
-        UpdateExteriorDataS2CPacket packet = new UpdateExteriorDataS2CPacket();
+    public static UpdateExteriorAnimationS2CPacket decode(FriendlyByteBuf buf) {
+        UpdateExteriorAnimationS2CPacket packet = new UpdateExteriorAnimationS2CPacket();
 
         try {
             BlockPos pos = buf.readBlockPos();
 
             packet.alpha = buf.readFloat();
             packet.pos = pos;
+            packet.firstRun = buf.readBoolean();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             System.out.println("Exception while reading Packet: " + e);
             return packet;
@@ -49,6 +59,7 @@ public class UpdateExteriorDataS2CPacket {
 
         buf.writeBlockPos(this.pos);
         buf.writeFloat(this.alpha);
+        buf.writeBoolean(this.firstRun);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -63,7 +74,12 @@ public class UpdateExteriorDataS2CPacket {
                 ExteriorBlockEntity entity = (ExteriorBlockEntity) level.getBlockEntity(this.pos);
                 if (entity == null) {return;}
 
-                entity.getAnimation().setAlpha(this.alpha);
+                ExteriorAnimation animation = entity.getAnimation();
+                animation.setAlpha(this.alpha);
+
+                if (animation instanceof ClassicAnimation classic) {
+                    classic.setFirstRun(this.firstRun);
+                }
             });
         });
         return true;

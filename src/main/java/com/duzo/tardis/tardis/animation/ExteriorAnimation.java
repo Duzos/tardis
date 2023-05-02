@@ -1,8 +1,7 @@
 package com.duzo.tardis.tardis.animation;
 
 import com.duzo.tardis.network.Network;
-import com.duzo.tardis.network.packets.UpdateExteriorDataS2CPacket;
-import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import net.minecraft.util.Mth;
@@ -37,6 +36,6 @@ public abstract class ExteriorAnimation {
     public void updateClient() {
         if (this.exterior.getLevel().isClientSide) {return;}
 
-        Network.sendToAll(new UpdateExteriorDataS2CPacket(exterior.getBlockPos(),this.getAlpha()));
+        Network.sendToAll(new UpdateExteriorAnimationS2CPacket(exterior.getBlockPos(),this.getAlpha()));
     }
 }
