@@ -82,9 +82,11 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
             this.runHopTakeoff();
         } else if (this.state == TARDISTravel.STATE.HOP_LAND) {
             this.runHopLanding();
-        } else if (this.state == TARDISTravel.STATE.FAIL_TAKOFF) {
+        } else if (this.state == TARDISTravel.STATE.FAIL_TAKEOFF) {
             this.runFailTakeoff();
         }
+
+        System.out.println(this.state);
     }
 
 

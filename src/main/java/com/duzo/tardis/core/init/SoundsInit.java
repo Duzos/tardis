@@ -17,4 +17,7 @@ public class SoundsInit {
     public static final RegistryObject<SoundEvent> FAIL_TAKEOFF = SOUNDS.register("fail_takeoff", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "fail_takeoff")));
     public static final RegistryObject<SoundEvent> HOP_TAKEOFF = SOUNDS.register("hop_takeoff", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "hop_takeoff")));
     public static final RegistryObject<SoundEvent> HOP_LAND = SOUNDS.register("hop_land", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "hop_land")));
+
+    public static final RegistryObject<SoundEvent> HANDBRAKE_PULL = SOUNDS.register("handbrake_pull", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "handbrake_pull")));
+    public static final RegistryObject<SoundEvent> DEMAT_LEVER_PULL = SOUNDS.register("demat_lever_pull", () -> new SoundEvent(new ResourceLocation(TARDISMod.MODID, "demat_lever_pull")));
 }

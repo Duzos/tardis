@@ -101,10 +101,21 @@ public class TARDISTravel {
     }
     private boolean runHandbrakeChecks() {
         if (this.handbrakeOn && this.state == STATE.LANDED) {
-            this.state = STATE.FAIL_TAKOFF;
+            this.state = STATE.FAIL_TAKEOFF;
             this.tardis.getLevel().playSound(null, this.tardis.getPosition(), SoundsInit.FAIL_TAKEOFF.get(), SoundSource.BLOCKS, 1f,1f);
             this.runAnimations();
             this.startHopping();
+
+            // making sure that it does land
+            TARDISTravel travel = this;
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    travel.state = STATE.LANDED;
+                }
+            }, MAT_AUDIO_LENGTH * SECONDS);
+
             return true;
         }
         return false;
@@ -192,8 +203,17 @@ public class TARDISTravel {
         this.tardis.updateBlockEntity();
 
         this.runAnimations();
-
         this.startHopping();
+
+        // making sure that it does land
+        TARDISTravel travel = this;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                travel.state = STATE.LANDED;
+            }
+        }, MAT_AUDIO_LENGTH * SECONDS);
     }
 
     public void dematerialise() {
@@ -290,6 +310,16 @@ public class TARDISTravel {
         this.tardis.updateBlockEntity();
 
         this.runAnimations();
+
+        // making sure that it does land
+        TARDISTravel travel = this;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                travel.state = STATE.LANDED;
+            }
+        }, MAT_AUDIO_LENGTH * SECONDS);
     }
 
     public boolean inFlight() {
@@ -334,7 +364,7 @@ public class TARDISTravel {
 
 
     public enum STATE {
-        FAIL_TAKOFF,
+        FAIL_TAKEOFF,
         HOP_TAKEOFF,
         HOP_LAND,
         DEMAT,

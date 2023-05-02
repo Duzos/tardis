@@ -54,5 +54,21 @@
         "name": "tardis:tardis/fail_takeoff"
       }
     ]
+  },
+  "demat_lever_pull": {
+    "subtitle": "Space Time Throttle Pulled",
+    "sounds": [
+      {
+        "name": "tardis:controls/demat_lever_pull"
+      }
+    ]
+  },
+  "handbrake_pull": {
+    "subtitle": "Handbrake Pulled",
+    "sounds": [
+      {
+        "name": "tardis:controls/handbrake_pull"
+      }
+    ]
   }
 }

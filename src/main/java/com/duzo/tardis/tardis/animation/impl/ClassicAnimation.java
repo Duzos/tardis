@@ -2,7 +2,6 @@ package com.duzo.tardis.tardis.animation.impl;
 
 import com.duzo.tardis.network.Network;
 import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
-import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ExteriorAnimation;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.io.TARDISTravel;
@@ -28,7 +27,7 @@ public class ClassicAnimation extends ExteriorAnimation {
             this.updateClient();
             alpha = alpha - (alphaChangeAmount);
             timeLeft--;
-        } else if (state == TARDISTravel.STATE.FAIL_TAKOFF) {
+        } else if (state == TARDISTravel.STATE.FAIL_TAKEOFF) {
             this.updateClient();
             if (alpha >= 0.5f && firstRun) {
                 alpha = alpha - (alphaChangeAmount );
