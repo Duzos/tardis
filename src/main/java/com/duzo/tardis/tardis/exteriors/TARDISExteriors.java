@@ -19,6 +19,7 @@ public class TARDISExteriors {
         TARDISExteriors.register(new BakerExteriorSchema());
         TARDISExteriors.register(new WarExteriorSchema());
         TARDISExteriors.register(new CopperExteriorSchema());
+        TARDISExteriors.register(new ToyotaExteriorSchema());
     }
     public static void register(TARDISExteriorSchema<?> exterior) {exteriors.put(exterior.getID(),exterior);}
     public static TARDISExteriorSchema<?> get(String id) {
