@@ -139,7 +139,7 @@ public class TARDISTravel {
             public void run() {
                 travel.__hopTakeoff();
             }
-        }, random.nextInt(1,30) * SECONDS);
+        }, random.nextInt(1,5) * MINUTES);
     }
 
     private void __hopTakeoff() {
