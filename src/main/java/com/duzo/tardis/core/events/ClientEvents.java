@@ -55,6 +55,9 @@ public class ClientEvents {
         event.registerLayerDefinition(CoralRotorModelSchema.LAYER_LOCATION, CoralRotorModelSchema::createBodyLayer); // Rotor
         event.registerLayerDefinition(CoralRampModel.LAYER_LOCATION, CoralRampModel::createBodyLayer); // Ramp
 
+        // Copper / Toyota
+        event.registerLayerDefinition(CopperTARDISExteriorModel.LAYER_LOCATION, CopperTARDISExteriorModel::createBodyLayer); // Exterior
+
         // Eighth
         event.registerLayerDefinition(EighthRotorModelSchema.LAYER_LOCATION, EighthRotorModelSchema::createBodyLayer); // Rotor
 
