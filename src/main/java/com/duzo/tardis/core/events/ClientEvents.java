@@ -11,6 +11,7 @@ import com.duzo.tardis.tardis.doors.impl.models.CoralInteriorDoorModel;
 import com.duzo.tardis.tardis.exteriors.ExteriorRenderer;
 import com.duzo.tardis.tardis.doors.InteriorDoorRenderer;
 import com.duzo.tardis.core.init.BlockEntityInit;
+import com.duzo.tardis.tardis.exteriors.impl.HellBentExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.impl.models.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -57,6 +58,9 @@ public class ClientEvents {
 
         // Copper / Toyota
         event.registerLayerDefinition(CopperTARDISExteriorModel.LAYER_LOCATION, CopperTARDISExteriorModel::createBodyLayer); // Exterior
+
+        // Hellbent
+        event.registerLayerDefinition(HellBentTARDISExteriorModel.LAYER_LOCATION, HellBentTARDISExteriorModel::createBodyLayer); // Exterior
 
         // Eighth
         event.registerLayerDefinition(EighthRotorModelSchema.LAYER_LOCATION, EighthRotorModelSchema::createBodyLayer); // Rotor
