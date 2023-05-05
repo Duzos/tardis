@@ -23,6 +23,7 @@ public class ItemInit {
     public static final RegistryObject<TARDISSpawnItem> COPPER_TARDIS_ITEM = ITEMS.register("copper_tardis_item", () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).exterior("copper"));
     public static final RegistryObject<TARDISSpawnItem> HELLBENT_TARDIS_ITEM = ITEMS.register("hellbent_tardis_item", () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).interior("baker").exterior("hellbent"));
     public static final RegistryObject<TARDISSpawnItem> HARTNELL_TT_TARDIS_ITEM = ITEMS.register("hartnell_tt_tardis_item", () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).interior("baker").exterior("hartnell_tt"));
+    public static final RegistryObject<TARDISSpawnItem> HARTNELL_TARDIS_ITEM = ITEMS.register("hartnell_tardis_item", () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).interior("baker").exterior("hartnell"));
 
 
     public static final RegistryObject<RemoteItem> REMOTE_ITEM = ITEMS.register("remote_item", () -> new RemoteItem(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)));

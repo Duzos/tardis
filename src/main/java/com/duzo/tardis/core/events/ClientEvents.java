@@ -75,6 +75,7 @@ public class ClientEvents {
 
         // Hartnell
         event.registerLayerDefinition(HartnellTTTARDISExteriorModel.LAYER_LOCATION, HartnellTTTARDISExteriorModel::createBodyLayer); // TT Capsule Exterior
+        event.registerLayerDefinition(HartnellTARDISExteriorModel.LAYER_LOCATION, HartnellTARDISExteriorModel::createBodyLayer); // Regular Exterior
 
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
