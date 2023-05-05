@@ -11,6 +11,7 @@ import com.duzo.tardis.tardis.doors.impl.models.CoralInteriorDoorModel;
 import com.duzo.tardis.tardis.exteriors.ExteriorRenderer;
 import com.duzo.tardis.tardis.doors.InteriorDoorRenderer;
 import com.duzo.tardis.core.init.BlockEntityInit;
+import com.duzo.tardis.tardis.exteriors.impl.HartnellTTExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.impl.HellBentExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.impl.models.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -72,6 +73,8 @@ public class ClientEvents {
         event.registerLayerDefinition(WarTARDISExteriorModel.LAYER_LOCATION, WarTARDISExteriorModel::createBodyLayer); // Exterior
         event.registerLayerDefinition(WarRotorModelSchema.LAYER_LOCATION, WarRotorModelSchema::createBodyLayer); // Rotor
 
+        // Hartnell
+        event.registerLayerDefinition(HartnellTTTARDISExteriorModel.LAYER_LOCATION, HartnellTTTARDISExteriorModel::createBodyLayer); // TT Capsule Exterior
 
         event.registerLayerDefinition(OriginalTARDISExteriorModel.LAYER_LOCATION, OriginalTARDISExteriorModel::createBodyLayer);
         event.registerLayerDefinition(ThirdTARDISExteriorModel.LAYER_LOCATION, ThirdTARDISExteriorModel::createBodyLayer);
