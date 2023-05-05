@@ -62,21 +62,19 @@ public class HartnellTTTARDISExteriorModel extends TARDISExteriorModelSchema {
 
         Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-        if (direction == Direction.SOUTH) {
-            stack.mulPose(Vector3f.YP.rotationDegrees(180f));
+        if (direction == Direction.NORTH) {
             stack.translate(-0.5,0,-0.5);
         }
-        else if (direction == Direction.NORTH) {
-            stack.mulPose(Vector3f.YP.rotationDegrees(180f));
+        else if (direction == Direction.SOUTH) {
             stack.translate(0.5,0,0.5);
         }
         else if (direction == Direction.WEST) {
-//			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
             stack.translate(-0.5,0,0.5);
+            stack.mulPose(Vector3f.YP.rotationDegrees(180f));
         }
         else if (direction == Direction.EAST) {
-//			stack.mulPose(Vector3f.YP.rotationDegrees(180f));
             stack.translate(0.5,0,-0.5);
+            stack.mulPose(Vector3f.YP.rotationDegrees(180f));
         }
 
 
