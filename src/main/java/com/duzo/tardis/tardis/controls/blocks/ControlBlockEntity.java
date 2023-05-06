@@ -1,11 +1,9 @@
 package com.duzo.tardis.tardis.controls.blocks;
 
-import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.controls.TARDISControlSchema;
 import com.duzo.tardis.tardis.manager.TARDISManager;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -13,7 +11,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,7 +48,7 @@ public abstract class ControlBlockEntity extends BlockEntity {
         return this.schema;
     }
 
-    protected abstract void run(Player player);
+    protected abstract void run(Player player, BlockHitResult hit);
 
     protected void playSound() {
         this.level.playSound(null, this.getBlockPos(), this.getSound(), SoundSource.BLOCKS, 1f,1f);
@@ -62,7 +59,7 @@ public abstract class ControlBlockEntity extends BlockEntity {
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            this.run(player);
+            this.run(player,hit);
         }
     }
 }

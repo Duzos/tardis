@@ -19,6 +19,7 @@ public class TARDISControls {
         TARDISControls.register(new CoralRotorSchema());
         TARDISControls.register(new WarRotorSchema());
         TARDISControls.register(new EighthRotorSchema());
+        TARDISControls.register(new VanillaCoordinatesSchema());
     }
 
     public static void register(TARDISControlSchema<?> control) {

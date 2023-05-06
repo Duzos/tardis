@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public abstract class RotorControlBlockEntity extends ControlBlockEntity {
     protected TARDISTravel.STATE previousState;
@@ -24,7 +25,7 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
     }
 
     @Override
-    protected void run(Player player) {
+    protected void run(Player player, BlockHitResult hit) {
         if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof RemoteItem) {
             ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
             RemoteItem item = (RemoteItem) stack.getItem();

@@ -38,5 +38,8 @@ public class ControlsInit {
 
     public static final RegistryObject<Block> VANILLA_HANDBRAKE = register("vanilla_handbrake", () -> new VanillaHandbrakeBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<VanillaHandbrakeBlockEntity>> VANILLA_HANDBRAKE_ENTITY = CONTROL_BLOCK_ENTITIES.register("vanilla_handbrake", () -> BlockEntityType.Builder.of(VanillaHandbrakeBlockEntity::new, VANILLA_HANDBRAKE.get()).build(null));
+
+    public static final RegistryObject<Block> VANILLA_COORDINATES = register("vanilla_coordinates", () -> new VanillaCoordinatesBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<VanillaCoordinatesBlockEntity>> VANILLA_COORDINATES_ENTITY = CONTROL_BLOCK_ENTITIES.register("vanilla_coordinates", () -> BlockEntityType.Builder.of(VanillaCoordinatesBlockEntity::new, VANILLA_COORDINATES.get()).build(null));
 }
 

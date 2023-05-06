@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public abstract class DematControlBlockEntity extends ControlBlockEntity {
     public DematControlBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
@@ -20,7 +21,7 @@ public abstract class DematControlBlockEntity extends ControlBlockEntity {
     }
 
     @Override
-    protected void run(Player player) {
+    protected void run(Player player, BlockHitResult hit) {
         this.playSound();
 
         TARDISTravel travel = this.getTARDIS().getTravel();
