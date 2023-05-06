@@ -117,8 +117,8 @@ public class CopperDematLeverModelSchema extends TARDISControlModelSchema {
     public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         stack.pushPose();
         stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
-        stack.translate(0,-0.75f,0);
-        stack.scale(0.5f,0.5f,0.5f);
+        stack.translate(0,-0.6f,0);
+        stack.scale(0.4f,0.4f,0.4f);
 
         base.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         lever.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
