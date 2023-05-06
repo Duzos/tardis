@@ -35,10 +35,10 @@ import java.util.function.ToIntFunction;
 
 public class ExteriorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape BOUNDING_BOX = Block.box(0, 0, 0, 16, 32, 16);
+//    private static final VoxelShape BOUNDING_BOX = Block.box(0, 0, 0, 16, 32, 16);
     public static final VoxelShape NORTH_AABB = Block.box(0, 0, 0.1, 16, 32, 16);
-    public static final VoxelShape EAST_AABB = Block.box(0, 0, 0, 0.1, 32, 16);
-    public static final VoxelShape SOUTH_AABB = Block.box(0, 0, 0, 16, 32, 0.1);
+    public static final VoxelShape EAST_AABB = Block.box(0, 0, 0, 15.9, 32, 16);
+    public static final VoxelShape SOUTH_AABB = Block.box(0, 0, 0, 16, 32, 15.9);
     public static final VoxelShape WEST_AABB = Block.box(0.1, 0, 0, 16, 32, 16);
 
     public ExteriorBlock(Properties p_49795_) {
