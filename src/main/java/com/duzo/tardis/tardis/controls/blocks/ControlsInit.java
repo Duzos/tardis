@@ -21,6 +21,8 @@ public class ControlsInit {
 
     public static final RegistryObject<Block> CORAL_DEMAT_LEVER = register("coral_demat_lever", () -> new CoralDematLeverBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<CoralDematLeverBlockEntity>> CORAL_DEMAT_LEVER_ENTITY = CONTROL_BLOCK_ENTITIES.register("coral_demat_lever_entity", () -> BlockEntityType.Builder.of(CoralDematLeverBlockEntity::new, CORAL_DEMAT_LEVER.get()).build(null));
+    public static final RegistryObject<Block> COPPER_DEMAT_LEVER = register("copper_demat_lever", () -> new CopperDematLeverBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<CopperDematLeverBlockEntity>> COPPER_DEMAT_LEVER_ENTITY = CONTROL_BLOCK_ENTITIES.register("copper_demat_lever_entity", () -> BlockEntityType.Builder.of(CopperDematLeverBlockEntity::new, COPPER_DEMAT_LEVER.get()).build(null));
 
     public static final RegistryObject<Block> VANILLA_DEMAT_LEVER = register("vanilla_demat_lever", () -> new VanillaDematLeverBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<VanillaDematLeverBlockEntity>> VANILLA_DEMAT_LEVER_ENTITY = CONTROL_BLOCK_ENTITIES.register("vanilla_demat_lever_entity", () -> BlockEntityType.Builder.of(VanillaDematLeverBlockEntity::new, VANILLA_DEMAT_LEVER.get()).build(null));

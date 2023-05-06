@@ -13,6 +13,7 @@ public class TARDISControls {
      */
     public static void init() {
         TARDISControls.register(new CoralDematLeverSchema());
+        TARDISControls.register(new CopperDematLeverSchema());
         TARDISControls.register(new VanillaDematLeverSchema());
         TARDISControls.register(new VanillaHandbrakeSchema());
         TARDISControls.register(new CoralRotorSchema());

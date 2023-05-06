@@ -32,6 +32,7 @@ public class ClientEvents {
 
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
+        renderers.registerBlockEntityRenderer(ControlsInit.COPPER_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_HANDBRAKE_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_ROTOR_ENTITY.get(), ControlRenderer::new);
@@ -59,6 +60,7 @@ public class ClientEvents {
 
         // Copper / Toyota
         event.registerLayerDefinition(CopperTARDISExteriorModel.LAYER_LOCATION, CopperTARDISExteriorModel::createBodyLayer); // Exterior
+        event.registerLayerDefinition(CopperDematLeverModelSchema.LAYER_LOCATION, CopperDematLeverModelSchema::createBodyLayer); // Demat Lever
 
         // Hellbent
         event.registerLayerDefinition(HellBentTARDISExteriorModel.LAYER_LOCATION, HellBentTARDISExteriorModel::createBodyLayer); // Exterior
