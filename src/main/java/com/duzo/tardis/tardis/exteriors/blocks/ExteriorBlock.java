@@ -5,8 +5,12 @@ import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.controls.blocks.basics.RotorControlBlockEntity;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,11 +23,14 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.ToIntFunction;
 
 public class ExteriorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -71,7 +78,15 @@ public class ExteriorBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> type) {
         return type == BlockEntityInit.TARDIS_BLOCK_ENTITY.get() ? ExteriorBlockEntity::tick : null;
     }
-
+//    @Override
+//    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+//        if (level.getBlockEntity(pos) instanceof ExteriorBlockEntity entity) {
+//            return Math.round(15 * entity.getAlpha());
+////            return 15;
+//        } else {
+//            return 15;
+//        }
+//    }
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {

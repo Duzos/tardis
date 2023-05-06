@@ -6,6 +6,7 @@ import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ExteriorAnimation;
 import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
+import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.mojang.logging.LogUtils;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 import org.slf4j.Logger;
 
 import java.util.UUID;

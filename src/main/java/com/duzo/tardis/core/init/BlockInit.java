@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TARDISMod.MODID);
 
-    public static final RegistryObject<Block> TARDIS_BLOCK = BLOCKS.register("tardis_block", () -> new ExteriorBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(3F)));
+    public static final RegistryObject<Block> TARDIS_BLOCK = BLOCKS.register("tardis_block", () -> new ExteriorBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL)/*.lightLevel((state) -> {return 15;})*/.noOcclusion().strength(3F)));
     public static final RegistryObject<Block> CORAL_RAMP = register("coral_ramp", () -> new CoralRampBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().noCollission().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static <T extends Block> RegistryObject<T> register(String name, Supplier<T> supplier, Item.Properties properties){
         RegistryObject<T> block = BLOCKS.register(name, supplier);
