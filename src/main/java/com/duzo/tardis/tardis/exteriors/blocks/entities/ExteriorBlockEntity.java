@@ -3,6 +3,8 @@ package com.duzo.tardis.tardis.exteriors.blocks.entities;
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.network.Network;
+import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ExteriorAnimation;
 import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
@@ -14,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,6 +31,8 @@ import java.util.UUID;
 public class ExteriorBlockEntity extends BlockEntity {
     private UUID tardisUUID;
     private ExteriorAnimation animation;
+    private boolean doorBool = false;
+    public float doorValue = 0;
 
     public ExteriorBlockEntity(BlockPos pos, BlockState state) {
         this(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), pos, state);
@@ -53,10 +58,28 @@ public class ExteriorBlockEntity extends BlockEntity {
         }
     }
 
+    public float getDoorValue() {
+        if(this.doorBool) {
+            return this.doorValue = 87.5f;
+        } else {
+            return this.doorValue = 0;
+        }
+    }
+
+    public boolean getDoorBoolean() {
+        return this.doorBool;
+    }
+
+    public void setDoorState(boolean bool) {
+        this.doorBool = bool;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putFloat("alpha",this.getAlpha());
+        tag.putBoolean("doorBool", this.doorBool);
+        tag.putFloat("doorValue", this.doorValue);
 
         if (this.tardisUUID != null) {
             tag.putUUID("tardisUUID", this.tardisUUID);
@@ -67,6 +90,8 @@ public class ExteriorBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         this.getAnimation().setAlpha(tag.getFloat("alpha"));
+        this.doorBool = tag.getBoolean("doorBool");
+        this.doorValue = tag.getFloat("doorValue");
 
         try {
             this.tardisUUID = tag.getUUID("tardisUUID");
@@ -83,13 +108,13 @@ public class ExteriorBlockEntity extends BlockEntity {
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        this.setDoorState(!this.doorBool);
         if (level.isClientSide || hand != InteractionHand.MAIN_HAND) {return;}
 
 
         if (this.getTARDIS() == null) {
             TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
-        this.getTARDIS().getInterior().teleportToDoor(player);
     }
 
     public float getAlpha() {
@@ -108,5 +133,17 @@ public class ExteriorBlockEntity extends BlockEntity {
         if (!(entity instanceof ExteriorBlockEntity exterior)) {return;}
 
         exterior.getAnimation().tick();
+    }
+
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity player) {
+        if (level.isClientSide) {return;}
+
+        if (this.getTARDIS() == null) {
+            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+        }
+
+        if(player instanceof Player && this.getDoorBoolean()) {
+            this.getTARDIS().getInterior().teleportToDoor((Player) player);
+        }
     }
 }

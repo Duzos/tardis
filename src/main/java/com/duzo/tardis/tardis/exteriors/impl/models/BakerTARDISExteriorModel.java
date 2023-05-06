@@ -63,14 +63,14 @@ public class BakerTARDISExteriorModel extends TARDISExteriorModelSchema {
 
 		PartDefinition cube_r5 = bone.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 285).mirror().addBox(-24.0F, -71.0F, 18.0F, 48.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 
-		PartDefinition bone2 = bone.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition left_door = bone.addOrReplaceChild("left_door", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r6 = bone2.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(266, 136).addBox(20.0F, -66.0F, -0.5F, 1.0F, 64.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r6 = left_door.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(266, 136).addBox(20.0F, -66.0F, -0.5F, 1.0F, 64.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(232, 184).addBox(19.0F, -66.0F, -16.0F, 1.0F, 64.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition right_door = bone.addOrReplaceChild("right_door", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r7 = bone3.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(13, 313).addBox(-20.05F, -45.0F, -2.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r7 = right_door.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(13, 313).addBox(-20.05F, -45.0F, -2.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(198, 184).addBox(-20.0F, -66.0F, -16.0F, 1.0F, 64.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 512, 512);

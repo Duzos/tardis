@@ -1,7 +1,7 @@
 package com.duzo.tardis.tardis.exteriors.blocks;
 
+
 import com.duzo.tardis.core.init.BlockEntityInit;
-import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.tardis.controls.blocks.ControlsInit;
 import com.duzo.tardis.tardis.controls.blocks.basics.RotorControlBlockEntity;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -35,6 +36,10 @@ import java.util.function.ToIntFunction;
 public class ExteriorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape BOUNDING_BOX = Block.box(0, 0, 0, 16, 32, 16);
+    public static final VoxelShape NORTH_AABB = Block.box(0, 0, 0.1, 16, 32, 16);
+    public static final VoxelShape EAST_AABB = Block.box(0, 0, 0, 0.1, 32, 16);
+    public static final VoxelShape SOUTH_AABB = Block.box(0, 0, 0, 16, 32, 0.1);
+    public static final VoxelShape WEST_AABB = Block.box(0.1, 0, 0, 16, 32, 16);
 
     public ExteriorBlock(Properties p_49795_) {
         super(p_49795_);
@@ -42,8 +47,20 @@ public class ExteriorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return BOUNDING_BOX;
+    public VoxelShape getShape(BlockState state, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        switch (state.getValue(FACING)) {
+            case NORTH:
+                return NORTH_AABB;
+            case EAST:
+                return EAST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            case WEST:
+                return WEST_AABB;
+            default:
+                throw new RuntimeException("Invalid facing direction in getShape() " +
+                        "//This is Loqor's code. If it breaks it's an L.");
+        }
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext p_48689_) {
@@ -71,6 +88,15 @@ public class ExteriorBlock extends BaseEntityBlock {
 
     public BlockState mirror(BlockState p_48719_, Mirror p_48720_) {
         return p_48719_.rotate(p_48720_.getRotation(p_48719_.getValue(FACING)));
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity player) {
+        if (!level.isClientSide) {
+            ExteriorBlockEntity blockEntity = (ExteriorBlockEntity) level.getBlockEntity(pos);
+            blockEntity.entityInside(state,level,pos,player);
+        }
+        super.entityInside(state, level, pos, player);
     }
 
     @Nullable

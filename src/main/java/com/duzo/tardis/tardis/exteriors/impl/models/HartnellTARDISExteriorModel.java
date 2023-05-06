@@ -69,12 +69,12 @@ public class HartnellTARDISExteriorModel  extends TARDISExteriorModelSchema {
 
         PartDefinition bone5 = bone.addOrReplaceChild("bone5", CubeListBuilder.create(), PartPose.offset(1.0F, 1.0F, 0.0F));
 
-        PartDefinition bone2 = bone.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(58, 119).addBox(-0.5F, -30.0F, -0.5F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F))
+        PartDefinition right_door = bone.addOrReplaceChild("right_door", CubeListBuilder.create().texOffs(58, 119).addBox(-0.5F, -30.0F, -0.5F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F))
                 .texOffs(301, 94).addBox(-0.6F, 0.0F, 14.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(8, 95).addBox(-1.5F, -8.0F, 11.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(9, 48).addBox(-1.5F, -30.0F, 11.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-15.5F, -31.0F, -13.5F));
 
-        PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(166, 178).addBox(-0.5F, -30.0F, -13.5F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F))
+        PartDefinition left_door = bone.addOrReplaceChild("left_door", CubeListBuilder.create().texOffs(166, 178).addBox(-0.5F, -30.0F, -13.5F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F))
                 .texOffs(196, 178).addBox(-1.5F, -30.0F, -14.0F, 1.0F, 64.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(9, 48).addBox(-1.5F, -30.0F, -12.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-15.5F, -31.0F, 13.5F));
 

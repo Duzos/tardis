@@ -37,6 +37,10 @@ public class ExteriorRenderer implements BlockEntityRenderer<ExteriorBlockEntity
         ResourceLocation texture = schema.getTexture();
         ResourceLocation emission = schema.getEmission();
 
+
+        stack.pushPose();
+
+        stack.popPose();
         schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentCull(texture)), packedLight, OverlayTexture.NO_OVERLAY);
         schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentEmissive(emission,false)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
     }

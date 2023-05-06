@@ -66,17 +66,17 @@ public class CopperTARDISExteriorModel extends TARDISExteriorModelSchema {
 
         PartDefinition cube_r4 = bone.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(17, 37).addBox(0.0F, -83.0F, -4.0F, 0.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -17.5F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
-        PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(-18.5F, -48.0F, -21.5F));
+        PartDefinition left_door = bone.addOrReplaceChild("left_door", CubeListBuilder.create(), PartPose.offset(-18.5F, -48.0F, -21.5F));
 
-        PartDefinition cube_r5 = bone3.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(11, 0).addBox(16.5F, -39.5F, -18.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(32.5F, 38.5F, 16.0F, 0.0F, 1.5708F, 0.0F));
+        PartDefinition cube_r5 = left_door.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(11, 0).addBox(16.5F, -39.5F, -18.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(32.5F, 38.5F, 16.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition cube_r6 = bone3.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(138, 175).addBox(15.5F, -66.0F, -0.5F, 1.0F, 75.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 15.0F, 0.0F, 1.5708F, 0.0F));
+        PartDefinition cube_r6 = left_door.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(138, 175).addBox(15.5F, -66.0F, -0.5F, 1.0F, 75.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 15.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition cube_r7 = bone3.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(101, 251).addBox(15.5F, -66.0F, -19.0F, 1.0F, 75.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 16.0F, 0.0F, 1.5708F, 0.0F));
+        PartDefinition cube_r7 = left_door.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(101, 251).addBox(15.5F, -66.0F, -19.0F, 1.0F, 75.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 16.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition bone4 = bone.addOrReplaceChild("bone4", CubeListBuilder.create(), PartPose.offset(18.5F, -48.0F, -21.45F));
+        PartDefinition right_door = bone.addOrReplaceChild("right_door", CubeListBuilder.create(), PartPose.offset(18.5F, -48.0F, -21.45F));
 
-        PartDefinition cube_r8 = bone4.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(23, 133).addBox(15.65F, -29.5F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+        PartDefinition cube_r8 = right_door.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(23, 133).addBox(15.65F, -29.5F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(16.5F, -39.5F, -12.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(79, 175).addBox(15.5F, -66.0F, -14.0F, 1.0F, 75.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.5F, 38.0F, 15.95F, 0.0F, 1.5708F, 0.0F));
 
@@ -88,6 +88,7 @@ public class CopperTARDISExteriorModel extends TARDISExteriorModelSchema {
     public void renderWithEntity(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         stack.pushPose();
         Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        float doorValueHere = entity.serializeNBT().getFloat("doorValue");
 
 //		if (direction == Direction.SOUTH) {
 //			direction = Direction.NORTH;
@@ -111,6 +112,9 @@ public class CopperTARDISExteriorModel extends TARDISExteriorModelSchema {
             stack.mulPose(Vector3f.YP.rotationDegrees(180f));
             stack.translate(0.5,0,-0.5);
         }
+
+        bone.getChild("right_door").yRot = (float) Math.toRadians(doorValueHere);
+        bone.getChild("left_door").yRot = - (float) Math.toRadians(doorValueHere);
 
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();

@@ -49,9 +49,9 @@ public class HartnellTTTARDISExteriorModel extends TARDISExteriorModelSchema {
 
         PartDefinition cube_r2 = bone.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(44, 3).mirror().addBox(-2.0F, -24.0F, -2.0F, 4.0F, 48.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-11.1953F, -29.0F, -10.4366F, 0.0F, 0.3491F, 0.0F));
 
-        PartDefinition doorpart1 = bone.addOrReplaceChild("doorpart1", CubeListBuilder.create().texOffs(0, 115).addBox(-9.0F, -24.0F, -9.0F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -29.0F, 0.0F));
+        PartDefinition door = bone.addOrReplaceChild("door", CubeListBuilder.create().texOffs(0, 115).addBox(-9.0F, -24.0F, -9.0F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -29.0F, 0.0F));
 
-        PartDefinition doorpart2 = doorpart1.addOrReplaceChild("doorpart2", CubeListBuilder.create().texOffs(0, 115).addBox(0.0F, -24.0F, -9.0F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition doorpart2 = door.addOrReplaceChild("doorpart2", CubeListBuilder.create().texOffs(0, 115).addBox(0.0F, -24.0F, -9.0F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 256, 256);
     }

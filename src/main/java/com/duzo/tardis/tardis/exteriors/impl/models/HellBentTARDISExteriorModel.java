@@ -46,9 +46,9 @@ public class HellBentTARDISExteriorModel extends TARDISExteriorModelSchema {
                 .texOffs(50, 66).addBox(-13.0F, -47.5F, -2.5F, 24.0F, 48.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(50, 66).addBox(-13.0F, -47.5F, -1.5F, 24.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(13.5F, -5.5F, -1.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition rightdoor = partdefinition.addOrReplaceChild("rightdoor", CubeListBuilder.create().texOffs(0, 115).addBox(-0.5F, -48.5F, -0.5F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.5F, 18.5F, -8.5F));
+        PartDefinition right_door = partdefinition.addOrReplaceChild("right_door", CubeListBuilder.create().texOffs(0, 115).addBox(-0.5F, -48.5F, -0.5F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.5F, 18.5F, -8.5F));
 
-        PartDefinition leftdoor = partdefinition.addOrReplaceChild("leftdoor", CubeListBuilder.create().texOffs(104, 0).addBox(-8.5F, -48.5F, -0.5F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(8.5F, 18.5F, -8.5F));
+        PartDefinition left_door = partdefinition.addOrReplaceChild("left_door", CubeListBuilder.create().texOffs(104, 0).addBox(-8.5F, -48.5F, -0.5F, 9.0F, 48.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(8.5F, 18.5F, -8.5F));
 
         return LayerDefinition.create(meshdefinition, 256, 256);
     }

@@ -39,7 +39,7 @@ public class OriginalTARDISExteriorModel extends TARDISExteriorModelSchema {
 		.texOffs(35, 1).addBox(-13.0F, 3.0F, -2.0F, 14.0F, 1.0F, 15.0F, new CubeDeformation(0.0F))
 		.texOffs(36, 17).addBox(-13.0F, -28.0F, -2.0F, 14.0F, 1.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0F, 20.0F, -6.0F));
 
-		PartDefinition doors = partdefinition.addOrReplaceChild("doors", CubeListBuilder.create().texOffs(52, 66).addBox(0.0F, -31.0F, -8.0F, 7.0F, 30.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition door = partdefinition.addOrReplaceChild("door", CubeListBuilder.create().texOffs(52, 66).addBox(0.0F, -31.0F, -8.0F, 7.0F, 30.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 48).addBox(-7.0F, -31.0F, -8.0F, 7.0F, 30.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 128, 128);

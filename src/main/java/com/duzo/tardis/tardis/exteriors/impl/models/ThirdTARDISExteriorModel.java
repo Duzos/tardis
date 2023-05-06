@@ -66,18 +66,18 @@ public class ThirdTARDISExteriorModel extends TARDISExteriorModelSchema {
 
 		PartDefinition bone5 = bone.addOrReplaceChild("bone5", CubeListBuilder.create(), PartPose.offset(1.0F, 1.0F, 0.0F));
 
-		PartDefinition bone2 = bone.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offset(-15.5F, -31.0F, -13.5F));
+		PartDefinition right_door = bone.addOrReplaceChild("right_door", CubeListBuilder.create(), PartPose.offset(-15.5F, -31.0F, -13.5F));
 
-		PartDefinition cube_r4 = bone2.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(9, 48).addBox(-18.0F, -62.0F, -2.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(16.5F, 28.0F, 13.5F, 0.0F, -1.5708F, 0.0F));
+		PartDefinition cube_r4 = right_door.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(9, 48).addBox(-18.0F, -62.0F, -2.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(16.5F, 28.0F, 13.5F, 0.0F, -1.5708F, 0.0F));
 
-		PartDefinition cube_r5 = bone2.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(8, 95).addBox(-17.0F, -39.0F, -2.0F, 1.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r5 = right_door.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(8, 95).addBox(-17.0F, -39.0F, -2.0F, 1.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(58, 119).addBox(-16.0F, -61.0F, -14.0F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(15.5F, 27.0F, 13.5F, 0.0F, -1.5708F, 0.0F));
 
-		PartDefinition bone3 = partdefinition.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(-15.5F, -7.0F, 13.5F));
+		PartDefinition left_door = partdefinition.addOrReplaceChild("left_door", CubeListBuilder.create(), PartPose.offset(-15.5F, -7.0F, 13.5F));
 
-		PartDefinition cube_r6 = bone3.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(9, 48).addBox(-18.0F, -62.0F, 1.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(16.5F, 28.0F, -13.5F, 0.0F, -1.5708F, 0.0F));
+		PartDefinition cube_r6 = left_door.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(9, 48).addBox(-18.0F, -62.0F, 1.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(16.5F, 28.0F, -13.5F, 0.0F, -1.5708F, 0.0F));
 
-		PartDefinition cube_r7 = bone3.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(196, 178).addBox(-17.0F, -61.0F, -0.5F, 1.0F, 64.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r7 = left_door.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(196, 178).addBox(-17.0F, -61.0F, -0.5F, 1.0F, 64.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(166, 178).addBox(-16.0F, -61.0F, 0.0F, 1.0F, 64.0F, 14.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(15.5F, 27.0F, -13.5F, 0.0F, -1.5708F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 512, 512);
