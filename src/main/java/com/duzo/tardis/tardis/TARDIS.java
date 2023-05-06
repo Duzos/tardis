@@ -115,6 +115,7 @@ public class TARDIS {
     public AbsoluteBlockPos getPosition() {
         return this.pos;
     }
+    // @TODO how to do a double blockpos like 1.5 or something
     public AbsoluteBlockPos getPositionForTeleporting() {
         BlockPos doorPos = this.getPosition();
         BlockPos adjustedPos = doorPos;
@@ -124,10 +125,10 @@ public class TARDIS {
                 .getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         switch(doorDirection) {
-            case NORTH -> adjustedPos = doorPos.north(1);
-            case SOUTH -> adjustedPos = doorPos.south(1);
-            case EAST -> adjustedPos = doorPos.east(1);
-            case WEST -> adjustedPos = doorPos.west(1);
+            case NORTH -> adjustedPos = doorPos.offset(0.5,0,-1);
+            case SOUTH -> adjustedPos = doorPos.offset(0.5,0,1);
+            case EAST -> adjustedPos = doorPos.offset(1,0,0.5);
+            case WEST -> adjustedPos = doorPos.offset(-1,0,0.5);
         }
         return new AbsoluteBlockPos(this.getPosition().getDimension(),adjustedPos);
     }
