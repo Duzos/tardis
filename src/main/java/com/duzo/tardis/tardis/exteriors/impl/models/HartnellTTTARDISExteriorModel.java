@@ -77,6 +77,7 @@ public class HartnellTTTARDISExteriorModel extends TARDISExteriorModelSchema {
             stack.mulPose(Vector3f.YP.rotationDegrees(180f));
         }
 
+        bone.getChild("door").visible = !entity.doorOpen();
 
         super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         stack.popPose();

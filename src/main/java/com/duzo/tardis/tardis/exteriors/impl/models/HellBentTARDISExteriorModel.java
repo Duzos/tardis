@@ -23,8 +23,8 @@ public class HellBentTARDISExteriorModel extends TARDISExteriorModelSchema {
 
     public HellBentTARDISExteriorModel(ModelPart root) {
         this.bone = root.getChild("bone");
-        this.rightdoor = root.getChild("rightdoor");
-        this.leftdoor = root.getChild("leftdoor");
+        this.rightdoor = root.getChild("right_door");
+        this.leftdoor = root.getChild("left_door");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -82,6 +82,9 @@ public class HellBentTARDISExteriorModel extends TARDISExteriorModelSchema {
             stack.mulPose(Vector3f.YP.rotationDegrees(180f));
             stack.translate(0.5,0,-0.5);
         }
+
+        rightdoor.yRot = (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
+        leftdoor.yRot = - (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
 
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();

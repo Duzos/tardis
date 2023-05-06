@@ -110,6 +110,9 @@ public class HartnellTARDISExteriorModel  extends TARDISExteriorModelSchema {
             stack.translate(0.5,0,-0.5);
         }
 
+        bone.getChild("right_door").yRot = (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
+        bone.getChild("left_door").yRot = - (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
+
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();
     }

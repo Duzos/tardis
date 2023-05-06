@@ -27,7 +27,7 @@ public class ThirdTARDISExteriorModel extends TARDISExteriorModelSchema {
 
 	public ThirdTARDISExteriorModel(ModelPart root) {
 		this.bone = root.getChild("bone");
-		this.bone3 = root.getChild("bone3");
+		this.bone3 = root.getChild("left_door");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -105,6 +105,9 @@ public class ThirdTARDISExteriorModel extends TARDISExteriorModelSchema {
 		}
 
 		stack.translate(0,0.5,0);
+
+		bone.getChild("right_door").yRot = (float) Math.toRadians(entity.doorOpen() ? 50.5f : 0);
+		bone3.yRot = - (float) Math.toRadians(entity.doorOpen() ? 50.5f : 0);
 
 		super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();
