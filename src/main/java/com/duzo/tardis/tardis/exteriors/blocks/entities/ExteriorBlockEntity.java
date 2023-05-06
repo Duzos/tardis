@@ -5,6 +5,7 @@ import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.network.Network;
 import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
+import com.duzo.tardis.network.packets.UpdateExteriorDoorS2CPacket;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ExteriorAnimation;
 import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
@@ -31,9 +32,7 @@ import java.util.UUID;
 public class ExteriorBlockEntity extends BlockEntity {
     private UUID tardisUUID;
     private ExteriorAnimation animation;
-    private boolean doorBool = false;
-    public float doorValue = 0;
-
+    private boolean doorOpened = false;
     public ExteriorBlockEntity(BlockPos pos, BlockState state) {
         this(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), pos, state);
     }
@@ -58,28 +57,27 @@ public class ExteriorBlockEntity extends BlockEntity {
         }
     }
 
-    public float getDoorValue() {
-        if(this.doorBool) {
-            return this.doorValue = 87.5f;
-        } else {
-            return this.doorValue = 0;
+    public boolean doorOpen() {
+        return this.doorOpened;
+    }
+
+    public void setDoorOpened(boolean bool, boolean updateClient) {
+        this.doorOpened = bool;
+
+        if (updateClient) {
+            Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getBlockPos(),bool));
         }
     }
 
-    public boolean getDoorBoolean() {
-        return this.doorBool;
-    }
-
-    public void setDoorState(boolean bool) {
-        this.doorBool = bool;
+    public void setDoorOpened(boolean bool) {
+        this.setDoorOpened(bool,false);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putFloat("alpha",this.getAlpha());
-        tag.putBoolean("doorBool", this.doorBool);
-        tag.putFloat("doorValue", this.doorValue);
+        tag.putBoolean("doorOpened", this.doorOpened);
 
         if (this.tardisUUID != null) {
             tag.putUUID("tardisUUID", this.tardisUUID);
@@ -90,25 +88,18 @@ public class ExteriorBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         this.getAnimation().setAlpha(tag.getFloat("alpha"));
-        this.doorBool = tag.getBoolean("doorBool");
-        this.doorValue = tag.getFloat("doorValue");
+        this.doorOpened = tag.getBoolean("doorOpened");
 
         try {
             this.tardisUUID = tag.getUUID("tardisUUID");
         } catch (Exception error) {
             Logger logger = LogUtils.getLogger();
             logger.error(error.toString());
-//            logger.error("Failed to load data for TARDIS Exterior block! Pulling from TARDISManager instead!");
-//            TARDIS tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
-//
-//            if (tardis != null) {
-//                this.setTARDIS(tardis);
-//            }
         }
     }
 
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        this.setDoorState(!this.doorBool);
+        this.setDoorOpened(!this.doorOpened,true);
         if (level.isClientSide || hand != InteractionHand.MAIN_HAND) {return;}
 
 
@@ -142,7 +133,7 @@ public class ExteriorBlockEntity extends BlockEntity {
             TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
 
-        if(player instanceof Player && this.getDoorBoolean()) {
+        if(player instanceof Player && this.doorOpen()) {
             this.getTARDIS().getInterior().teleportToDoor((Player) player);
         }
     }

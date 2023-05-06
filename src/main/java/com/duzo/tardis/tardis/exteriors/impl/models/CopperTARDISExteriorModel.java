@@ -88,15 +88,6 @@ public class CopperTARDISExteriorModel extends TARDISExteriorModelSchema {
     public void renderWithEntity(ExteriorBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         stack.pushPose();
         Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-        float doorValueHere = entity.serializeNBT().getFloat("doorValue");
-
-//		if (direction == Direction.SOUTH) {
-//			direction = Direction.NORTH;
-//		} else if (direction == Direction.NORTH) {
-//			direction = Direction.SOUTH;
-//		}
-
-//		stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
         if (direction == Direction.NORTH) {
             stack.translate(-0.5,0,-0.5);
@@ -113,8 +104,8 @@ public class CopperTARDISExteriorModel extends TARDISExteriorModelSchema {
             stack.translate(0.5,0,-0.5);
         }
 
-        bone.getChild("right_door").yRot = (float) Math.toRadians(doorValueHere);
-        bone.getChild("left_door").yRot = - (float) Math.toRadians(doorValueHere);
+        bone.getChild("right_door").yRot = (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
+        bone.getChild("left_door").yRot = - (float) Math.toRadians(entity.doorOpen() ? 87.5f : 0);
 
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();
