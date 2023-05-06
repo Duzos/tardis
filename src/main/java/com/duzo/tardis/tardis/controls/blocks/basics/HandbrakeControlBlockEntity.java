@@ -46,6 +46,6 @@ public abstract class HandbrakeControlBlockEntity extends ControlBlockEntity {
 
         travel.changeHandbrake();
         this.playSound();
-        this.setPulled(!this.pulled());
+        this.setPulled(!this.pulled(),true);
     }
 }

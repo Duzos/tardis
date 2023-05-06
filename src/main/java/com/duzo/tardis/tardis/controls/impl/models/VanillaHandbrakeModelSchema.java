@@ -6,6 +6,8 @@ package com.duzo.tardis.tardis.controls.impl.models;// Made with Blockbench 4.7.
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.TARDISControlModelSchema;
 import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
+import com.duzo.tardis.tardis.controls.blocks.basics.DematControlBlockEntity;
+import com.duzo.tardis.tardis.controls.blocks.basics.HandbrakeControlBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -63,6 +65,10 @@ public class VanillaHandbrakeModelSchema extends TARDISControlModelSchema {
 		}
 		else if (direction == Direction.EAST) {
 			stack.translate(-0.5,0,0.5);
+		}
+
+		if (entity instanceof HandbrakeControlBlockEntity) {
+			RESETCORDSSWITCH.getChild("bone3").xRot = (float) Math.toRadians(((HandbrakeControlBlockEntity) entity).pulled() ? -100f : 0);
 		}
 
 		super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
