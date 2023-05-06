@@ -6,6 +6,7 @@ package com.duzo.tardis.tardis.controls.impl.models;// Made with Blockbench 4.7.
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.TARDISControlModelSchema;
 import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
+import com.duzo.tardis.tardis.controls.blocks.basics.DematControlBlockEntity;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -84,6 +85,10 @@ public class CoralDematLeverModelSchema extends TARDISControlModelSchema {
 		}
 		else if (direction == Direction.EAST) {
 			stack.translate(-0.5,0,0.5);
+		}
+
+		if (entity instanceof DematControlBlockEntity) {
+			bone.getChild("bone2").xRot = (float) Math.toRadians(((DematControlBlockEntity) entity).pulled() ? 50f : -50f);
 		}
 
 		super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);

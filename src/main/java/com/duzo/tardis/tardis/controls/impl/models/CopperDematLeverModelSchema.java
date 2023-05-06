@@ -3,6 +3,7 @@ package com.duzo.tardis.tardis.controls.impl.models;
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.TARDISControlModelSchema;
 import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
+import com.duzo.tardis.tardis.controls.blocks.basics.DematControlBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -108,6 +109,10 @@ public class CopperDematLeverModelSchema extends TARDISControlModelSchema {
         }
 
         stack.mulPose(Vector3f.YN.rotationDegrees(180.0f));
+
+        if (entity instanceof DematControlBlockEntity) {
+            lever.xRot = (float) Math.toRadians(((DematControlBlockEntity) entity).pulled() ? -70f : 70f);
+        }
 
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();
