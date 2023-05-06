@@ -66,6 +66,8 @@ public abstract class RotorControlBlockEntity extends ControlBlockEntity {
     }
 
     private void updateState() {
+        if (this.getTARDIS() == null) return;
+
         TARDISTravel travel = this.getTARDIS().getTravel();
 
         if (travel.getState() == this.state) {return;}

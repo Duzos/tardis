@@ -1,5 +1,6 @@
 package com.duzo.tardis.tardis.io;
 
+import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.SoundsInit;
@@ -273,7 +274,12 @@ public class TARDISTravel {
                 MAT_AUDIO_LENGTH = 16;
             } else {
                 level.playSound(null, this.destination, SoundsInit.FAIL_LAND.get(), SoundSource.BLOCKS, 1f,1f);
-                this.setDestination(tardis.getPosition(),false);
+                this.setDestination(this.tardis.getPosition(),false);
+
+                if (this.tardis.getPosition().getDimension() == TARDISUtil.getTARDISLevel()) {
+                    this.setDestination(new AbsoluteBlockPos(TARDISMod.server.overworld(), this.tardis.getPosition()),false);
+                }
+
                 this.materialise();
                 return;
             }
