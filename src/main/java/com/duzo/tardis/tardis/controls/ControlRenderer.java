@@ -35,6 +35,8 @@ public class ControlRenderer implements BlockEntityRenderer<ControlBlockEntity> 
 
         TARDISControlSchema<?> schema = entity.getSchema();
 
+        if (schema == null) return;
+
         ResourceLocation texture = schema.getTexture();
 
         schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucent(texture)), packedLight, OverlayTexture.NO_OVERLAY);

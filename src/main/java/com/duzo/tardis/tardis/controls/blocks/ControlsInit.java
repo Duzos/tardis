@@ -34,6 +34,8 @@ public class ControlsInit {
 
     public static final RegistryObject<Block> WAR_ROTOR = register("war_rotor", () -> new WarRotorBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<WarRotorBlockEntity>> WAR_ROTOR_ENTITY = CONTROL_BLOCK_ENTITIES.register("war_rotor_entity", () -> BlockEntityType.Builder.of(WarRotorBlockEntity::new, WAR_ROTOR.get()).build(null));
+    public static final RegistryObject<Block> INVISIBLE_ROTOR = register("invisible_rotor", () -> new InvisibleRotorBlock(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<InvisibleRotorBlockEntity>> INVISIBLE_ROTOR_ENTITY = CONTROL_BLOCK_ENTITIES.register("invisible_rotor_entity", () -> BlockEntityType.Builder.of(InvisibleRotorBlockEntity::new, INVISIBLE_ROTOR.get()).build(null));
 
     public static final RegistryObject<Block> EIGHTH_ROTOR = register("eighth_rotor", () -> new EighthRotorBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
     public static final RegistryObject<BlockEntityType<EighthRotorBlockEntity>> EIGHTH_ROTOR_ENTITY = CONTROL_BLOCK_ENTITIES.register("eighth_rotor_entity", () -> BlockEntityType.Builder.of(EighthRotorBlockEntity::new, EIGHTH_ROTOR.get()).build(null));
