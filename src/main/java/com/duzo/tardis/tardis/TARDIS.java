@@ -130,7 +130,7 @@ public class TARDIS {
             case EAST -> adjustedPos = doorPos.offset(1,0,0.5);
             case WEST -> adjustedPos = doorPos.offset(-1,0,0.5);
         }
-        return new AbsoluteBlockPos(this.getPosition().getDimension(),adjustedPos);
+        return new AbsoluteBlockPos(this.getPosition().getDimension(),this.getPosition().getDirection(),adjustedPos);
     }
 
     public UUID getUuid() {

@@ -10,6 +10,7 @@ import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
@@ -65,16 +66,16 @@ public class TARDISInterior {
     }
     private BlockPos getOffsetDoorPosition() {
         BlockPos doorPos = this.getInteriorDoorPos();
-        BlockPos adjustedPos = doorPos;
+        BlockPos adjustedPos = new BlockPos(0,0,0);
         Direction doorDirection = this.getInteriorDimension()
                 .getBlockState(
                         doorPos)
                 .getValue(BlockStateProperties.HORIZONTAL_FACING);
         switch(doorDirection) {
-            case NORTH -> adjustedPos = doorPos.north(1);
-            case SOUTH -> adjustedPos = doorPos.south(1);
-            case EAST -> adjustedPos = doorPos.east(1);
-            case WEST -> adjustedPos = doorPos.west(1);
+            case NORTH -> adjustedPos = new BlockPos(doorPos.getX() + 0.5,doorPos.getY(),doorPos.getZ() - 1.5);
+            case SOUTH -> adjustedPos =new BlockPos(doorPos.getX() + 0.5,doorPos.getY(),doorPos.getZ() + 1.5);
+            case EAST -> adjustedPos = new BlockPos(doorPos.getX() + 1.5,doorPos.getY(),doorPos.getZ() + 0.5);
+            case WEST -> adjustedPos = new BlockPos(doorPos.getX() - 1.5,doorPos.getY(),doorPos.getZ() + 0.5);
         }
         return adjustedPos;
     }
@@ -91,7 +92,12 @@ public class TARDISInterior {
             this.generate();
         }
 
-        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getInteriorDimension(),this.getOffsetDoorPosition()));
+        Direction doorDirection = this.getInteriorDimension()
+                .getBlockState(
+                        this.getInteriorDoorPos())
+                .getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+        TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getInteriorDimension(),doorDirection,this.getOffsetDoorPosition()));
         helper.teleport((ServerLevel) player.getLevel());
     }
 
