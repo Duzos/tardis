@@ -33,6 +33,7 @@ public class ClientEvents {
         // Controls
         renderers.registerBlockEntityRenderer(ControlsInit.CORAL_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.COPPER_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
+        renderers.registerBlockEntityRenderer(ControlsInit.TOYOTA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_DEMAT_LEVER_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_HANDBRAKE_ENTITY.get(), ControlRenderer::new);
         renderers.registerBlockEntityRenderer(ControlsInit.VANILLA_COORDINATES_ENTITY.get(), ControlRenderer::new);
@@ -59,9 +60,12 @@ public class ClientEvents {
         event.registerLayerDefinition(CoralRotorModelSchema.LAYER_LOCATION, CoralRotorModelSchema::createBodyLayer); // Rotor
         event.registerLayerDefinition(CoralRampModel.LAYER_LOCATION, CoralRampModel::createBodyLayer); // Ramp
 
-        // Copper / Toyota
+        // Copper
         event.registerLayerDefinition(CopperTARDISExteriorModel.LAYER_LOCATION, CopperTARDISExteriorModel::createBodyLayer); // Exterior
         event.registerLayerDefinition(CopperDematLeverModelSchema.LAYER_LOCATION, CopperDematLeverModelSchema::createBodyLayer); // Demat Lever
+
+        // Toyota
+        event.registerLayerDefinition(ToyotaDematLeverModelSchema.LAYER_LOCATION, ToyotaDematLeverModelSchema::createBodyLayer); // Demat Lever
 
         // Hellbent
         event.registerLayerDefinition(HellBentTARDISExteriorModel.LAYER_LOCATION, HellBentTARDISExteriorModel::createBodyLayer); // Exterior
