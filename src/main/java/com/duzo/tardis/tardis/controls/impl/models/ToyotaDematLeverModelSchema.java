@@ -65,16 +65,8 @@ public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
                 .texOffs(9, 0).addBox(1.9F, -7.5F, -0.5F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(50, 26).addBox(3.266F, -13.5981F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(7, 46).addBox(-4.266F, -13.5981F, -0.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(40, 9).addBox(-5.266F, -14.5981F, -0.5F, 5.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(43, 35).addBox(-5.266F, -14.6981F, -0.5F, 5.0F, 0.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(43, 33).addBox(-5.266F, -13.4981F, -0.5F, 5.0F, 0.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 13).addBox(0.266F, -13.4981F, -0.5F, 5.0F, 0.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(41, 48).addBox(-5.266F, -14.5981F, 0.6F, 5.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(48, 24).addBox(-5.266F, -14.5981F, -0.6F, 5.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 10).addBox(0.266F, -14.5981F, -0.5F, 5.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(30, 18).addBox(0.266F, -14.5981F, 0.6F, 5.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(48, 0).addBox(0.266F, -14.5981F, -0.6F, 5.0F, 1.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(40, 12).addBox(0.266F, -14.6981F, -0.5F, 5.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 20.5F, -0.5F, -0.9599F, 0.0F, 0.0F));
+                .texOffs(0, 10).mirror().addBox(-5.266F, -14.5981F, -0.5F, 5.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 20.5F, -0.5F, -0.9599F, 0.0F, 0.0F));
 
         PartDefinition lever_r1 = lever.addOrReplaceChild("lever_r1", CubeListBuilder.create().texOffs(40, 50).addBox(-0.5F, -2.0F, -0.5F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.833F, -8.116F, 0.0F, 0.0F, 0.0F, -0.5236F));
 
@@ -85,7 +77,6 @@ public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
-
 
     @Override
     public void renderWithEntity(ControlBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
