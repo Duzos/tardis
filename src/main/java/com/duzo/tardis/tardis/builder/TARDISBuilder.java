@@ -17,8 +17,8 @@ public class TARDISBuilder {
     private AbsoluteBlockPos position;
     private TARDISExteriorSchema<?> exteriorSchema;
     private TARDISInteriorSchema interior;
-    public static final String DEFAULT_EXTERIOR = "coral";
-    public static final String DEFAULT_INTERIOR = "coral";
+    public static final String DEFAULT_EXTERIOR = "";
+    public static final String DEFAULT_INTERIOR = "";
 
     public TARDISBuilder(UUID uuid) {
         this.uuid = uuid;
