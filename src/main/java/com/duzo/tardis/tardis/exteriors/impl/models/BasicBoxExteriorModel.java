@@ -144,8 +144,8 @@ public class BasicBoxExteriorModel extends TARDISExteriorModelSchema {
         stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
 
 //		stack.scale(0.3f,0.175f,0.3f); funny square block TARDIS
-        stack.scale(0.5f,0.5f,0.5f);
-        stack.translate(0, -1.5f, 0);
+        stack.scale(0.6f,0.6f,0.6f);
+        stack.translate(0, -1.4f, 0);
 
 
         box.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

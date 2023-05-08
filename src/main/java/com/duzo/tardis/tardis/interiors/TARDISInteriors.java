@@ -1,6 +1,7 @@
 package com.duzo.tardis.tardis.interiors;
 
 import com.duzo.tardis.tardis.interiors.impl.HartnellInterior;
+import com.duzo.tardis.tardis.interiors.impl.PristineInterior;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class TARDISInteriors {
      * TARDIS Interiors are registered here:
      */
     public static void init() {
-        register(new HartnellInterior());
+        register(new PristineInterior());
     }
     public static void register(TARDISInteriorSchema interior) {interiors.put(interior.getID(),interior);}
     public static TARDISInteriorSchema get(String id) {

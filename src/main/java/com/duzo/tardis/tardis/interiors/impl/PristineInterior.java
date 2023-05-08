@@ -6,22 +6,20 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 
-// @TODO: Someone needs to fix this interior as its structure .nbt stuff is broken asf
-// basically someone pls rebuild it
-public class HartnellInterior extends TARDISInteriorSchema {
-    public HartnellInterior(ResourceLocation location, String id) {
+public class PristineInterior extends TARDISInteriorSchema {
+    public PristineInterior(ResourceLocation location, String id) {
         super(location, id);
     }
 
-    public HartnellInterior(String structureName) {
+    public PristineInterior(String structureName) {
         super(structureName);
     }
-    public HartnellInterior() {this("hartnell");}
+    public PristineInterior() {this("pristine");}
 
     private static final Codec<TARDISStructure> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
                 ResourceLocation.CODEC.fieldOf("structure").forGetter(TARDISStructure::getLocation),
                 Codec.STRING.orElse("Placeholder").fieldOf("name_component").forGetter(TARDISStructure::getStructureName)
-        ).apply(instance, HartnellInterior::new);
+        ).apply(instance, PristineInterior::new);
     });
 }

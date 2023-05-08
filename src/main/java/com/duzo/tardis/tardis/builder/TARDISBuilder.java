@@ -18,7 +18,7 @@ public class TARDISBuilder {
     private TARDISExteriorSchema<?> exteriorSchema;
     private TARDISInteriorSchema interior;
     public static final String DEFAULT_EXTERIOR = "basic_box";
-    public static final String DEFAULT_INTERIOR = "hartnell";
+    public static final String DEFAULT_INTERIOR = "pristine";
 
     public TARDISBuilder(UUID uuid) {
         this.uuid = uuid;
