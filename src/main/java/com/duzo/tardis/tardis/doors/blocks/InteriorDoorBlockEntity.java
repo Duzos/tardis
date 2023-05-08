@@ -41,8 +41,8 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
         this.doorOpened = bool;
 
         if (updateClient) {
-            Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getTARDIS().getPosition(),bool));
             Network.sendToAll(new UpdateInteriorDoorS2CPacket(this.getBlockPos(),bool));
+            Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getTARDIS().getPosition(),bool));
         }
     }
 
