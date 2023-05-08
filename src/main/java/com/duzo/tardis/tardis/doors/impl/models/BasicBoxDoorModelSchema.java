@@ -79,6 +79,9 @@ public class BasicBoxDoorModelSchema extends TARDISInteriorDoorModelSchema {
             stack.translate(-1.15,0,0.25);
         }
 
+        box.getChild("right_door").yRot = (float) Math.toRadians(entity.doorOpen() ? -270f : 0);
+        box.getChild("left_door").yRot = - (float) Math.toRadians(entity.doorOpen() ? -270f : 0);
+
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
         stack.popPose();
     }
