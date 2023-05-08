@@ -91,7 +91,7 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
         if (level.isClientSide) {return;}
 
         if (this.getTARDIS() == null) {
-            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+            TARDISManager.getInstance().findTARDISFromInteriorCoordinate(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
 
         if(player instanceof Player && this.doorOpen()) {

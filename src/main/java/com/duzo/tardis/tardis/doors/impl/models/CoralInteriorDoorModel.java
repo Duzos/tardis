@@ -63,19 +63,19 @@ public class CoralInteriorDoorModel extends TARDISInteriorDoorModelSchema {
 				.texOffs(102, 149).addBox(62.0F, -49.0F, -8.0F, 1.0F, 26.0F, 8.0F, new CubeDeformation(0.0F))
 				.texOffs(4, 132).addBox(54.0F, -49.0F, -8.0F, 8.0F, 25.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-29.0F, -34.0656F, -10.914F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition bone3 = bone.addOrReplaceChild("bone3", CubeListBuilder.create(), PartPose.offset(-18.5F, -48.0F, -9.5F));
+		PartDefinition right_door = bone.addOrReplaceChild("right_door", CubeListBuilder.create(), PartPose.offset(-18.5F, -48.0F, -9.5F));
 
-		PartDefinition cube_r3 = bone3.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(4, 5).addBox(16.5F, -39.5F, -18.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(32.5F, 38.5F, 16.0F, 0.0F, 1.5708F, 0.0F));
+		PartDefinition cube_r3 = right_door.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(4, 5).addBox(16.5F, -39.5F, -18.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(32.5F, 38.5F, 16.0F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition cube_r4 = bone3.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 94).addBox(15.5F, -66.0F, -0.5F, 1.0F, 75.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 15.0F, 0.0F, 1.5708F, 0.0F));
+		PartDefinition cube_r4 = right_door.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 94).addBox(15.5F, -66.0F, -0.5F, 1.0F, 75.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 15.0F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition cube_r5 = bone3.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(216, 138).addBox(15.25F, 5.5F, -2.5F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r5 = right_door.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(216, 138).addBox(15.25F, 5.5F, -2.5F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(201, 138).addBox(15.0F, 5.0F, -3.0F, 1.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 				.texOffs(40, 0).addBox(15.5F, -66.0F, -19.0F, 1.0F, 75.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 16.0F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition cube_r6 = bone3.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(197, 166).addBox(15.25F, -29.5F, -1.25F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 16.1F, 0.0F, 1.5708F, 0.0F));
+		PartDefinition cube_r6 = right_door.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(197, 166).addBox(15.25F, -29.5F, -1.25F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(18.5F, 38.0F, 16.1F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition bone2 = bone3.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offset(-2.5F, -6.0F, -3.8F));
+		PartDefinition bone2 = right_door.addOrReplaceChild("bone2", CubeListBuilder.create(), PartPose.offset(-2.5F, -6.0F, -3.8F));
 
 		PartDefinition cube_r7 = bone2.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(37, 209).addBox(13.5F, -45.5F, -9.5F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
 				.texOffs(37, 209).addBox(13.5F, -45.5F, -6.5F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
@@ -88,13 +88,13 @@ public class CoralInteriorDoorModel extends TARDISInteriorDoorModelSchema {
 
 		PartDefinition cube_r9 = bone2.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(45, 239).addBox(0.0F, -1.5F, -1.25F, 0.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(15.5F, 6.5F, 5.8F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition bone4 = bone.addOrReplaceChild("bone4", CubeListBuilder.create(), PartPose.offset(18.5F, -48.0F, -9.45F));
+		PartDefinition left_door = bone.addOrReplaceChild("left_door", CubeListBuilder.create(), PartPose.offset(18.5F, -48.0F, -9.45F));
 
-		PartDefinition cube_r10 = bone4.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(130, 220).addBox(15.65F, -29.5F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r10 = left_door.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(130, 220).addBox(15.65F, -29.5F, -12.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 5).addBox(16.5F, -39.5F, -12.5F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 0).addBox(15.5F, -66.0F, -14.0F, 1.0F, 75.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.5F, 38.0F, 15.95F, 0.0F, 1.5708F, 0.0F));
 
-		PartDefinition cube_r11 = bone4.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(223, 191).addBox(15.4F, -29.0F, 0.25F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r11 = left_door.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(223, 191).addBox(15.4F, -29.0F, 0.25F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
 				.texOffs(221, 170).addBox(15.25F, -29.5F, 0.75F, 1.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-18.5F, 38.0F, 16.05F, 0.0F, 1.5708F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 256, 256);
@@ -117,6 +117,9 @@ public class CoralInteriorDoorModel extends TARDISInteriorDoorModelSchema {
 		else if (direction == Direction.EAST) {
 			stack.translate(-1,0,0.5);
 		}
+
+		bone.getChild("right_door").yRot = (float) Math.toRadians(entity.doorOpen() ? 270f : 0);
+		bone.getChild("left_door").yRot =  (float) Math.toRadians(entity.doorOpen() ? -270f : 0);
 
 		super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
 		stack.popPose();
