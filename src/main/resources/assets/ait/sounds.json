@@ -3,7 +3,7 @@
     "subtitle": "TARDIS Dematerialising",
     "sounds": [
       {
-        "name": "tardis:tardis/demat"
+        "name": "ait:tardis/demat"
       }
     ]
   },
@@ -11,7 +11,7 @@
     "subtitle": "TARDIS Materialising",
     "sounds": [
       {
-        "name": "tardis:tardis/mat"
+        "name": "ait:tardis/mat"
       }
     ]
   },
@@ -19,7 +19,7 @@
     "subtitle": "TARDIS Failing to land",
     "sounds": [
       {
-        "name": "tardis:tardis/fail_land"
+        "name": "ait:tardis/fail_land"
       }
     ]
   },
@@ -27,7 +27,7 @@
     "subtitle": "TARDIS Emergency Landing",
     "sounds": [
       {
-        "name": "tardis:tardis/emergency_land"
+        "name": "ait:tardis/emergency_land"
       }
     ]
   },
@@ -35,7 +35,7 @@
     "subtitle": "TARDIS Hopping",
     "sounds": [
       {
-        "name": "tardis:tardis/hop_takeoff"
+        "name": "ait:tardis/hop_takeoff"
       }
     ]
   },
@@ -43,7 +43,7 @@
     "subtitle": "TARDIS Hopping",
     "sounds": [
       {
-        "name": "tardis:tardis/hop_land"
+        "name": "ait:tardis/hop_land"
       }
     ]
   },
@@ -51,7 +51,7 @@
     "subtitle": "TARDIS Takeoff Failing",
     "sounds": [
       {
-        "name": "tardis:tardis/fail_takeoff"
+        "name": "ait:tardis/fail_takeoff"
       }
     ]
   },
@@ -59,7 +59,7 @@
     "subtitle": "Space Time Throttle Pulled",
     "sounds": [
       {
-        "name": "tardis:controls/demat_lever_pull"
+        "name": "ait:controls/demat_lever_pull"
       }
     ]
   },
@@ -67,7 +67,7 @@
     "subtitle": "Handbrake Pulled",
     "sounds": [
       {
-        "name": "tardis:controls/handbrake_pull"
+        "name": "ait:controls/handbrake_pull"
       }
     ]
   }

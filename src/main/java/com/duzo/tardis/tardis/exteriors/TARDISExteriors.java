@@ -1,5 +1,7 @@
 package com.duzo.tardis.tardis.exteriors;
 
+import com.duzo.tardis.tardis.exteriors.impl.BasicBoxExteriorSchema;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,7 @@ public class TARDISExteriors {
      * TARDIS Exteriors are registered here:
      */
     public static void init() {
-
+        register(new BasicBoxExteriorSchema());
     }
     public static void register(TARDISExteriorSchema<?> exterior) {exteriors.put(exterior.getID(),exterior);}
     public static TARDISExteriorSchema<?> get(String id) {

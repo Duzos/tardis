@@ -1,6 +1,8 @@
 package com.duzo.tardis.tardis.doors;
 
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
+import com.duzo.tardis.tardis.doors.blocks.impl.BasicBoxDoorBlock;
+import com.duzo.tardis.tardis.doors.impl.BasicBoxDoorSchema;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
@@ -13,14 +15,14 @@ public class TARDISInteriorDoors {
     @Deprecated
     public static final String[] INTERIOR_DOOR_BLOCK_ID_LIST = new String[]{    };
     public static final List<Block> INTERIOR_DOOR_BLOCK_LIST = List.of(new Block[]{
-
+        DoorsInit.BASIC_DOOR_BLOCK.get()
     });
 
     /**
      * TARDIS Doors are registered here:
      */
     public static void init() {
-
+        register(new BasicBoxDoorSchema());
     }
 
     public static void register(TARDISInteriorDoorSchema<?> exterior) {

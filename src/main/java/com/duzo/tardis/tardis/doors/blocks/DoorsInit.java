@@ -1,8 +1,11 @@
 package com.duzo.tardis.tardis.doors.blocks;
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.core.init.BlockInit;
 import com.duzo.tardis.core.init.CreativeTabInit;
 import com.duzo.tardis.core.init.ItemInit;
+import com.duzo.tardis.tardis.doors.blocks.impl.BasicBoxDoorBlock;
+import com.duzo.tardis.tardis.doors.blocks.impl.entities.BasicBoxDoorBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +26,9 @@ public class DoorsInit {
     public static final List<BlockEntityType<? extends InteriorDoorBlockEntity>> DOOR_ENTITIES_LIST = new ArrayList<>();
     public static final DeferredRegister<Block> DOOR_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TARDISMod.MODID);
     public static final DeferredRegister<BlockEntityType<?>> DOOR_BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TARDISMod.MODID);
+
+    public static final RegistryObject<Block> BASIC_DOOR_BLOCK = BlockInit.register("basic_door_block", () -> new BasicBoxDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().noCollission().strength(3F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
+    public static final RegistryObject<BlockEntityType<BasicBoxDoorBlockEntity>> BASIC_DOOR_ENTITY = DOOR_BLOCK_ENTITIES.register("basic_door_block_entity", () -> BlockEntityType.Builder.of(BasicBoxDoorBlockEntity::new, BASIC_DOOR_BLOCK.get()).build(null));
 
     public static <T extends Block> RegistryObject<T> registerDoorBlock(String name, Supplier<T> supplier, Item.Properties properties){
         RegistryObject<T> block = DOOR_BLOCKS.register(name, supplier);

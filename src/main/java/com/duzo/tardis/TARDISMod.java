@@ -49,7 +49,7 @@ import org.slf4j.Logger;
 public class TARDISMod {
 
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "tardis";
+    public static final String MODID = "ait";
     // Directly reference a slf4j logger
     public static MinecraftServer server;
     private static final Logger LOGGER = LogUtils.getLogger();
