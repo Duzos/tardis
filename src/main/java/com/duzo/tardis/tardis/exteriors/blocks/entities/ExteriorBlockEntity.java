@@ -6,6 +6,7 @@ import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.network.Network;
 import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
 import com.duzo.tardis.network.packets.UpdateExteriorDoorS2CPacket;
+import com.duzo.tardis.network.packets.UpdateInteriorDoorS2CPacket;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ExteriorAnimation;
 import com.duzo.tardis.tardis.animation.impl.ClassicAnimation;
@@ -66,6 +67,7 @@ public class ExteriorBlockEntity extends BlockEntity {
 
         if (updateClient) {
             Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getBlockPos(),bool));
+            Network.sendToAll(new UpdateInteriorDoorS2CPacket(this.getTARDIS().getInterior().getInteriorDoorPos(),bool));
         }
     }
 
