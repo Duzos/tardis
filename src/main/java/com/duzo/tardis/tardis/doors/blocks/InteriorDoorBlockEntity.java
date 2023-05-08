@@ -10,6 +10,7 @@ import com.duzo.tardis.tardis.doors.TARDISInteriorDoorModelSchema;
 import com.duzo.tardis.tardis.doors.TARDISInteriorDoorSchema;
 import com.duzo.tardis.tardis.io.TeleportHelper;
 import com.duzo.tardis.tardis.manager.TARDISManager;
+import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +43,10 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
 
         if (updateClient) {
             Network.sendToAll(new UpdateInteriorDoorS2CPacket(this.getBlockPos(),bool));
-            Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getTARDIS().getPosition(),bool));
+
+            if (this.level == TARDISUtil.getTARDISLevel()) {
+                Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getTARDIS().getPosition(), bool));
+            }
         }
     }
 
@@ -90,8 +94,8 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity player) {
         if (level.isClientSide) {return;}
 
-        if (this.getTARDIS() == null) {
-            TARDISManager.getInstance().findTARDISFromInteriorCoordinate(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+        if (this.getTARDIS() == null && this.level == (TARDISUtil.getTARDISLevel())) {
+            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
 
         if(player instanceof Player && this.doorOpen()) {
