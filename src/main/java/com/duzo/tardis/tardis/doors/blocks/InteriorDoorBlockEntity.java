@@ -64,6 +64,10 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
         );
     }
     public TARDIS getTARDIS() {
+        if (this.tardis == null) {
+            this.updateTARDIS(new AbsoluteBlockPos(this.level,this.getBlockPos()));
+        }
+
         return this.tardis;
     }
 
@@ -95,10 +99,10 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
         if (level.isClientSide) {return;}
 
         if (this.getTARDIS() == null && this.level == (TARDISUtil.getTARDISLevel())) {
-            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+            TARDISManager.getInstance().findTARDISFromInteriorCoordinate(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
         }
 
-        if(player instanceof Player && this.doorOpen()) {
+        if(player instanceof Player && this.doorOpen() && this.level == TARDISUtil.getTARDISLevel()) {
             TeleportHelper helper = new TeleportHelper(player.getUUID(), this.getTARDIS().getPositionForTeleporting());
             helper.teleport((ServerLevel) player.getLevel());
         }
