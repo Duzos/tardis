@@ -1,10 +1,7 @@
 package com.duzo.tardis.network;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.network.packets.UpdateExteriorAnimationS2CPacket;
-import com.duzo.tardis.network.packets.UpdateExteriorDoorS2CPacket;
-import com.duzo.tardis.network.packets.UpdateInteriorDoorS2CPacket;
-import com.duzo.tardis.network.packets.UpdateLeverPulledS2CPacket;
+import com.duzo.tardis.network.packets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -34,6 +31,11 @@ public class Network {
                 .decoder(UpdateExteriorAnimationS2CPacket::decode)
                 .encoder(UpdateExteriorAnimationS2CPacket::encode)
                 .consumerMainThread(UpdateExteriorAnimationS2CPacket::handle)
+                .add();
+        net.messageBuilder(UpdateConsoleAnimationS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateConsoleAnimationS2CPacket::decode)
+                .encoder(UpdateConsoleAnimationS2CPacket::encode)
+                .consumerMainThread(UpdateConsoleAnimationS2CPacket::handle)
                 .add();
         net.messageBuilder(UpdateExteriorDoorS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(UpdateExteriorDoorS2CPacket::decode)

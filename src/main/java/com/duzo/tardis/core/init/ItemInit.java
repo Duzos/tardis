@@ -13,7 +13,8 @@ public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TARDISMod.MODID);
 
     // TARDIS Spawn items
-    public static final RegistryObject<TARDISSpawnItem> BASIC_BOX_ITEM = ITEMS.register("basic_box_tardis_item", () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).exterior("basic_box"));
+    public static final RegistryObject<TARDISSpawnItem> BASIC_BOX_ITEM = ITEMS.register("basic_box_tardis_item",
+            () -> new TARDISSpawnItemBuilder(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)).exterior("basic_box"));
 
     public static final RegistryObject<RemoteItem> STATTENHEIM_REMOTE = ITEMS.register("stattenheim_remote", () -> new RemoteItem(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)));
 }
