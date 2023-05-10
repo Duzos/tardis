@@ -3,6 +3,7 @@ package com.duzo.tardis.tardis.consoles.blocks;
 
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
+import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -54,6 +55,15 @@ public class ConsoleBlock extends BaseEntityBlock {
     }
 
     @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState p_60569_, boolean p_60570_) {
+        if (!level.isClientSide) {
+            ConsoleBlockEntity blockEntity = (ConsoleBlockEntity) level.getBlockEntity(pos);
+            blockEntity.onPlace(state,level,pos);
+        }
+        super.onPlace(state, level, pos, p_60569_, p_60570_);
+    }
+
+    @Override
     public RenderShape getRenderShape(BlockState p_49232_) {
         return RenderShape.MODEL;
     }
@@ -75,6 +85,6 @@ public class ConsoleBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> type) {
-        return type == BlockEntityInit.TARDIS_BLOCK_ENTITY.get() ? ConsoleBlockEntity::tick : null;
+        return type == BlockEntityInit.CONSOLE_BLOCK_ENTITY.get() ? ConsoleBlockEntity::tick : null;
     }
 }

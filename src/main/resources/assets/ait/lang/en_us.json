@@ -1,4 +1,6 @@
 {
-  "ait.blocks.tardis_block": "TARDIS",
-  "ait.blocks.console_block": "TARDIS Console"
+  "item.ait.basic_box_tardis_item": "TARDIS",
+  "item.ait.stattenheim_remote": "Stattenheim Remote",
+  "block.ait.basic_door_block": "Interior Doors",
+  "block.ait.console_block": "TARDIS Console"
 }

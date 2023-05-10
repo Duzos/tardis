@@ -44,6 +44,8 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
+import javax.swing.text.html.parser.Entity;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TARDISMod.MODID)
 public class TARDISMod {
@@ -64,6 +66,7 @@ public class TARDISMod {
         BlockInit.BLOCKS.register(bus);
         BlockEntityInit.BLOCK_ENTITIES.register(bus);
         SoundsInit.SOUNDS.register(bus);
+        EntityInit.ENTITY_TYPES.register(bus);
         DimensionsInit.register();
 
         // Registering doors

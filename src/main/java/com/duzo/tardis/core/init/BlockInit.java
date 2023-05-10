@@ -2,6 +2,7 @@ package com.duzo.tardis.core.init;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.consoles.blocks.ConsoleBlock;
+import com.duzo.tardis.tardis.doors.blocks.impl.BasicBoxDoorBlock;
 import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,8 +22,8 @@ public class BlockInit {
     public static final RegistryObject<Block> TARDIS_BLOCK = BLOCKS.register("tardis_block",
             () -> new ExteriorBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL)/*.lightLevel((state) -> {return 15;})*/.noOcclusion().strength(3F)));
 
-    public static final RegistryObject<Block> CONSOLE_BLOCK = BLOCKS.register("console_block",
-            () -> new ConsoleBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL)/*.lightLevel((state) -> {return 15;})*/.noOcclusion().strength(463346346F)));
+    public static final RegistryObject<Block> CONSOLE_BLOCK = BlockInit.register("console_block",
+            () -> new ConsoleBlock(BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(13F)), new Item.Properties().tab(CreativeTabInit.TARDIS_TAB));
 
     public static <T extends Block> RegistryObject<T> register(String name, Supplier<T> supplier, Item.Properties properties){
         RegistryObject<T> block = BLOCKS.register(name, supplier);

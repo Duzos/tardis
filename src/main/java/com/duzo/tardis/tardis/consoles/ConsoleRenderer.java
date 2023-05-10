@@ -18,6 +18,8 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
 
     public ModelPart model;
 
+    public float twirlAmount;
+
     private static final ResourceLocation texture = new ResourceLocation(TARDISMod.MODID, "textures/tardis/console/borealis_console.png");
 
     public ConsoleRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -27,7 +29,6 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
     @Override
     public void render(ConsoleBlockEntity entity, float partialTick, PoseStack stack, MultiBufferSource source, int packedLight, int packedOverlay) {
         Direction direction = (entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING));
-
         stack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
         stack.mulPose(Vector3f.XP.rotationDegrees(180f));
         stack.translate(-0.5, -0.75, 0.5);
@@ -57,6 +58,9 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
         if (entity.rotorState == EnumRotorState.UP) {
             if (entity.rotorTick > -0.45f) {
                 entity.rotorTick -= 0.0015f;
+                for (float i = 0; i <= 6; i = (i + 2f)) {
+                    entity.rotorSpin += i / 60f;
+                }
             } else {
                 entity.rotorTick = -0.45f;
                 entity.rotorState = EnumRotorState.DOWN;
@@ -64,7 +68,7 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
         }
 
         stack.pushPose();
-        consoleModel.rotor.yRot = (float) Math.toRadians(entity.getRotorTicking());
+        consoleModel.rotor.yRot = (float) Math.toRadians(entity.rotorSpin);
         //consoleModel.rotor.y = entity.rotorTick / 1.25f;
         stack.translate(0, -entity.rotorTick / 1.25f, 0);
         //stack.mulPose(Vector3f.YP.rotationDegrees(entity.getRotorTicking()));
@@ -72,6 +76,7 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
         stack.popPose();
         //schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentCull(texture)), packedLight, OverlayTexture.NO_OVERLAY);
         //schema.render(entity,stack, source.getBuffer(RenderType.entityTranslucentEmissive(emission,false)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        consoleModel.glow.render(stack, source.getBuffer(RenderType.entityTranslucentCull(texture)), 15728880, packedOverlay, 1, 1, 1, 1);
         consoleModel.renderToBuffer(stack, source.getBuffer(RenderType.entityTranslucentCull(texture)), packedLight, packedOverlay, 1, 1, 1, 1);
     }
 

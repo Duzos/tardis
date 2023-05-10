@@ -1,10 +1,13 @@
 package com.duzo.tardis.core.events;
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.client.renderers.GenericRenderer;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.init.BlockInit;
+import com.duzo.tardis.core.init.EntityInit;
 import com.duzo.tardis.tardis.consoles.ConsoleRenderer;
 import com.duzo.tardis.tardis.consoles.impl.models.BorealisConsoleModel;
+import com.duzo.tardis.tardis.controls.control_entities.ControlEntityRenderer;
 import com.duzo.tardis.tardis.doors.InteriorDoorRenderer;
 import com.duzo.tardis.tardis.doors.blocks.DoorsInit;
 import com.duzo.tardis.tardis.doors.impl.models.BasicBoxDoorModelSchema;
@@ -22,6 +25,7 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), ExteriorRenderer::new);
         renderers.registerBlockEntityRenderer(DoorsInit.BASIC_DOOR_ENTITY.get(), InteriorDoorRenderer::new);
         renderers.registerBlockEntityRenderer(BlockEntityInit.CONSOLE_BLOCK_ENTITY.get(), ConsoleRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
     }
 
     @SubscribeEvent

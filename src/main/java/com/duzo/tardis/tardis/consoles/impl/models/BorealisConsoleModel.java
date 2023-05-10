@@ -595,9 +595,6 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 		.texOffs(108, 138).mirror().addBox(2.5F, 1.024F, 10.0765F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(41, 87).mirror().addBox(1.5F, 1.024F, 11.0765F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(41, 87).addBox(-2.5F, 1.024F, 11.0765F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(32, 130).addBox(-5.0F, 0.274F, 10.5765F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(32, 130).addBox(-1.0F, 0.274F, 10.5765F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(32, 130).addBox(3.0F, 0.274F, 10.5765F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(81, 11).addBox(-3.0F, 1.274F, 3.0765F, 6.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 59).addBox(5.0F, 1.274F, -0.9235F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
 		.texOffs(137, 0).addBox(6.0F, 0.774F, 0.0765F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
@@ -647,8 +644,7 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 		.texOffs(125, 61).addBox(4.5F, 1.024F, -0.9235F, 6.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
 		.texOffs(67, 57).addBox(-5.5F, 0.774F, 11.0765F, 7.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
 		.texOffs(143, 119).addBox(-5.0F, 0.274F, 11.5765F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(143, 15).addBox(3.0F, 0.774F, 11.0765F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
-		.texOffs(45, 98).addBox(-1.0F, 0.024F, 11.5765F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -4.0F, -27.8F, 0.48F, 0.0F, 0.0F));
+		.texOffs(143, 15).addBox(3.0F, 0.774F, 11.0765F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -4.0F, -27.8F, 0.48F, 0.0F, 0.0F));
 
 		PartDefinition bone175 = bone174.addOrReplaceChild("bone175", CubeListBuilder.create().texOffs(0, 103).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-8.5F, 0.774F, 3.0765F, 0.7854F, 0.0F, 0.0F));
 
@@ -668,7 +664,7 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		base_console.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		//rotor.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		glow.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//glow.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		NORTH.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		NORTH_WEST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		SOUTH_WEST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
