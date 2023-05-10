@@ -1,6 +1,7 @@
-package com.duzo.tardis.tardis.consoles.impl.models;
+package com.duzo.tardis.tardis.consoles.impl;
 
 import com.duzo.tardis.tardis.consoles.ConsoleSchema;
+import com.duzo.tardis.tardis.consoles.impl.models.BorealisConsoleModel;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
 import com.duzo.tardis.tardis.exteriors.impl.models.BasicBoxExteriorModel;
 import net.minecraft.client.Minecraft;

@@ -6,7 +6,9 @@ import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ConsoleAnimation;
 import com.duzo.tardis.tardis.animation.impl.BorealisAnimation;
+import com.duzo.tardis.tardis.consoles.ConsoleSchema;
 import com.duzo.tardis.tardis.consoles.EnumRotorState;
+import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.mojang.logging.LogUtils;
@@ -24,8 +26,8 @@ public class ConsoleBlockEntity extends BlockEntity {
     public float rotorSpin;
     public EnumRotorState rotorState = EnumRotorState.UP;
     private ConsoleAnimation animation;
-    //protected ConsoleSchema<?> schema;
-    //protected ConsoleSchema.Serializer SCHEMA_SERIALIZER = new ConsoleSchema.Serializer();
+    protected ConsoleSchema<?> schema;
+    protected ConsoleSchema.Serializer SCHEMA_SERIALIZER = new ConsoleSchema.Serializer();
 
     public ConsoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -35,9 +37,9 @@ public class ConsoleBlockEntity extends BlockEntity {
         this(BlockEntityInit.CONSOLE_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
-    //public ConsoleSchema<?> getSchema() {
-    //    return this.schema;
-    //}
+    public ConsoleSchema<?> getSchema() {
+        return new BorealisConsoleSchema();
+    }
 
     public void setTARDIS(TARDIS tardis) {
         this.tardis = tardis;

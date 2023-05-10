@@ -4,14 +4,20 @@ package com.duzo.tardis.tardis.consoles.impl.models;// Made with Blockbench 4.7.
 
 
 import com.duzo.tardis.tardis.consoles.ConsoleModelSchema;
+import com.duzo.tardis.tardis.consoles.EnumRotorState;
+import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class BorealisConsoleModel extends ConsoleModelSchema {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -656,20 +662,70 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 	}
 
 	@Override
+	public void renderWithEntity(ConsoleBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		stack.pushPose();
+		stack.mulPose(Vector3f.XP.rotationDegrees(180f));
+		stack.translate(0, -0.75,0);
+		stack.scale(0.5f, 0.5f, 0.5f);
+
+
+		Direction direction = entity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+		if (direction == Direction.NORTH) {
+			stack.translate(-1,0,1);
+		}
+		else if (direction == Direction.SOUTH) {
+			stack.translate(1,0,-1);
+		}
+		else if (direction == Direction.EAST) {
+			stack.translate(1,0,1);
+		}
+		else if (direction == Direction.WEST) {
+			stack.translate(-1,0,-1);
+		}
+
+		if (entity.rotorState == EnumRotorState.DOWN) {
+			if (entity.rotorTick < 0f/*1.5f*/) {
+				entity.rotorTick += 0.0015f;
+			} else {
+				entity.rotorTick = 0f/*1.5f*/;
+				entity.rotorState = EnumRotorState.UP;
+			}
+		}
+		if (entity.rotorState == EnumRotorState.UP) {
+			if (entity.rotorTick > -0.45f) {
+				entity.rotorTick -= 0.0015f;
+				for (float i = 0; i <= 6; i = (i + 2f)) {
+					entity.rotorSpin += i / 60f;
+				}
+			} else {
+				entity.rotorTick = -0.45f;
+				entity.rotorState = EnumRotorState.DOWN;
+			}
+		}
+
+		super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+
+		this.rotor.yRot = (float) Math.toRadians(entity.rotorSpin);
+		stack.translate(0, -entity.rotorTick / 1.25f, 0);
+		this.rotor.render(stack, vertexConsumer, packedLight, packedOverlay, 1, 1, 1, 1);
+		stack.popPose();
+	}
+
+	@Override
 	public void setupAnim(Entity p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
 
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		base_console.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//rotor.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//glow.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		NORTH.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		NORTH_WEST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		SOUTH_WEST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		SOUTH.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		SOUTH_EAST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		NORTH_EAST.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		base_console.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		glow.render(stack, vertexConsumer, 15728880, packedOverlay, 1, 1, 1, 1);
+		NORTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		NORTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		SOUTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		SOUTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		NORTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

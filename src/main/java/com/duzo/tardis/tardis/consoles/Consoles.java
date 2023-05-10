@@ -1,7 +1,6 @@
 package com.duzo.tardis.tardis.consoles;
 
-import com.duzo.tardis.tardis.consoles.impl.models.BorealisConsoleSchema;
-import com.duzo.tardis.tardis.exteriors.impl.BasicBoxExteriorSchema;
+import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
 
 import java.util.HashMap;
 import java.util.Map;
