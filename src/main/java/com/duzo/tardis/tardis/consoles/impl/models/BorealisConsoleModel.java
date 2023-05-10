@@ -706,8 +706,12 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 
 		super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 
-		this.rotor.yRot = (float) Math.toRadians(entity.rotorSpin);
-		stack.translate(0, -entity.rotorTick / 1.25f, 0);
+		if(entity.isInFlight()) {
+			this.rotor.yRot = (float) Math.toRadians(entity.rotorSpin);
+			stack.translate(0, -entity.rotorTick / 1.25f, 0);
+		} else {
+			this.rotor.yRot = (float) Math.toRadians(0);
+		}
 		this.rotor.render(stack, vertexConsumer, packedLight, packedOverlay, 1, 1, 1, 1);
 		stack.popPose();
 	}

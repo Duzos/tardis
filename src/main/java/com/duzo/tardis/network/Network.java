@@ -37,6 +37,11 @@ public class Network {
                 .encoder(UpdateConsoleAnimationS2CPacket::encode)
                 .consumerMainThread(UpdateConsoleAnimationS2CPacket::handle)
                 .add();
+        net.messageBuilder(UpdateFlightStateS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateFlightStateS2CPacket::decode)
+                .encoder(UpdateFlightStateS2CPacket::encode)
+                .consumerMainThread(UpdateFlightStateS2CPacket::handle)
+                .add();
         net.messageBuilder(UpdateExteriorDoorS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(UpdateExteriorDoorS2CPacket::decode)
                 .encoder(UpdateExteriorDoorS2CPacket::encode)

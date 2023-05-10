@@ -28,6 +28,7 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
     private TARDIS tardis;
     protected TARDISInteriorDoorSchema<?> schema;
     private boolean doorOpened = false;
+    public boolean doorLocked = false;
     protected TARDISInteriorDoorSchema.Serializer SCHEMA_SERIALIZER = new TARDISInteriorDoorSchema.Serializer();
 
     public InteriorDoorBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
@@ -36,6 +37,14 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
 
     public boolean doorOpen() {
         return this.doorOpened;
+    }
+
+    public void setDoorLocked(boolean bool, boolean updateClient) {
+        this.doorLocked = bool;
+
+        if(updateClient) {
+            Network.sendToAll(new UpdateInteriorDoorS2CPacket(this.getBlockPos(),bool));
+        }
     }
 
     public void setDoorOpened(boolean bool, boolean updateClient) {
@@ -52,6 +61,10 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
 
     public void setDoorOpened(boolean bool) {
         this.setDoorOpened(bool,false);
+    }
+
+    public void setDoorLocked(boolean bool) {
+        this.setDoorLocked(bool, false);
     }
 
 

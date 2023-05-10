@@ -1,8 +1,14 @@
 package com.duzo.tardis.tardis.controls.control_entities;
 
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
+import com.duzo.tardis.network.Network;
+import com.duzo.tardis.network.packets.UpdateLeverPulledS2CPacket;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.consoles.blocks.ConsoleBlock;
+import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
+import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.manager.TARDISManager;
+import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -33,16 +39,18 @@ public class ControlEntitySchema extends AmbientCreature {
 
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(Bat.class, EntityDataSerializers.BYTE);
 
-    public static final String Throttle = "throttle";
+    /*public static final String Throttle = "throttle";
     public static final String coordinateX = "x";
     public static final String coordinateY = "y";
     public static final String coordinateZ = "z";
     public static final String Increment = "increment";
     public static final String DimensionalControl = "dimensional_control";
     public static final String posNeg = "positive_negative";
-    public static final String exteriorFacing = "exterior_facing";
+    public static final String exteriorFacing = "exterior_facing";*/
+    private BlockPos consolePosition;
     public static float sizing = 0.125f;
     public static boolean hasBeenHit = false;
+    public boolean isPulled;
     public UUID tardisID;
     public String controlName;
 
@@ -50,14 +58,19 @@ public class ControlEntitySchema extends AmbientCreature {
         super(p_i50290_1_, p_i50290_2_);
     }
 
-    public ControlEntitySchema(EntityType<? extends AmbientCreature> entity, Level level, UUID tardisID, String name) {
+    public ControlEntitySchema(EntityType<? extends AmbientCreature> entity, Level level, UUID tardisID, String name, BlockPos consoleBlockPos) {
         super(entity, level);
         this.tardisID = tardisID;
         this.controlName = name;
+        this.consolePosition = consoleBlockPos;
     }
 
     public void setControlName(String newControlName) {
         this.setCustomName(Component.nullToEmpty(newControlName));
+    }
+
+    public String getControlName() {
+        return this.controlName;
     }
 
     public void travel(UUID tardisID) {
@@ -171,7 +184,8 @@ public class ControlEntitySchema extends AmbientCreature {
         /*if(pHand == InteractionHand.MAIN_HAND) {
             this.remove(RemovalReason.DISCARDED);
         }*/
-        doInteractionStuff(pPlayer);
+        //doInteractionStuff(pPlayer);
+        this.remove(RemovalReason.DISCARDED);
         return super.mobInteract(pPlayer, pHand);
     }
 
@@ -200,6 +214,18 @@ public class ControlEntitySchema extends AmbientCreature {
         return true;
     }
 
+    public boolean pulled() {
+        return this.isPulled;
+    }
+
+    public void setPulled(boolean bool, boolean updateClient) {
+        this.isPulled = bool;
+
+        if (updateClient) {
+            Network.sendToAll(new UpdateLeverPulledS2CPacket(this.consolePosition, bool));
+        }
+    }
+
     /**
      * Called when the entity is attacked.
      * @param pSource
@@ -207,9 +233,24 @@ public class ControlEntitySchema extends AmbientCreature {
     public void doInteractionStuff(Player pSource) {
         if (pSource.level.isClientSide) return;
 
-        this.travel(this.tardisID);
-        Level level = pSource.getLevel();
-        level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
+        if(this.getControlName().equals("Throttle")) {
+            this.travel(this.tardisID);
+            if(this.consolePosition != null && !level.isClientSide()) {
+                ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
+                console.setTARDISInFlight(true, true);
+            }
+            this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
+        }
+        if(this.getControlName().equals("Handbrake")) {
+            if(this.consolePosition != null) {
+                ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
+                TARDISTravel travel = console.getTARDIS().getTravel();
+
+                travel.changeHandbrake();
+                this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
+                this.setPulled(!this.pulled(), true);
+            }
+        }
         /*boolean randomBool = false;
         if(!this.hasBeenHit && !randomBool) {
             this.setHasBeenHit();
