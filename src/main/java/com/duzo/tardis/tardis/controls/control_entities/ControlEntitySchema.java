@@ -205,6 +205,8 @@ public class ControlEntitySchema extends AmbientCreature {
      * @param pSource
      */
     public void doInteractionStuff(Player pSource) {
+        if (pSource.level.isClientSide) return;
+
         this.travel(this.tardisID);
         Level level = pSource.getLevel();
         level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);

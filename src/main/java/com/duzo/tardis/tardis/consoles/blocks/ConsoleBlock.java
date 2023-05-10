@@ -12,7 +12,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -55,12 +57,13 @@ public class ConsoleBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState p_60569_, boolean p_60570_) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity p_49850_, ItemStack p_49851_) {
+        super.setPlacedBy(level, pos, state, p_49850_, p_49851_);
+
         if (!level.isClientSide) {
             ConsoleBlockEntity blockEntity = (ConsoleBlockEntity) level.getBlockEntity(pos);
             blockEntity.onPlace(state,level,pos);
         }
-        super.onPlace(state, level, pos, p_60569_, p_60570_);
     }
 
     @Override

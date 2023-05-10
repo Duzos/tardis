@@ -54,6 +54,8 @@ public class ConsoleBlockEntity extends BlockEntity {
     }
 
     public TARDIS getTARDIS() {
+        if (this.tardis == null) this.updateTARDIS(new AbsoluteBlockPos(this.level,this.getBlockPos()));
+
         return this.tardis;
     }
 
