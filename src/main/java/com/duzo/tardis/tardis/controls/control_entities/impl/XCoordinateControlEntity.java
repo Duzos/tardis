@@ -28,10 +28,12 @@ public class XCoordinateControlEntity extends ControlEntitySchema {
 
         if (!this.getControlName().equals("X")) return;
 
+        this.updateCoordinates();
+
         if (!pSource.isCrouching()) {
-            x += this.incrementValue;
+            this.x += this.incrementValue;
         } else {
-            x -= this.incrementValue;
+            this.x -= this.incrementValue;
         }
 
         pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);

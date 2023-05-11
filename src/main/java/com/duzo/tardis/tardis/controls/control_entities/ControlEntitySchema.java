@@ -81,30 +81,36 @@ public abstract class ControlEntitySchema extends AmbientCreature {
 
     public void setDest() {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisID);
-        BlockPos targetPosition = new BlockPos(x, y, z);
+        BlockPos targetPosition = new BlockPos(this.x, this.y, this.z);
         this.setListedPosition(this.tardisID, targetPosition);
         tardis.getTravel().setDestination(new AbsoluteBlockPos(tardis.getTravel().getDestination().getDimension(), targetPosition), true);
     }
 
     public void setListedPosition(UUID tardisID, BlockPos bPos) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
-        x = bPos.getX();
+        x = bPos.getX(); // These variables get immediately reassigned lol, but just have it there in case we need to go back to it.
         y = bPos.getY();
         z = bPos.getZ();
+
+        this.x = tardis.getTravel().getDestination().getX(); // This makes sure all controls have the same coords
+        this.y = tardis.getTravel().getDestination().getY();
+        this.z = tardis.getTravel().getDestination().getZ();
+    }
+    protected void updateCoordinates() {
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
+        this.x = tardis.getTravel().getDestination().getX(); // This makes sure all controls have the same coords
+        this.y = tardis.getTravel().getDestination().getY();
+        this.z = tardis.getTravel().getDestination().getZ();
     }
 
     public int getNextIncrement() {
-        switch(incrementValue) {
-            case 1:
-                return 10;
-            case 10:
-                return 100;
-            case 100:
-                return 1000;
-            case 1000:
-                return 1;
-        }
-        return 1;
+        return switch (incrementValue) {
+            case 1 -> 10;
+            case 10 -> 100;
+            case 100 -> 1000;
+            case 1000 -> 1;
+            default -> 1;
+        };
     }
 
     public void removeMe() {

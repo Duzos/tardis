@@ -28,13 +28,15 @@ public class YCoordinateControlEntity extends ControlEntitySchema {
 
         if (!this.getControlName().equals("Y")) return;
 
+        this.updateCoordinates();
+
         if (!pSource.isCrouching()) {
-            if (y != 320) {
-                y += this.incrementValue;
+            if (this.y != 320) {
+                this.y += this.incrementValue;
             }
         } else {
-            if (y != -64) {
-                y -= this.incrementValue;
+            if (this.y != -64) {
+                this.y -= this.incrementValue;
             }
         }
 

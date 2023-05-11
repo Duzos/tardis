@@ -28,10 +28,12 @@ public class ZCoordinateControlEntity extends ControlEntitySchema {
 
         if (!this.getControlName().equals("Z")) return;
 
+        this.updateCoordinates();
+
         if (!pSource.isCrouching()) {
-            z += this.incrementValue;
+            this.z += this.incrementValue;
         } else {
-            z -= this.incrementValue;
+            this.z -= this.incrementValue;
         }
 
         pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
