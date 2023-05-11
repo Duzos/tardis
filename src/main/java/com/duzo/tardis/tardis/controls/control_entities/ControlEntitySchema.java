@@ -37,6 +37,7 @@ import java.util.UUID;
 public abstract class ControlEntitySchema extends AmbientCreature {
 
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(ControlEntitySchema.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<String> CONTROL_NAME = SynchedEntityData.defineId(ControlEntitySchema.class, EntityDataSerializers.STRING);
 
     /*public static final String Throttle = "throttle";
     public static final String coordinateX = "x";
@@ -64,7 +65,6 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     public ControlEntitySchema(EntityType<? extends AmbientCreature> entity, Level level, UUID tardisID, String name, BlockPos consoleBlockPos) {
         super(entity, level);
         this.tardisID = tardisID;
-        this.controlName = name;
         this.setControlName(name);
         this.setListedPosition(tardisID, TARDISManager.getInstance().findTARDIS(tardisID).getPosition());
         this.consolePosition = consoleBlockPos;
@@ -72,10 +72,11 @@ public abstract class ControlEntitySchema extends AmbientCreature {
 
     public void setControlName(String newControlName) {
         this.setCustomName(Component.nullToEmpty(newControlName));
+        this.entityData.set(CONTROL_NAME,newControlName);
     }
 
     public String getControlName() {
-        return this.controlName;
+        return this.entityData.get(CONTROL_NAME);
     }
 
 
@@ -141,6 +142,7 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ID_FLAGS, (byte)0);
+        this.entityData.define(CONTROL_NAME,"");
     }
 
     /**
@@ -341,6 +343,7 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.entityData.set(DATA_ID_FLAGS, pCompound.getByte("ControlFlags"));
+        this.setControlName(pCompound.getString("customName"));
         this.hasBeenHit = pCompound.getBoolean("hasbeenhit");
         if (this.tardisID != null) {
             this.tardisID = pCompound.getUUID("tardisID");
@@ -360,6 +363,7 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putByte("ControlFlags", this.entityData.get(DATA_ID_FLAGS));
+        pCompound.putString("customName",this.getControlName());
         pCompound.putBoolean("hasbeenhit", this.hasBeenHit);
         if (this.tardisID != null) {
             pCompound.putUUID("tardisID", this.tardisID);
