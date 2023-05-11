@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 
+import javax.naming.ldap.Control;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,6 +192,24 @@ public class ConsoleBlockEntity extends BlockEntity {
         this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos)).setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
+    }
+
+    public ControlEntitySchema getControl(String controlName) {
+        for (ControlEntitySchema entity : this.controlEntities) {
+            if (entity.getCustomName().equals(controlName)) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    public ControlEntitySchema getControl(Class<ControlEntitySchema> schema) {
+        for (ControlEntitySchema entity : this.controlEntities) {
+            if (schema.isInstance(entity)) {
+                return entity;
+            }
+        }
+        return null;
     }
 
     @Override
