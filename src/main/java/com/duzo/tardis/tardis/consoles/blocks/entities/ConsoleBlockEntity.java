@@ -28,6 +28,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +38,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsoleBlockEntity extends BlockEntity {
     private TARDIS tardis;
@@ -49,6 +53,7 @@ public class ConsoleBlockEntity extends BlockEntity {
     protected ConsoleSchema.Serializer SCHEMA_SERIALIZER = new ConsoleSchema.Serializer();
     protected TARDISTravel.STATE previousState;
     protected TARDISTravel.STATE state;
+    private List<ControlEntitySchema> controlEntities = new ArrayList<>();
     public ConsoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -134,6 +139,19 @@ public class ConsoleBlockEntity extends BlockEntity {
         }
     }
 
+    public ControlEntitySchema addControlEntity(ControlEntitySchema schema) {
+        this.controlEntities.add(schema);
+        schema.setCustomNameVisible(true);
+        this.level.addFreshEntity(schema);
+        return schema;
+    }
+
+    private void removeControls() {
+        for (ControlEntitySchema entity : this.controlEntities) {
+            entity.setRemoved(Entity.RemovalReason.DISCARDED);
+        }
+    }
+
     public void runControlSpawn(Level level, BlockPos pos) {
         float multipleOfX = 1;
         float multipleOfZ = 1;
@@ -141,30 +159,6 @@ public class ConsoleBlockEntity extends BlockEntity {
         float addSubZ = 0;
         Direction direction = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         if(this.getTARDIS() == null) return;
-
-        ControlEntitySchema throttle = new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos);
-        throttle.setCustomNameVisible(true);
-        this.level.addFreshEntity(throttle);
-
-        ControlEntitySchema handbrake = new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos);
-        handbrake.setCustomNameVisible(true);
-        this.level.addFreshEntity(handbrake);
-
-        ControlEntitySchema xControl = new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos);
-        xControl.setCustomNameVisible(true);
-        this.level.addFreshEntity(xControl);
-
-        ControlEntitySchema yControl = new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos);
-        yControl.setCustomNameVisible(true);
-        this.level.addFreshEntity(yControl);
-
-        ControlEntitySchema zControl = new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos);
-        zControl.setCustomNameVisible(true);
-        this.level.addFreshEntity(zControl);
-
-        ControlEntitySchema increment = new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos);
-        increment.setCustomNameVisible(true);
-        this.level.addFreshEntity(increment);
 
         if(direction.equals(Direction.NORTH)) {
             multipleOfX = multipleOfX * 1f;
@@ -190,12 +184,19 @@ public class ConsoleBlockEntity extends BlockEntity {
             addSubX = 1f;
             addSubZ = 1f;
         }*/
-        throttle.setPos(pos.getX() + (1.3 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (0.7225 * multipleOfZ) + addSubZ);
-        handbrake.setPos(pos.getX() + (1.08 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.08 * multipleOfZ) + addSubZ);
-        xControl.setPos(pos.getX() + (0.375 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
-        yControl.setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
-        zControl.setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
-        increment.setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
+
+        this.addControlEntity(new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos)).setPos(pos.getX() + (1.3 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (0.7225 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos)).setPos(pos.getX() + (1.08 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.08 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos)).setPos(pos.getX() + (0.375 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos)).setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
+    }
+
+    @Override
+    public void setRemoved() {
+        this.removeControls();
+        super.setRemoved();
     }
 
     public void onPlace(BlockState state, Level level, BlockPos pos) {
