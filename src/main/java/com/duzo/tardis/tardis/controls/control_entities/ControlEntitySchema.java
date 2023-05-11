@@ -4,11 +4,9 @@ import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.network.Network;
 import com.duzo.tardis.network.packets.UpdateLeverPulledS2CPacket;
 import com.duzo.tardis.tardis.TARDIS;
-import com.duzo.tardis.tardis.consoles.blocks.ConsoleBlock;
 import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.manager.TARDISManager;
-import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -36,9 +34,9 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class ControlEntitySchema extends AmbientCreature {
+public abstract class ControlEntitySchema extends AmbientCreature {
 
-    private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(Bat.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(ControlEntitySchema.class, EntityDataSerializers.BYTE);
 
     /*public static final String Throttle = "throttle";
     public static final String coordinateX = "x";
@@ -48,13 +46,13 @@ public class ControlEntitySchema extends AmbientCreature {
     public static final String DimensionalControl = "dimensional_control";
     public static final String posNeg = "positive_negative";
     public static final String exteriorFacing = "exterior_facing";*/
-    private BlockPos consolePosition;
+    protected BlockPos consolePosition;
     public static float sizing = 0.125f;
     public static boolean hasBeenHit = false;
-    private float x;
-    private float y;
-    private float z;
-    private int incrementValue = 1;
+    protected float x;
+    protected float y;
+    protected float z;
+    protected int incrementValue = 1;
     public boolean isPulled;
     public UUID tardisID;
     public String controlName;
@@ -80,10 +78,6 @@ public class ControlEntitySchema extends AmbientCreature {
         return this.controlName;
     }
 
-    public void travel(UUID tardisID) {
-        TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
-        tardis.to(new AbsoluteBlockPos(level, tardis.getPosition().getDirection(), tardis.getPosition()),true);
-    }
 
     public void setDest() {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisID);
@@ -220,7 +214,7 @@ public class ControlEntitySchema extends AmbientCreature {
             this.remove(RemovalReason.DISCARDED);
         }*/
         //doInteractionStuff(pPlayer);
-        this.remove(RemovalReason.DISCARDED);
+        this.remove(RemovalReason.DISCARDED); // why?
         return super.mobInteract(pPlayer, pHand);
     }
 
@@ -265,80 +259,9 @@ public class ControlEntitySchema extends AmbientCreature {
      * Called when the entity is attacked.
      * @param pSource
      */
-    public void doInteractionStuff(Player pSource) {
+    public void runInteractions(Player pSource) {
         if (pSource.level.isClientSide) return;
 
-        if(this.getControlName().equals("Throttle")) {
-            this.travel(this.tardisID);
-            if(this.consolePosition != null && !level.isClientSide()) {
-                ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
-                console.setTARDISInFlight(true, true);
-            }
-            this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
-        }
-        if(this.getControlName().equals("Handbrake")) {
-            if(this.consolePosition != null) {
-                ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
-                TARDISTravel travel = console.getTARDIS().getTravel();
-
-                travel.changeHandbrake();
-                this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
-                this.setPulled(!this.pulled(), true);
-            }
-        }
-        if(this.getControlName().equals("X")
-                || this.getControlName().equals("Y")
-                || this.getControlName().equals("Z")) {
-            if (this.getControlName().equals("X")) {
-                if (!pSource.isCrouching()) {
-                    if (this.getControlName().equals("X")) {
-                        x += this.incrementValue;
-                    }
-                } else {
-                    if (this.getControlName().equals("X")) {
-                        x -= this.incrementValue;
-                    }
-                }
-                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
-                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
-            }
-            if (this.getControlName().equals("Y")) {
-                if (!pSource.isCrouching()) {
-                    if (this.getControlName().equals("Y")) {
-                        if (y != 320) {
-                            y += this.incrementValue;
-                        }
-                    }
-                } else {
-                    if (this.getControlName().equals("Y")) {
-                        if (y != -64) {
-                            y -= this.incrementValue;
-                        }
-                    }
-                }
-                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
-                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
-            }
-            if (this.getControlName().equals("Z")) {
-                if (!pSource.isCrouching()) {
-                    if (this.getControlName().equals("Z")) {
-                        z += this.incrementValue;
-                    }
-                } else {
-                    if (this.getControlName().equals("Z")) {
-                        z -= this.incrementValue;
-                    }
-                }
-                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
-                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
-            }
-            this.setDest();
-        }
-        if(this.getControlName().equals("Increment")) {
-            this.getNextIncrement();
-            pSource.displayClientMessage(Component.translatable("Increment Amount: " + incrementValue).setStyle(Style.EMPTY), true);
-            this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 0.5f, 5f);
-        }
         /*boolean randomBool = false;
         if(!this.hasBeenHit && !randomBool) {
             this.setHasBeenHit();
@@ -400,7 +323,7 @@ public class ControlEntitySchema extends AmbientCreature {
             if (this.isInvulnerableTo(pSource)) {
                 return false;
             } else {
-                doInteractionStuff(player);
+                this.runInteractions(player);
             }
         }
         return super.hurt(pSource, 0);

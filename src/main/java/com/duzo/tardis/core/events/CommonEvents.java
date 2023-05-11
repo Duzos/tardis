@@ -21,7 +21,7 @@ public class CommonEvents {
     public static class ModEventBusEvents {
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-            event.put(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+//            event.put(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.THROTTLE_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.X_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());

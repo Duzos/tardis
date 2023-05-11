@@ -25,7 +25,7 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(BlockEntityInit.TARDIS_BLOCK_ENTITY.get(), ExteriorRenderer::new);
         renderers.registerBlockEntityRenderer(DoorsInit.BASIC_DOOR_ENTITY.get(), InteriorDoorRenderer::new);
         renderers.registerBlockEntityRenderer(BlockEntityInit.CONSOLE_BLOCK_ENTITY.get(), ConsoleRenderer::new);
-        renderers.registerEntityRenderer(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+//        renderers.registerEntityRenderer(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
         renderers.registerEntityRenderer(EntityInit.THROTTLE_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
         renderers.registerEntityRenderer(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
         renderers.registerEntityRenderer(EntityInit.X_CONTROL_ENTITY.get(), ControlEntityRenderer::new);

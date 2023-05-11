@@ -62,11 +62,8 @@ public class UpdateFlightStateS2CPacket {
                 if (!(level.getBlockEntity(this.pos) instanceof ConsoleBlockEntity entity)) {
                     return;
                 }
-                if (entity == null) {return;}
 
-                if (entity instanceof ConsoleBlockEntity) {
-                    ((ConsoleBlockEntity) entity).setTARDISInFlight(this.inFlight, false);
-                }
+                entity.setTARDISInFlight(this.inFlight, false);
             });
         });
         return true;
