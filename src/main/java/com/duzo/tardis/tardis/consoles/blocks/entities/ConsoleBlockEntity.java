@@ -14,12 +14,14 @@ import com.duzo.tardis.tardis.consoles.ConsoleSchema;
 import com.duzo.tardis.tardis.consoles.EnumRotorState;
 import com.duzo.tardis.tardis.consoles.blocks.ConsoleBlock;
 import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
+import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.util.TARDISUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.MobCategory;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class ConsoleBlockEntity extends BlockEntity {
     private TARDIS tardis;
@@ -117,15 +120,60 @@ public class ConsoleBlockEntity extends BlockEntity {
     }
 
     public void runControlSpawn(Level level, BlockPos pos) {
+        float multipleOfX = 1;
+        float multipleOfZ = 1;
+        float addSubX = 0;
+        float addSubZ = 0;
+        Direction direction = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         if(this.getTARDIS() != null) {
-            ControlEntitySchema throttle = new ControlEntitySchema(EntityInit.BASIC_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos);
-            ControlEntitySchema handbrake = new ControlEntitySchema(EntityInit.BASIC_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos);
+            ControlEntitySchema throttle = new ControlEntitySchema(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos);
+            ControlEntitySchema handbrake = new ControlEntitySchema(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos);
+            ControlEntitySchema xControl = new ControlEntitySchema(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos);
+            ControlEntitySchema yControl = new ControlEntitySchema(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos);
+            ControlEntitySchema zControl = new ControlEntitySchema(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos);
+            ControlEntitySchema increment = new ControlEntitySchema(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos);
             throttle.setCustomNameVisible(true);
             handbrake.setCustomNameVisible(true);
+            xControl.setCustomNameVisible(true);
+            yControl.setCustomNameVisible(true);
+            zControl.setCustomNameVisible(true);
+            increment.setCustomNameVisible(true);
             this.level.addFreshEntity(throttle);
             this.level.addFreshEntity(handbrake);
-            throttle.setPos(pos.getX() + 0.8, pos.getY() + 1.4, pos.getZ() + 0.25);
-            handbrake.setPos(pos.getX() - 0.8, pos.getY() + 1.4, pos.getZ() + 0.25);
+            this.level.addFreshEntity(xControl);
+            this.level.addFreshEntity(yControl);
+            this.level.addFreshEntity(zControl);
+            this.level.addFreshEntity(increment);
+            if(direction.equals(Direction.NORTH)) {
+                multipleOfX = multipleOfX * 1f;
+                multipleOfZ = multipleOfZ * 1f;
+                addSubX = 0;
+                addSubZ = 0;
+            }
+            /*if(direction.equals(Direction.EAST)) {
+                multipleOfX = multipleOfX * 1f;
+                multipleOfZ = multipleOfZ * -1f;
+                addSubX = -0.5f;
+                addSubZ = 0.5f;
+            }*/
+            if(direction.equals(Direction.SOUTH)) {
+                multipleOfX = multipleOfX * -1f;
+                multipleOfZ = multipleOfZ * -1f;
+                addSubX = 1f;
+                addSubZ = 1f;
+            }
+            /*if(direction.equals(Direction.WEST)) {
+                multipleOfX = multipleOfX * 1f;
+                multipleOfZ = multipleOfZ * -1f;
+                addSubX = 1f;
+                addSubZ = 1f;
+            }*/
+            throttle.setPos(pos.getX() + (1.3 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (0.7225 * multipleOfZ) + addSubZ);
+            handbrake.setPos(pos.getX() + (1.08 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.08 * multipleOfZ) + addSubZ);
+            xControl.setPos(pos.getX() + (0.375 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+            yControl.setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+            zControl.setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
+            increment.setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
         }
     }
 

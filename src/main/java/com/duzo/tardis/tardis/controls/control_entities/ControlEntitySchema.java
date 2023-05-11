@@ -12,6 +12,7 @@ import com.duzo.tardis.tardis.util.TARDISUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -50,6 +51,10 @@ public class ControlEntitySchema extends AmbientCreature {
     private BlockPos consolePosition;
     public static float sizing = 0.125f;
     public static boolean hasBeenHit = false;
+    private float x;
+    private float y;
+    private float z;
+    private int incrementValue = 1;
     public boolean isPulled;
     public UUID tardisID;
     public String controlName;
@@ -62,6 +67,8 @@ public class ControlEntitySchema extends AmbientCreature {
         super(entity, level);
         this.tardisID = tardisID;
         this.controlName = name;
+        this.setControlName(name);
+        this.setListedPosition(tardisID, TARDISManager.getInstance().findTARDIS(tardisID).getPosition());
         this.consolePosition = consoleBlockPos;
     }
 
@@ -76,6 +83,34 @@ public class ControlEntitySchema extends AmbientCreature {
     public void travel(UUID tardisID) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
         tardis.to(new AbsoluteBlockPos(level, tardis.getPosition().getDirection(), tardis.getPosition()),true);
+    }
+
+    public void setDest() {
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisID);
+        BlockPos targetPosition = new BlockPos(x, y, z);
+        this.setListedPosition(this.tardisID, targetPosition);
+        tardis.getTravel().setDestination(new AbsoluteBlockPos(tardis.getTravel().getDestination().getDimension(), targetPosition), true);
+    }
+
+    public void setListedPosition(UUID tardisID, BlockPos bPos) {
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
+        x = bPos.getX();
+        y = bPos.getY();
+        z = bPos.getZ();
+    }
+
+    public int getNextIncrement() {
+        switch(incrementValue) {
+            case 1:
+                return 10;
+            case 10:
+                return 100;
+            case 100:
+                return 1000;
+            case 1000:
+                return 1;
+        }
+        return 1;
     }
 
     public void removeMe() {
@@ -251,6 +286,59 @@ public class ControlEntitySchema extends AmbientCreature {
                 this.setPulled(!this.pulled(), true);
             }
         }
+        if(this.getControlName().equals("X")
+                || this.getControlName().equals("Y")
+                || this.getControlName().equals("Z")) {
+            if (this.getControlName().equals("X")) {
+                if (!pSource.isCrouching()) {
+                    if (this.getControlName().equals("X")) {
+                        x += this.incrementValue;
+                    }
+                } else {
+                    if (this.getControlName().equals("X")) {
+                        x -= this.incrementValue;
+                    }
+                }
+                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
+                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
+            }
+            if (this.getControlName().equals("Y")) {
+                if (!pSource.isCrouching()) {
+                    if (this.getControlName().equals("Y")) {
+                        if (y != 320) {
+                            y += this.incrementValue;
+                        }
+                    }
+                } else {
+                    if (this.getControlName().equals("Y")) {
+                        if (y != -64) {
+                            y -= this.incrementValue;
+                        }
+                    }
+                }
+                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
+                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
+            }
+            if (this.getControlName().equals("Z")) {
+                if (!pSource.isCrouching()) {
+                    if (this.getControlName().equals("Z")) {
+                        z += this.incrementValue;
+                    }
+                } else {
+                    if (this.getControlName().equals("Z")) {
+                        z -= this.incrementValue;
+                    }
+                }
+                pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
+                this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
+            }
+            this.setDest();
+        }
+        if(this.getControlName().equals("Increment")) {
+            this.getNextIncrement();
+            pSource.displayClientMessage(Component.translatable("Increment Amount: " + incrementValue).setStyle(Style.EMPTY), true);
+            this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 0.5f, 5f);
+        }
         /*boolean randomBool = false;
         if(!this.hasBeenHit && !randomBool) {
             this.setHasBeenHit();
@@ -328,6 +416,10 @@ public class ControlEntitySchema extends AmbientCreature {
         if (this.tardisID != null) {
             this.tardisID = pCompound.getUUID("tardisID");
         }
+        this.x = pCompound.getFloat("x");
+        this.y = pCompound.getFloat("y");
+        this.z = pCompound.getFloat("z");
+        this.incrementValue = pCompound.getInt("increment");
         /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
             this.currentdimensionstate = EnumDimensionControlState.values()[pCompound.getInt("currentdimensionstate")];
         }
@@ -343,6 +435,10 @@ public class ControlEntitySchema extends AmbientCreature {
         if (this.tardisID != null) {
             pCompound.putUUID("tardisID", this.tardisID);
         }
+        pCompound.putFloat("x", this.x);
+        pCompound.putFloat("y", this.y);
+        pCompound.putFloat("z", this.z);
+        pCompound.putInt("increment", this.incrementValue);
         /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
             pCompound.putInt("currentdimensionstate", this.currentdimensionstate.ordinal());
         }

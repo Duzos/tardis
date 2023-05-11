@@ -21,4 +21,34 @@ public class EntityInit {
                     () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
                             .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
                             .build(new ResourceLocation(TARDISMod.MODID, "basic_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> THROTTLE_CONTROL_ENTITY =
+            ENTITY_TYPES.register("throttle_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "throttle_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> HANDBRAKE_CONTROL_ENTITY =
+            ENTITY_TYPES.register("handbrake_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "handbrake_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> X_CONTROL_ENTITY =
+            ENTITY_TYPES.register("x_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(0.1f, 0.1f)
+                            .build(new ResourceLocation(TARDISMod.MODID, "x_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> Y_CONTROL_ENTITY =
+            ENTITY_TYPES.register("y_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(0.1f, 0.1f)
+                            .build(new ResourceLocation(TARDISMod.MODID, "y_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> Z_CONTROL_ENTITY =
+            ENTITY_TYPES.register("z_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(0.1f, 0.1f)
+                            .build(new ResourceLocation(TARDISMod.MODID, "z_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> INCREMENT_CONTROL_ENTITY =
+            ENTITY_TYPES.register("increment_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(ControlEntitySchema::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "increment_control_entity").toString()));
 }

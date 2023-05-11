@@ -26,6 +26,12 @@ public class ClientEvents {
         renderers.registerBlockEntityRenderer(DoorsInit.BASIC_DOOR_ENTITY.get(), InteriorDoorRenderer::new);
         renderers.registerBlockEntityRenderer(BlockEntityInit.CONSOLE_BLOCK_ENTITY.get(), ConsoleRenderer::new);
         renderers.registerEntityRenderer(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.THROTTLE_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.X_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.Y_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.Z_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.INCREMENT_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
     }
 
     @SubscribeEvent

@@ -22,6 +22,12 @@ public class CommonEvents {
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
             event.put(EntityInit.BASIC_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.THROTTLE_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.X_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.Y_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.Z_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.INCREMENT_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
         }
     }
 
