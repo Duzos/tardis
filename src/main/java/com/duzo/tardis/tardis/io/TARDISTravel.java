@@ -30,6 +30,8 @@ public class TARDISTravel {
     private int MAT_AUDIO_LENGTH = 10;
     private final long SECONDS = 1000L;
     private final long MINUTES = SECONDS * 60;
+    private final int MINIMUM_HOP_TIME = 5;
+    private final int MAXIMUM_HOP_TIME = 15;
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
@@ -140,7 +142,7 @@ public class TARDISTravel {
             public void run() {
                 travel.__hopTakeoff();
             }
-        }, random.nextInt(1,5) * MINUTES);
+        }, random.nextInt(MINIMUM_HOP_TIME,MAXIMUM_HOP_TIME) * MINUTES);
     }
 
     private void __hopTakeoff() {
