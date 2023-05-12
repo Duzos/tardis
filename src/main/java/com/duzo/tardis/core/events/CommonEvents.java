@@ -2,6 +2,7 @@ package com.duzo.tardis.core.events;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.core.init.EntityInit;
+import com.duzo.tardis.tardis.controls.control_entities.ControlEntityRenderer;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
 import com.duzo.tardis.tardis.manager.TARDISManager;
@@ -28,6 +29,8 @@ public class CommonEvents {
             event.put(EntityInit.Y_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.Z_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.INCREMENT_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.DOOR_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.MONITOR_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
         }
     }
 

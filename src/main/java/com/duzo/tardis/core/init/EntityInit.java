@@ -52,4 +52,14 @@ public class EntityInit {
                     () -> EntityType.Builder.<ControlEntitySchema>of(IncrementCoordinateControlEntity::new, MobCategory.AMBIENT)
                             .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
                             .build(new ResourceLocation(TARDISMod.MODID, "increment_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> DOOR_CONTROL_ENTITY =
+            ENTITY_TYPES.register("door_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(DoorControlEntity::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "door_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> MONITOR_CONTROL_ENTITY =
+            ENTITY_TYPES.register("monitor_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(MonitorControlEntity::new, MobCategory.AMBIENT)
+                            .sized(0.2f, 0.2f)
+                            .build(new ResourceLocation(TARDISMod.MODID, "monitor_control_entity").toString()));
 }

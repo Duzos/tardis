@@ -726,8 +726,14 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 			this.SOUTH_EAST.getChild("bone169").getChild("handbrake").xRot = (float) Math.toRadians(75);
 			this.SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
+		if(sharedValues.getDoorControlEnabled()) {
+			this.NORTH.getChild("bone136").getChild("door_control").z = this.NORTH.getChild("bone136").getChild("door_control").z + 3;
+		} else {
+			this.NORTH.getChild("bone136").getChild("door_control").z = this.NORTH.getChild("bone136").getChild("door_control").z;
+		}
 		this.rotor.render(stack, vertexConsumer, packedLight, packedOverlay, 1, 1, 1, 1);
 		this.SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.NORTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();
 	}
 
@@ -740,7 +746,7 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 	public void renderToBuffer(PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		base_console.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		glow.render(stack, vertexConsumer, 15728880, packedOverlay, 1, 1, 1, 1);
-		NORTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//NORTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		NORTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		SOUTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		SOUTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

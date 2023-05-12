@@ -24,6 +24,9 @@ public class ControlEntityRenderer extends EntityRenderer<ControlEntitySchema> {
     protected void renderNameTag(ControlEntitySchema p_114498_, Component p_114499_, PoseStack stack, MultiBufferSource p_114501_, int p_114502_) {
         stack.pushPose();
         stack.scale(0.25f, 0.25f, 0.25f);
+        if(p_114498_.getControlName().equals("Monitor")) {
+            stack.translate(0, 0.5, 0);
+        }
         super.renderNameTag(p_114498_, p_114499_, stack, p_114501_, 15728880);
         stack.popPose();
     }

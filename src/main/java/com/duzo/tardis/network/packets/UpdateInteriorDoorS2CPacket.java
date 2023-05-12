@@ -1,5 +1,6 @@
 package com.duzo.tardis.network.packets;
 
+import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import net.minecraft.client.Minecraft;

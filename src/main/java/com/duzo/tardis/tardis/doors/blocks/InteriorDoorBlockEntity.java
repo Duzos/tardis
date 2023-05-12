@@ -39,6 +39,10 @@ public abstract class InteriorDoorBlockEntity extends BlockEntity {
         return this.doorOpened;
     }
 
+    public boolean doorLocked() {
+        return this.doorLocked;
+    }
+
     public void setDoorLocked(boolean bool, boolean updateClient) {
         this.doorLocked = bool;
 

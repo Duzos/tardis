@@ -3,5 +3,9 @@
   "item.ait.basic_box_tardis_item": "TARDIS",
   "item.ait.stattenheim_remote": "Stattenheim Remote",
   "block.ait.basic_door_block": "Interior Doors",
-  "block.ait.console_block": "TARDIS Console"
+  "block.ait.console_block": "TARDIS Console",
+  "screen.ait.ceu": ">",
+  "screen.ait.ceo": "<",
+  "screen.ait.done": "Done",
+  "screen.ait.borealis_monitor": "Borealis Monitor"
 }

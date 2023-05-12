@@ -2,6 +2,7 @@ package com.duzo.tardis;
 
 import com.duzo.tardis.config.TARDISModClientConfigs;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
+import com.duzo.tardis.core.containers.ContainersInit;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.network.Network;
@@ -67,6 +68,7 @@ public class TARDISMod {
         BlockEntityInit.BLOCK_ENTITIES.register(bus);
         SoundsInit.SOUNDS.register(bus);
         EntityInit.ENTITY_TYPES.register(bus);
+        ContainersInit.MENUS.register(bus);
         DimensionsInit.register();
 
         // Registering doors

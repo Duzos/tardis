@@ -15,6 +15,7 @@ import com.duzo.tardis.tardis.consoles.EnumRotorState;
 import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.controls.control_entities.impl.*;
+import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
 import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.util.TARDISUtil;
@@ -183,6 +184,8 @@ public class ConsoleBlockEntity extends BlockEntity {
         this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos)).setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() - (0.3 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new MonitorControlEntity(EntityInit.MONITOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Monitor", pos)).setPos(pos.getX() - (0.15 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (0.125 * multipleOfZ) + addSubZ);
     }
 
     public ControlEntitySchema getControl(String controlName) {
@@ -287,12 +290,15 @@ public class ConsoleBlockEntity extends BlockEntity {
 
         private boolean handbrakeEnabled;
         private boolean throttleEnabled;
+        private boolean doorControlEnabled;
 
         public void setHandbrakeEnabled(boolean bool){this.handbrakeEnabled = bool;}
-        public void setThrottleEnabled(boolean bool){this.throttleEnabled = bool; }
+        public void setThrottleEnabled(boolean bool){this.throttleEnabled = bool;}
+        public void setDoorControlEnabled(boolean bool){this.doorControlEnabled = bool;}
 
         public boolean getHandbrakeEnabled(){return this.handbrakeEnabled;}
         public boolean getThrottleEnabled(){return this.throttleEnabled;}
+        public boolean getDoorControlEnabled(){return this.doorControlEnabled;}
     }
 
     public void setHandbrake(Boolean shouldSetToFalse) {
@@ -307,5 +313,12 @@ public class ConsoleBlockEntity extends BlockEntity {
     public void setThrottle() {
         if(this.getTARDIS() == null) {return;}
         sharedValues.setThrottleEnabled(this.getTARDIS().getTravel().getState() != TARDISTravel.STATE.LANDED);
+    }
+
+    public void setDoorControl() {
+        if(this.getTARDIS() == null) {return;}
+        if(this.getTARDIS().getInterior().getInteriorDoorPos() == null) {return;}
+        InteriorDoorBlockEntity door = (InteriorDoorBlockEntity) this.level.getBlockEntity(this.getTARDIS().getInterior().getInteriorDoorPos());
+        sharedValues.setDoorControlEnabled(door.doorOpen());
     }
 }
