@@ -26,7 +26,7 @@ public class ThrottleControlEntity extends ControlEntitySchema {
 
     public void travel(UUID tardisID) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
-        tardis.to(new AbsoluteBlockPos(level, tardis.getPosition().getDirection(), tardis.getTravel().getDestination()), true);
+        tardis.to(new AbsoluteBlockPos(tardis.getPosition().getDimension(), tardis.getPosition().getDirection(), tardis.getTravel().getDestination()), true);
     }
 
     @Override

@@ -40,6 +40,7 @@ public class ClientEvents {
         renderers.registerEntityRenderer(EntityInit.INCREMENT_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
         renderers.registerEntityRenderer(EntityInit.DOOR_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
         renderers.registerEntityRenderer(EntityInit.MONITOR_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
+        renderers.registerEntityRenderer(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), ControlEntityRenderer::new);
     }
 
     @SubscribeEvent

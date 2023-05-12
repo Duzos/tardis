@@ -124,11 +124,15 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     }
 
 
-    public void setDest() {
+    public void setDest(BlockPos pos, boolean checks) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisID);
+        tardis.getTravel().setDestination(new AbsoluteBlockPos(tardis.getTravel().getDestination().getDimension(), pos), checks);
+    }
+
+    public void setDest() {
         BlockPos targetPosition = new BlockPos(this.x, this.y, this.z);
         this.setListedPosition(this.tardisID, targetPosition);
-        tardis.getTravel().setDestination(new AbsoluteBlockPos(tardis.getTravel().getDestination().getDimension(), targetPosition), true);
+        this.setDest(targetPosition, false);
     }
 
     public void setListedPosition(UUID tardisID, BlockPos bPos) {

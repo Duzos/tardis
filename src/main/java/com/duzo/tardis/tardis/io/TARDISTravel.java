@@ -99,9 +99,11 @@ public class TARDISTravel {
         this.destination = pos;
         System.out.println(this.destination + " = !@@@!");
     }
+
     public AbsoluteBlockPos getDestination() {
         return this.destination;
     }
+
     private boolean canTakeoff() {
         return (this.state == STATE.LANDED) && !(this.handbrakeOn);
     }

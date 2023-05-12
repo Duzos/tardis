@@ -184,8 +184,9 @@ public class ConsoleBlockEntity extends BlockEntity {
         this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos)).setPos(pos.getX() + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, pos.getZ() + (1.05 * multipleOfZ) + addSubZ);
         this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (1.2 * multipleOfZ) + addSubZ);
-        this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() - (0.3 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos)).setPos(pos.getX() + (0.5 * multipleOfX) + addSubX, pos.getY() + 1, pos.getZ() - (0.3 * multipleOfZ) + addSubZ);
         this.addControlEntity(new MonitorControlEntity(EntityInit.MONITOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Monitor", pos)).setPos(pos.getX() - (0.15 * multipleOfX) + addSubX, pos.getY() + 1.05, pos.getZ() + (0.125 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new RandomizerControlEntity(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Randomizer", pos)).setPos(pos.getX() + (0.265 * multipleOfX) + addSubX, pos.getY() + 1, pos.getZ() + (1.3 * multipleOfZ) + addSubZ);
     }
 
     public ControlEntitySchema getControl(String controlName) {

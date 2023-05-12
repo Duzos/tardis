@@ -31,6 +31,7 @@ public class CommonEvents {
             event.put(EntityInit.INCREMENT_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.DOOR_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
             event.put(EntityInit.MONITOR_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
+            event.put(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), ControlEntitySchema.setAttributes());
         }
     }
 

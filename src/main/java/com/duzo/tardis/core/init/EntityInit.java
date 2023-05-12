@@ -62,4 +62,9 @@ public class EntityInit {
                     () -> EntityType.Builder.<ControlEntitySchema>of(MonitorControlEntity::new, MobCategory.AMBIENT)
                             .sized(0.2f, 0.2f)
                             .build(new ResourceLocation(TARDISMod.MODID, "monitor_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> RANDOMIZER_CONTROL_ENTITY =
+            ENTITY_TYPES.register("randomizer_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(RandomizerControlEntity::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "randomizer_control_entity").toString()));
 }
