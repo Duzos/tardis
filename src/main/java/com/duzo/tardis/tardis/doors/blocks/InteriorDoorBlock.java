@@ -25,10 +25,10 @@ import org.jetbrains.annotations.NotNull;
 public abstract class InteriorDoorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public static final VoxelShape NORTH_AABB = Block.box(0, 0, -0.1, 16, 32, 16);
+    public static final VoxelShape NORTH_AABB = Block.box(0, 0, 0, 16, 32, 16.1);
     public static final VoxelShape EAST_AABB = Block.box(0, 0, 0, 16.1, 32, 16);
     public static final VoxelShape SOUTH_AABB = Block.box(0, 0, 0, 16, 32, 16.1);
-    public static final VoxelShape WEST_AABB = Block.box(-0.1, 0, 0, 16, 32, 16);
+    public static final VoxelShape WEST_AABB = Block.box(0, 0, 0, 16.1, 32, 16);
 
     public InteriorDoorBlock(Properties p_49224_) {
         super(p_49224_);
@@ -61,7 +61,7 @@ public abstract class InteriorDoorBlock extends BaseEntityBlock {
     }
 
     public @NotNull RenderShape getRenderShape(BlockState p_49232_) {
-        return RenderShape.MODEL;
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override

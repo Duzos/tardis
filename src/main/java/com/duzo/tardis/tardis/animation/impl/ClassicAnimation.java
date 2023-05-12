@@ -49,7 +49,7 @@ public class ClassicAnimation extends ExteriorAnimation {
             if (alpha >= 1f) {
                 exterior.getTARDIS().getTravel().setState(TARDISTravel.STATE.LANDED);
             }
-        }else if (state == TARDISTravel.STATE.HOP_LAND) {
+        }else if (state == TARDISTravel.STATE.HOP_MAT) {
             this.updateClient();
             alpha = alpha + (alphaChangeAmount * 2);
             timeLeft--;

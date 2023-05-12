@@ -31,6 +31,7 @@ public class HandbrakeControlEntity extends ControlEntitySchema {
 
         ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
         TARDISTravel travel = console.getTARDIS().getTravel();
+        console.setHandbrake(false);
 
         travel.changeHandbrake();
         this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);

@@ -115,7 +115,7 @@ public class TARDIS {
     public AbsoluteBlockPos getPosition() {
         return this.pos;
     }
-    // @TODO how to do a double blockpos like 1.5 or something
+    // @TODO how to do a double blockpos like 1.5 or something; extrapolated point; change the door to an entity to achieve this
     public AbsoluteBlockPos getPositionForTeleporting() {
         BlockPos doorPos = this.getPosition();
         BlockPos adjustedPos = doorPos;

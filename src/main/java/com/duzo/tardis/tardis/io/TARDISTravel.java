@@ -7,6 +7,7 @@ import com.duzo.tardis.core.init.SoundsInit;
 import com.duzo.tardis.core.util.AbsoluteBlockPos;
 import com.duzo.tardis.nbt.NBTSerializers;
 import com.duzo.tardis.tardis.TARDIS;
+import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
 import com.duzo.tardis.tardis.exteriors.blocks.ExteriorBlock;
 import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
 import com.duzo.tardis.tardis.manager.TARDISManager;
@@ -16,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +38,7 @@ public class TARDISTravel {
     private STATE state;
     private AbsoluteBlockPos destination;
     private boolean handbrakeOn;
+    ConsoleBlockEntity.SharedValues sharedValues = ConsoleBlockEntity.SharedValues.getInstance();
     public TARDISTravel(TARDIS tardis) {
         this.tardis = tardis;
         this.handbrakeOn = false;
@@ -44,13 +47,12 @@ public class TARDISTravel {
         if (direction != Direction.UP && direction != Direction.DOWN) {direction = Direction.UP;}
 
         BlockPos testingPos = pos;
-
         if (direction == Direction.UP) {
-            while (level.getBlockState(testingPos).getBlock() != Blocks.AIR) {
+            while (level.getBlockState(testingPos).getBlock() != Blocks.AIR/* || level.getBlockState(testingPos).getBlock() != Blocks.SNOW/* || block != Blocks.WATER*/) {
                 testingPos = testingPos.above();
             }
         } else {
-            while (level.getBlockState(testingPos).getBlock() != Blocks.AIR) {
+            while (level.getBlockState(testingPos).getBlock() != Blocks.AIR/* || level.getBlockState(testingPos).getBlock() != Blocks.SNOW*/) {
                 testingPos = testingPos.below();
             }
         }
@@ -62,16 +64,16 @@ public class TARDISTravel {
         if (direction != Direction.UP && direction != Direction.DOWN) {direction = Direction.UP;}
 
         BlockPos testingPos = pos;
-
         if (direction == Direction.UP) {
-            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR) {
+            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR/* || level.getBlockState(testingPos).getBlock() == Blocks.SNOW/* || block == Blocks.WATER*/) {
                 testingPos = testingPos.above();
             }
         } else {
-            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR) {
+            while (level.getBlockState(testingPos).getBlock() == Blocks.AIR/* || level.getBlockState(testingPos).getBlock() == Blocks.SNOW*/) {
                 testingPos = testingPos.below();
             }
         }
+
 
         return testingPos.above();
     }
@@ -95,6 +97,7 @@ public class TARDISTravel {
             );
         }
         this.destination = pos;
+        System.out.println(this.destination + " = !@@@!");
     }
     public AbsoluteBlockPos getDestination() {
         return this.destination;
@@ -190,7 +193,7 @@ public class TARDISTravel {
             return;
         }
 
-        this.state = STATE.HOP_LAND;
+        this.state = STATE.HOP_MAT;
 
         Level level = this.destination.getDimension();
 
@@ -326,8 +329,10 @@ public class TARDISTravel {
             @Override
             public void run() {
                 travel.state = STATE.LANDED;
+                sharedValues.setThrottleEnabled(false);
             }
         }, MAT_AUDIO_LENGTH * SECONDS);
+
     }
 
     public boolean inFlight() {
@@ -347,6 +352,10 @@ public class TARDISTravel {
 
     public void changeHandbrake() {
         this.handbrakeOn = !this.handbrakeOn;
+    }
+
+    public boolean getHandbrake() {
+        return this.handbrakeOn;
     }
 
     public static class Serializer {
@@ -374,7 +383,7 @@ public class TARDISTravel {
     public enum STATE {
         FAIL_TAKEOFF,
         HOP_TAKEOFF,
-        HOP_LAND,
+        HOP_MAT,
         DEMAT,
         MAT,
         LANDED,

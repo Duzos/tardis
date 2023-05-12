@@ -26,7 +26,7 @@ public class ThrottleControlEntity extends ControlEntitySchema {
 
     public void travel(UUID tardisID) {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
-        tardis.to(new AbsoluteBlockPos(level, tardis.getPosition().getDirection(), tardis.getPosition()),true);
+        tardis.to(new AbsoluteBlockPos(level, tardis.getPosition().getDirection(), tardis.getTravel().getDestination()), true);
     }
 
     @Override
@@ -41,6 +41,7 @@ public class ThrottleControlEntity extends ControlEntitySchema {
             ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
             assert console != null;
             console.setTARDISInFlight(true, true);
+            console.setThrottle();
         }
         this.level.playSound(null, this.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.MASTER, 1f, 5f);
     }

@@ -1,5 +1,6 @@
 package com.duzo.tardis.tardis.controls.control_entities.impl;
 
+import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -29,16 +30,17 @@ public class XCoordinateControlEntity extends ControlEntitySchema {
         if (!this.getControlName().equals("X")) return;
 
         this.updateCoordinates();
+        if (this.consolePosition != null) {
+            ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
+            if (!pSource.isCrouching()) {
+                this.x += console.getIncrement();
+            } else {
+                this.x -= console.getIncrement();
+            }
+            pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
+            this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
 
-        if (!pSource.isCrouching()) {
-            this.x += this.incrementValue;
-        } else {
-            this.x -= this.incrementValue;
+            this.setDest();
         }
-
-        pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
-        this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_BIT, SoundSource.MASTER, 1.5f, 5f);
-
-        this.setDest();
     }
 }

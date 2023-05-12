@@ -10,10 +10,13 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import java.awt.font.FontRenderContext;
 
 public class BasicBoxExteriorModel extends TARDISExteriorModelSchema {
 
@@ -144,7 +147,7 @@ public class BasicBoxExteriorModel extends TARDISExteriorModelSchema {
         stack.mulPose(Vector3f.XN.rotationDegrees(180.0f));
 
 //		stack.scale(0.3f,0.175f,0.3f); funny square block TARDIS
-        stack.scale(0.6f,0.6f,0.6f);
+        stack.scale(0.675f,0.675f,0.675f);
         stack.translate(0, -1.4f, 0);
 
 
@@ -156,4 +159,6 @@ public class BasicBoxExteriorModel extends TARDISExteriorModelSchema {
     public void setupAnim(Entity p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
 
     }
+
+
 }

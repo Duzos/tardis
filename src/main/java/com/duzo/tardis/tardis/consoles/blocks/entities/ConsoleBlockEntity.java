@@ -1,6 +1,5 @@
 package com.duzo.tardis.tardis.consoles.blocks.entities;
 
-import com.duzo.tardis.common.items.RemoteItem;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
 import com.duzo.tardis.core.init.BlockEntityInit;
 import com.duzo.tardis.core.init.EntityInit;
@@ -13,10 +12,7 @@ import com.duzo.tardis.tardis.animation.ConsoleAnimation;
 import com.duzo.tardis.tardis.animation.impl.BorealisAnimation;
 import com.duzo.tardis.tardis.consoles.ConsoleSchema;
 import com.duzo.tardis.tardis.consoles.EnumRotorState;
-import com.duzo.tardis.tardis.consoles.blocks.ConsoleBlock;
 import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
-import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
-import com.duzo.tardis.tardis.controls.blocks.basics.RotorControlBlockEntity;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.controls.control_entities.impl.*;
 import com.duzo.tardis.tardis.io.TARDISTravel;
@@ -27,19 +23,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.BlockHitResult;
 
-import javax.naming.ldap.Control;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +45,7 @@ public class ConsoleBlockEntity extends BlockEntity {
     protected TARDISTravel.STATE previousState;
     protected TARDISTravel.STATE state;
     private List<ControlEntitySchema> controlEntities = new ArrayList<>();
+    SharedValues sharedValues = SharedValues.getInstance();
     public ConsoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -196,20 +187,24 @@ public class ConsoleBlockEntity extends BlockEntity {
 
     public ControlEntitySchema getControl(String controlName) {
         for (ControlEntitySchema entity : this.controlEntities) {
-            if (entity.getCustomName().equals(controlName)) {
+            if (entity.getControlName().equals(controlName)) {
                 return entity;
             }
         }
         return null;
     }
 
-    public ControlEntitySchema getControl(Class<ControlEntitySchema> schema) {
+    /*public ControlEntitySchema getControl(Class<ControlEntitySchema> schema) {
         for (ControlEntitySchema entity : this.controlEntities) {
             if (schema.isInstance(entity)) {
                 return entity;
             }
         }
         return null;
+    }*/
+
+    public int getIncrement() {
+        return this.getControl("Increment").getIncrementValue();
     }
 
     @Override
@@ -220,6 +215,8 @@ public class ConsoleBlockEntity extends BlockEntity {
 
     public void onPlace(BlockState state, Level level, BlockPos pos) {
         this.runControlSpawn(level, pos);
+        this.setHandbrake(true);
+        this.setThrottle();
     }
 
     private static void runDematerialise(Level level, BlockPos pos) {
@@ -272,12 +269,43 @@ public class ConsoleBlockEntity extends BlockEntity {
             this.runMaterialise();
         } else if (this.state == TARDISTravel.STATE.HOP_TAKEOFF) {
             this.runHopTakeoff();
-        } else if (this.state == TARDISTravel.STATE.HOP_LAND) {
+        } else if (this.state == TARDISTravel.STATE.HOP_MAT) {
             this.runHopLanding();
         } else if (this.state == TARDISTravel.STATE.FAIL_TAKEOFF) {
             this.runFailTakeoff();
+        } else if (this.state != TARDISTravel.STATE.LANDED) {
+            this.setTARDISInFlight(true, true);
         }
 
         System.out.println(this.state);
+    }
+
+    public static class SharedValues {
+
+        private static SharedValues sharedValues = new SharedValues();
+        public static SharedValues getInstance(){return sharedValues;}
+
+        private boolean handbrakeEnabled;
+        private boolean throttleEnabled;
+
+        public void setHandbrakeEnabled(boolean bool){this.handbrakeEnabled = bool;}
+        public void setThrottleEnabled(boolean bool){this.throttleEnabled = bool; }
+
+        public boolean getHandbrakeEnabled(){return this.handbrakeEnabled;}
+        public boolean getThrottleEnabled(){return this.throttleEnabled;}
+    }
+
+    public void setHandbrake(Boolean shouldSetToFalse) {
+        if(this.getTARDIS() == null) {return;}
+        if(shouldSetToFalse) {
+            sharedValues.setHandbrakeEnabled(false);
+        } else {
+            sharedValues.setHandbrakeEnabled(this.getTARDIS().getTravel().getHandbrake());
+        }
+    }
+
+    public void setThrottle() {
+        if(this.getTARDIS() == null) {return;}
+        sharedValues.setThrottleEnabled(this.getTARDIS().getTravel().getState() != TARDISTravel.STATE.LANDED);
     }
 }

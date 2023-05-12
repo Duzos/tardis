@@ -9,7 +9,7 @@ public class CreativeTabInit {
     public static final CreativeModeTab TARDIS_TAB = new CreativeModeTab("tardis_tab") {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(Items.IRON_INGOT);
+            return new ItemStack(ItemInit.BASIC_BOX_ITEM.get());
         }
     };
 }

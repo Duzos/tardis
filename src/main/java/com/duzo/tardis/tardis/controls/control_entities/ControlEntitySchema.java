@@ -9,6 +9,7 @@ import com.duzo.tardis.tardis.io.TARDISTravel;
 import com.duzo.tardis.tardis.manager.TARDISManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -39,14 +40,6 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(ControlEntitySchema.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<String> CONTROL_NAME = SynchedEntityData.defineId(ControlEntitySchema.class, EntityDataSerializers.STRING);
 
-    /*public static final String Throttle = "throttle";
-    public static final String coordinateX = "x";
-    public static final String coordinateY = "y";
-    public static final String coordinateZ = "z";
-    public static final String Increment = "increment";
-    public static final String DimensionalControl = "dimensional_control";
-    public static final String posNeg = "positive_negative";
-    public static final String exteriorFacing = "exterior_facing";*/
     protected BlockPos consolePosition;
     public static float sizing = 0.125f;
     public static boolean hasBeenHit = false;
@@ -56,7 +49,6 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     protected int incrementValue = 1;
     public boolean isPulled;
     public UUID tardisID;
-    public String controlName;
 
     public ControlEntitySchema(EntityType<? extends AmbientCreature> p_i50290_1_, Level p_i50290_2_) {
         super(p_i50290_1_, p_i50290_2_);
@@ -68,6 +60,58 @@ public abstract class ControlEntitySchema extends AmbientCreature {
         this.setControlName(name);
         this.setListedPosition(tardisID, TARDISManager.getInstance().findTARDIS(tardisID).getPosition());
         this.consolePosition = consoleBlockPos;
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.entityData.set(DATA_ID_FLAGS, pCompound.getByte("ControlFlags"));
+        this.setControlName(pCompound.getString("customName"));
+        this.hasBeenHit = pCompound.getBoolean("hasbeenhit");
+        if (this.tardisID != null) {
+            this.tardisID = pCompound.getUUID("tardisID");
+        }
+        this.x = pCompound.getFloat("x");
+        this.y = pCompound.getFloat("y");
+        this.z = pCompound.getFloat("z");
+        this.incrementValue = pCompound.getInt("increment");
+        /*this.consolePosition = new BlockPos(pCompound.getInt("consolePositionX"),
+                pCompound.getInt("consolePositionY"), pCompound.getInt("consolePositionZ"));*/
+        this.consolePosition = NbtUtils.readBlockPos(pCompound.getCompound("consolePosition"));
+        /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
+            this.currentdimensionstate = EnumDimensionControlState.values()[pCompound.getInt("currentdimensionstate")];
+        }
+        if(this.getCustomName().getContents().equals("Exterior Facing") && this.tardisID != null) {
+            this.currentExteriorFacingSetting = EnumExteriorFacingState.values()[pCompound.getInt("exteriorfacing")];
+        }*/
+    }
+
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putByte("ControlFlags", this.entityData.get(DATA_ID_FLAGS));
+        pCompound.putString("customName",this.getControlName());
+        pCompound.putBoolean("hasbeenhit", this.hasBeenHit);
+        if (this.tardisID != null) {
+            pCompound.putUUID("tardisID", this.tardisID);
+        }
+        pCompound.putFloat("x", this.x);
+        pCompound.putFloat("y", this.y);
+        pCompound.putFloat("z", this.z);
+        pCompound.putInt("increment", this.incrementValue);
+        if(this.consolePosition != null) {
+            /*pCompound.putInt("consolePositionX", this.consolePosition.getX());
+            pCompound.putInt("consolePositionY", this.consolePosition.getY());
+            pCompound.putInt("consolePositionZ", this.consolePosition.getZ());*/
+            pCompound.put("consolePosition", NbtUtils.writeBlockPos(this.consolePosition));
+        }
+        /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
+            pCompound.putInt("currentdimensionstate", this.currentdimensionstate.ordinal());
+        }
+        if(this.getCustomName().getContents().equals("Exterior Facing") && this.tardisID != null) {
+            pCompound.putInt("exteriorfacing", this.currentExteriorFacingSetting.ordinal());
+        }*/
     }
 
     public void setControlName(String newControlName) {
@@ -98,20 +142,23 @@ public abstract class ControlEntitySchema extends AmbientCreature {
         this.z = tardis.getTravel().getDestination().getZ();
     }
     protected void updateCoordinates() {
-        TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
+        TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisID);
         this.x = tardis.getTravel().getDestination().getX(); // This makes sure all controls have the same coords
         this.y = tardis.getTravel().getDestination().getY();
         this.z = tardis.getTravel().getDestination().getZ();
     }
 
     public int getNextIncrement() {
-        return switch (incrementValue) {
-            case 1 -> 10;
-            case 10 -> 100;
-            case 100 -> 1000;
-            case 1000 -> 1;
-            default -> 1;
-        };
+        if(this.incrementValue < 10000) {
+            this.incrementValue = this.incrementValue * 10;
+        } else {
+            this.incrementValue = 1;
+        }
+        return this.incrementValue;
+    }
+
+    public int getIncrementValue() {
+        return this.incrementValue;
     }
 
     public void removeMe() {
@@ -335,49 +382,6 @@ public abstract class ControlEntitySchema extends AmbientCreature {
             }
         }
         return super.hurt(pSource, 0);
-    }
-
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
-    public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
-        this.entityData.set(DATA_ID_FLAGS, pCompound.getByte("ControlFlags"));
-        this.setControlName(pCompound.getString("customName"));
-        this.hasBeenHit = pCompound.getBoolean("hasbeenhit");
-        if (this.tardisID != null) {
-            this.tardisID = pCompound.getUUID("tardisID");
-        }
-        this.x = pCompound.getFloat("x");
-        this.y = pCompound.getFloat("y");
-        this.z = pCompound.getFloat("z");
-        this.incrementValue = pCompound.getInt("increment");
-        /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
-            this.currentdimensionstate = EnumDimensionControlState.values()[pCompound.getInt("currentdimensionstate")];
-        }
-        if(this.getCustomName().getContents().equals("Exterior Facing") && this.tardisID != null) {
-            this.currentExteriorFacingSetting = EnumExteriorFacingState.values()[pCompound.getInt("exteriorfacing")];
-        }*/
-    }
-
-    public void addAdditionalSaveData(CompoundTag pCompound) {
-        super.addAdditionalSaveData(pCompound);
-        pCompound.putByte("ControlFlags", this.entityData.get(DATA_ID_FLAGS));
-        pCompound.putString("customName",this.getControlName());
-        pCompound.putBoolean("hasbeenhit", this.hasBeenHit);
-        if (this.tardisID != null) {
-            pCompound.putUUID("tardisID", this.tardisID);
-        }
-        pCompound.putFloat("x", this.x);
-        pCompound.putFloat("y", this.y);
-        pCompound.putFloat("z", this.z);
-        pCompound.putInt("increment", this.incrementValue);
-        /*if(this.getCustomName().getContents().equals("Dimension Switch") && this.tardisID != null) {
-            pCompound.putInt("currentdimensionstate", this.currentdimensionstate.ordinal());
-        }
-        if(this.getCustomName().getContents().equals("Exterior Facing") && this.tardisID != null) {
-            pCompound.putInt("exteriorfacing", this.currentExteriorFacingSetting.ordinal());
-        }*/
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {

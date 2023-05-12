@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class BorealisConsoleModel extends ConsoleModelSchema {
@@ -31,6 +32,8 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 	public final ModelPart SOUTH;
 	public final ModelPart SOUTH_EAST;
 	public final ModelPart NORTH_EAST;
+
+	ConsoleBlockEntity.SharedValues sharedValues = ConsoleBlockEntity.SharedValues.getInstance();
 
 	public BorealisConsoleModel(ModelPart root) {
 		this.base_console = root.getChild("base_console");
@@ -663,6 +666,7 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 
 	@Override
 	public void renderWithEntity(ConsoleBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+
 		stack.pushPose();
 		stack.mulPose(Vector3f.XP.rotationDegrees(180f));
 		stack.translate(0, -0.75,0);
@@ -684,35 +688,46 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 			stack.translate(-1,0,-1);
 		}
 
-		if (entity.rotorState == EnumRotorState.DOWN) {
-			if (entity.rotorTick < 0f/*1.5f*/) {
-				entity.rotorTick += 0.0015f;
-			} else {
-				entity.rotorTick = 0f/*1.5f*/;
-				entity.rotorState = EnumRotorState.UP;
-			}
-		}
-		if (entity.rotorState == EnumRotorState.UP) {
-			if (entity.rotorTick > -0.45f) {
-				entity.rotorTick -= 0.0015f;
-				for (float i = 0; i <= 6; i = (i + 2f)) {
-					entity.rotorSpin += i / 60f;
-				}
-			} else {
-				entity.rotorTick = -0.45f;
-				entity.rotorState = EnumRotorState.DOWN;
-			}
-		}
-
 		super.renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 
-		if(entity.isInFlight()) {
+		if(sharedValues.getThrottleEnabled()) {
+			if (entity.rotorState == EnumRotorState.DOWN) {
+				if (entity.rotorTick < 0f/*1.5f*/) {
+					entity.rotorTick += 0.0015f;
+				} else {
+					entity.rotorTick = 0f/*1.5f*/;
+					entity.rotorState = EnumRotorState.UP;
+				}
+			}
+			if (entity.rotorState == EnumRotorState.UP) {
+				if (entity.rotorTick > -0.45f) {
+					entity.rotorTick -= 0.0015f;
+					for (float i = 0; i <= 6; i = (i + 2f)) {
+						entity.rotorSpin += i / 60f;
+					}
+				} else {
+					entity.rotorTick = -0.45f;
+					entity.rotorState = EnumRotorState.DOWN;
+				}
+			}
 			this.rotor.yRot = (float) Math.toRadians(entity.rotorSpin);
-			stack.translate(0, -entity.rotorTick / 1.25f, 0);
+			this.rotor.y = this.rotor.y - entity.rotorTick * 20f;
+			//stack.translate(0, -entity.rotorTick / 1.25f, 0);
+			this.SOUTH_EAST.getChild("bone169").getChild("throttle").z = this.SOUTH_EAST.getChild("bone169").getChild("throttle").z + 3;
 		} else {
+			this.rotor.y = this.rotor.y;
 			this.rotor.yRot = (float) Math.toRadians(0);
+			this.SOUTH_EAST.getChild("bone169").getChild("throttle").z = this.SOUTH_EAST.getChild("bone169").getChild("throttle").z;
+		}
+		if(sharedValues.getHandbrakeEnabled()) {
+			this.SOUTH_EAST.getChild("bone169").getChild("handbrake").xRot = (float) Math.toRadians(-75);
+			this.SOUTH_EAST.getChild("bone169").getChild("handbrake").render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		} else {
+			this.SOUTH_EAST.getChild("bone169").getChild("handbrake").xRot = (float) Math.toRadians(75);
+			this.SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
 		this.rotor.render(stack, vertexConsumer, packedLight, packedOverlay, 1, 1, 1, 1);
+		this.SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		stack.popPose();
 	}
 
@@ -729,7 +744,7 @@ public class BorealisConsoleModel extends ConsoleModelSchema {
 		NORTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		SOUTH_WEST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		SOUTH.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//SOUTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		NORTH_EAST.render(stack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }
