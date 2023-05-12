@@ -1,17 +1,15 @@
 package com.duzo.tardis.tardis.consoles;
 
 import com.duzo.tardis.TARDISMod;
-import com.duzo.tardis.tardis.consoles.ConsoleModelSchema;
 import com.duzo.tardis.tardis.consoles.blocks.entities.ConsoleBlockEntity;
-import com.duzo.tardis.tardis.exteriors.TARDISExteriorSchema;
-import com.duzo.tardis.tardis.exteriors.TARDISExteriors;
-import com.duzo.tardis.tardis.exteriors.blocks.entities.ExteriorBlockEntity;
-import com.duzo.tardis.tardis.interiors.TARDISInterior;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class ConsoleSchema<T extends ConsoleModelSchema> {
     private final String id;
@@ -48,4 +46,6 @@ public abstract class ConsoleSchema<T extends ConsoleModelSchema> {
             return Consoles.get(nbt.getString("id"));
         }
     }
+
+    public abstract Vec3 positionFor(String controlName, BlockPos pos, Direction direction);
 }

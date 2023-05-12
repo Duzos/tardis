@@ -146,14 +146,15 @@ public class ConsoleBlockEntity extends BlockEntity {
     }
 
     public void runControlSpawn(Level level, BlockPos pos) {
+        Direction direction = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        if(this.getTARDIS() == null) return;
+
         float multipleOfX = 1;
         float multipleOfZ = 1;
         float addSubX = 0;
         float addSubZ = 0;
         int getX = pos.getX();
         int getZ = pos.getZ();
-        Direction direction = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-        if(this.getTARDIS() == null) return;
 
         if(direction.equals(Direction.NORTH)) {
             multipleOfX = multipleOfX * 1f;
@@ -182,10 +183,10 @@ public class ConsoleBlockEntity extends BlockEntity {
 
         if(direction.equals(Direction.NORTH) || direction.equals(Direction.SOUTH)) {
             this.addControlEntity(new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos))
-                    .setPos(getX + (1.3 * multipleOfX) + addSubX, pos.getY() + 1.05, getZ + (0.7225 * multipleOfZ) + addSubZ);
+                    .setPos(this.getSchema().positionFor("Throttle",pos,direction));
 
             this.addControlEntity(new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos))
-                    .setPos(getX + (1.08 * multipleOfX) + addSubX, pos.getY() + 1.05, getZ + (1.08 * multipleOfZ) + addSubZ);
+                    .setPos(this.getSchema().positionFor("Handbrake",pos,direction));
 
             this.addControlEntity(new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos))
                     .setPos(getX + (0.375 * multipleOfX) + addSubX, pos.getY() + 1.15, getZ + (1.05 * multipleOfZ) + addSubZ);
