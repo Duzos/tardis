@@ -37,6 +37,7 @@ public class TARDISTravel {
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
+    private Direction direction = Direction.NORTH;
     private boolean handbrakeOn;
     ConsoleBlockEntity.SharedValues sharedValues = ConsoleBlockEntity.SharedValues.getInstance();
     public TARDISTravel(TARDIS tardis) {
@@ -88,9 +89,21 @@ public class TARDISTravel {
         return new BlockPos(pos.getX() + xChange, pos.getY() + yChange, pos.getZ() + zChange);
     }
 
+    public void setDirection(Direction newDirection, boolean newSetDirection, AbsoluteBlockPos pos) {
+        if(newSetDirection) {
+            this.direction = newDirection;
+        } else {
+            this.direction = pos.getDirection();
+        }
+    }
+
+    public Direction getDirection() {
+        return this.direction;
+    }
+
     public void setDestination(AbsoluteBlockPos pos, boolean withChecks) {
         if (withChecks) {
-            pos = new AbsoluteBlockPos(pos.getDimension(),pos.getDirection(),
+            pos = new AbsoluteBlockPos(pos.getDimension(), this.getDirection(),
                     checkForNearestNonAirBlock(pos.getDimension(),
                     searchForNearestAirBlock(pos.getDimension(),pos, Direction.UP),
                             Direction.DOWN)
@@ -202,7 +215,7 @@ public class TARDISTravel {
         level.getChunkAt(this.destination);
 
         ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
-        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.destination.getDirection());
+        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.getDirection());
         level.setBlockAndUpdate(this.destination, state);
         level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
         level.playSound(null, this.destination, SoundsInit.HOP_LAND.get(), SoundSource.BLOCKS, 1f, 1f);
@@ -315,7 +328,7 @@ public class TARDISTravel {
         level.getChunkAt(this.destination);
 
         ExteriorBlock block = (ExteriorBlock) BlockInit.TARDIS_BLOCK.get();
-        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.destination.getDirection());
+        BlockState state = block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, this.getDirection());
         level.setBlockAndUpdate(this.destination, state);
         level.setBlockEntity(new ExteriorBlockEntity(this.destination, state));
 

@@ -67,4 +67,9 @@ public class EntityInit {
                     () -> EntityType.Builder.<ControlEntitySchema>of(RandomizerControlEntity::new, MobCategory.AMBIENT)
                             .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
                             .build(new ResourceLocation(TARDISMod.MODID, "randomizer_control_entity").toString()));
+    public static final RegistryObject<EntityType<ControlEntitySchema>> FACING_CONTROL_ENTITY =
+            ENTITY_TYPES.register("facing_control_entity",
+                    () -> EntityType.Builder.<ControlEntitySchema>of(FacingControlEntity::new, MobCategory.AMBIENT)
+                            .sized(ControlEntitySchema.xSize(), ControlEntitySchema.ySize())
+                            .build(new ResourceLocation(TARDISMod.MODID, "facing_control_entity").toString()));
 }
