@@ -149,101 +149,36 @@ public class ConsoleBlockEntity extends BlockEntity {
         Direction direction = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         if(this.getTARDIS() == null) return;
 
-        float multipleOfX = 1;
-        float multipleOfZ = 1;
-        float addSubX = 0;
-        float addSubZ = 0;
-        int getX = pos.getX();
-        int getZ = pos.getZ();
+        this.addControlEntity(new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos))
+                .setPos(this.getSchema().positionFor("Throttle",pos,direction));
 
-        if(direction.equals(Direction.NORTH)) {
-            multipleOfX = multipleOfX * 1f;
-            multipleOfZ = multipleOfZ * 1f;
-            addSubX = 0;
-            addSubZ = 0;
-        }
-        if(direction.equals(Direction.EAST)) {
-            multipleOfX = multipleOfX * -1f;
-            multipleOfZ = multipleOfZ * 1f;
-            addSubX = 1f;
-            addSubZ = 0f;
-        }
-        if(direction.equals(Direction.SOUTH)) {
-            multipleOfX = multipleOfX * -1f;
-            multipleOfZ = multipleOfZ * -1f;
-            addSubX = 1f;
-            addSubZ = 1f;
-        }
-        if(direction.equals(Direction.WEST)) {
-            multipleOfX = multipleOfX * 1f;
-            multipleOfZ = multipleOfZ * -1f;
-            addSubX = 0f;
-            addSubZ = 1f;
-        }
+        this.addControlEntity(new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos))
+                .setPos(this.getSchema().positionFor("Handbrake",pos,direction));
 
-        if(direction.equals(Direction.NORTH) || direction.equals(Direction.SOUTH)) {
-            this.addControlEntity(new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos))
-                    .setPos(this.getSchema().positionFor("Throttle",pos,direction));
+        this.addControlEntity(new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos))
+                .setPos(this.getSchema().positionFor("X",pos,direction));
 
-            this.addControlEntity(new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos))
-                    .setPos(this.getSchema().positionFor("Handbrake",pos,direction));
+        this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos))
+                .setPos(this.getSchema().positionFor("Y",pos,direction));
 
-            this.addControlEntity(new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos))
-                    .setPos(getX + (0.375 * multipleOfX) + addSubX, pos.getY() + 1.15, getZ + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos))
+                .setPos(this.getSchema().positionFor("Z",pos,direction));
 
-            this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos))
-                    .setPos(getX + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.15, getZ + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos))
+                .setPos(this.getSchema().positionFor("Increment",pos,direction));
 
-            this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos))
-                    .setPos(getX + (0.625 * multipleOfX) + addSubX, pos.getY() + 1.15, getZ + (1.05 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos))
+                .setPos(this.getSchema().positionFor("Door Control",pos,direction));
 
-            this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos))
-                    .setPos(getX + (0.5 * multipleOfX) + addSubX, pos.getY() + 1.05, getZ + (1.2 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new MonitorControlEntity(EntityInit.MONITOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Monitor", pos))
+                .setPos(this.getSchema().positionFor("Monitor",pos,direction));
 
-            this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos))
-                    .setPos(getX + (0.5 * multipleOfX) + addSubX, pos.getY() + 1, getZ - (0.3 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new RandomizerControlEntity(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Randomizer", pos))
+                .setPos(this.getSchema().positionFor("Randomizer",pos,direction));
 
-            this.addControlEntity(new MonitorControlEntity(EntityInit.MONITOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Monitor", pos))
-                    .setPos(getX - (0.15 * multipleOfX) + addSubX, pos.getY() + 1.05, getZ + (0.125 * multipleOfZ) + addSubZ);
+        this.addControlEntity(new FacingControlEntity(EntityInit.FACING_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Exterior Facing", pos))
+                .setPos(this.getSchema().positionFor("Exterior Facing",pos,direction));
 
-            this.addControlEntity(new RandomizerControlEntity(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Randomizer", pos))
-                    .setPos(getX + (0.265 * multipleOfX) + addSubX, pos.getY() + 1, getZ + (1.3 * multipleOfZ) + addSubZ);
-
-            this.addControlEntity(new FacingControlEntity(EntityInit.FACING_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Exterior Facing", pos))
-                    .setPos(getX + (0.735 * multipleOfX) + addSubX, pos.getY() + 1, getZ + (1.3 * multipleOfZ) + addSubZ);
-        }
-
-        if(direction.equals(Direction.EAST) || direction.equals(Direction.WEST)) {
-            this.addControlEntity(new ThrottleControlEntity(EntityInit.THROTTLE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Throttle", pos))
-                    .setPos(getX + (0.7225 * multipleOfZ) + addSubZ, pos.getY() + 1.05, getZ + (1.3 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new HandbrakeControlEntity(EntityInit.HANDBRAKE_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Handbrake", pos))
-                    .setPos(getX + (1.08 * multipleOfZ) + addSubZ, pos.getY() + 1.05, getZ + (1.08 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new XCoordinateControlEntity(EntityInit.X_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "X", pos))
-                    .setPos(getX + (1.05 * multipleOfZ) + addSubZ, pos.getY() + 1.15, getZ + (0.375 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new YCoordinateControlEntity(EntityInit.Y_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Y", pos))
-                    .setPos(getX + (1.05 * multipleOfZ) + addSubZ, pos.getY() + 1.15, getZ + (0.5 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new ZCoordinateControlEntity(EntityInit.Z_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Z", pos))
-                    .setPos(getX + (1.05 * multipleOfZ) + addSubZ, pos.getY() + 1.15, getZ + (0.625 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new IncrementCoordinateControlEntity(EntityInit.INCREMENT_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Increment", pos))
-                    .setPos(getX + (1.2 * multipleOfZ) + addSubZ, pos.getY() + 1.05, getZ + (0.5 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new DoorControlEntity(EntityInit.DOOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Door Control", pos))
-                    .setPos(getX - (0.3 * multipleOfZ) + addSubZ, pos.getY() + 1, getZ + (0.5 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new MonitorControlEntity(EntityInit.MONITOR_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Monitor", pos))
-                    .setPos(getX + (0.125 * multipleOfZ) + addSubZ, pos.getY() + 1.05, getZ - (0.15 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new RandomizerControlEntity(EntityInit.RANDOMIZER_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Randomizer", pos))
-                    .setPos(getX + (1.3 * multipleOfZ) + addSubZ, pos.getY() + 1, getZ + (0.265 * multipleOfX) + addSubX);
-
-            this.addControlEntity(new RandomizerControlEntity(EntityInit.FACING_CONTROL_ENTITY.get(), level, this.getTARDIS().getUuid(), "Exterior Facing", pos))
-                    .setPos(getX + (1.3 * multipleOfZ) + addSubZ, pos.getY() + 1, getZ + (0.265 * multipleOfX) + addSubX);
-        }
     }
 
     public ControlEntitySchema getControl(String controlName) {

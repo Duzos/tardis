@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.HashMap;
+
 public abstract class ConsoleSchema<T extends ConsoleModelSchema> {
     private final String id;
     private final Component name;
