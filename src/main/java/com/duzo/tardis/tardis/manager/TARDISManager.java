@@ -112,7 +112,7 @@ public class TARDISManager {
         List<AbsoluteBlockPos> list = new ArrayList<>();
 
         AbsoluteBlockPos bottomLeft = generateRandomPosInTARDISDim();
-        AbsoluteBlockPos topRight = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), bottomLeft.offset(256,0,256));
+        AbsoluteBlockPos topRight = new AbsoluteBlockPos(TARDISUtil.getTARDISLevel(), bottomLeft.offset(256,256,256));
 
         list.add(bottomLeft);
         list.add(topRight);

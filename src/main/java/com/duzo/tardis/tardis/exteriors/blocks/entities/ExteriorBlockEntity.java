@@ -54,11 +54,15 @@ public class ExteriorBlockEntity extends BlockEntity {
         this.syncToClient();
         if (tardis == null) {
             tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level, this.worldPosition));
+
+            if (tardis == null) {
+                // Just give up.
+                return null;
+            }
+
             this.tardisUUID = tardis.getUuid();
-            return tardis;
-        } else {
-            return tardis;
         }
+        return tardis;
     }
 
     public boolean doorOpen() {

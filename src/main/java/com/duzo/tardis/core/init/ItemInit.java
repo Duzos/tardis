@@ -1,6 +1,7 @@
 package com.duzo.tardis.core.init;
 
 import com.duzo.tardis.TARDISMod;
+import com.duzo.tardis.common.items.InteriorDeletionItem;
 import com.duzo.tardis.common.items.RemoteItem;
 import com.duzo.tardis.tardis.item.TARDISSpawnItem;
 import com.duzo.tardis.tardis.item.impl.*;
@@ -18,4 +19,6 @@ public class ItemInit {
 
     public static final RegistryObject<RemoteItem> STATTENHEIM_REMOTE = ITEMS.register("stattenheim_remote",
             () -> new RemoteItem(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)));
+    public static final RegistryObject<InteriorDeletionItem> INTERIOR_DELETION = ITEMS.register("interior_deletion_test",
+            () -> new InteriorDeletionItem(new Item.Properties().tab(CreativeTabInit.TARDIS_TAB).stacksTo(1)));
 }

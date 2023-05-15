@@ -101,6 +101,12 @@ public class TARDISInterior {
         helper.teleport((ServerLevel) player.getLevel());
     }
 
+    public void delete() {
+        TARDISStructureGenerator.InteriorGenerator generator = new TARDISStructureGenerator.InteriorGenerator(this.tardis, (ServerLevel) this.getInteriorDimension(),this.getSchema());
+        generator.deleteInterior();
+        this.interiorCornerPositions = null;
+    }
+
     public void generate() {
         this.generate(this.getSchema());
     }

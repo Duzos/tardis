@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class TARDISStructureGenerator {
             this.tardis.getInterior().setSchema(this.interior);
 
 //            this.tardis.setInterior(this.interior);
+        }
+
+        public void deleteInterior() {
+            AreaDeletionThread deleter = new AreaDeletionThread(this.tardis.getInterior().getInteriorCornerPositions());
+            deleter.run();
         }
     }
     private TARDISStructure structure;
