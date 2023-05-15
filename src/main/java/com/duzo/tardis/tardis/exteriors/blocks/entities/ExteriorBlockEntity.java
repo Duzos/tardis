@@ -28,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class ExteriorBlockEntity extends BlockEntity {
@@ -50,9 +51,11 @@ public class ExteriorBlockEntity extends BlockEntity {
 
     public TARDIS getTARDIS() {
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(this.tardisUUID);
-
+        this.syncToClient();
         if (tardis == null) {
-            return TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level,this.worldPosition));
+            tardis = TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(this.level, this.worldPosition));
+            this.tardisUUID = tardis.getUuid();
+            return tardis;
         } else {
             return tardis;
         }
@@ -68,6 +71,7 @@ public class ExteriorBlockEntity extends BlockEntity {
         if (updateClient) {
             Network.sendToAll(new UpdateExteriorDoorS2CPacket(this.getBlockPos(),bool));
             Network.sendToAll(new UpdateInteriorDoorS2CPacket(this.getTARDIS().getInterior().getInteriorDoorPos(),bool));
+            this.syncToClient();
         }
     }
 
@@ -132,11 +136,19 @@ public class ExteriorBlockEntity extends BlockEntity {
         if (level.isClientSide) {return;}
 
         if (this.getTARDIS() == null) {
-            TARDISManager.getInstance().findTARDIS(new AbsoluteBlockPos(level,pos)).updateBlockEntity();
+            TARDISManager.getInstance().findTARDIS(this.tardisUUID).updateBlockEntity();
         }
 
         if(player instanceof Player && this.doorOpen()) {
             this.getTARDIS().getInterior().teleportToDoor((Player) player);
         }
+        this.syncToClient();
+    }
+
+    public void syncToClient() {
+        assert level != null;
+        level.setBlocksDirty(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition));
+        level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
+        setChanged();
     }
 }

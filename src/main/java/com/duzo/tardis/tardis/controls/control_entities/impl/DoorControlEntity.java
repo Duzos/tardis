@@ -30,6 +30,7 @@ public class DoorControlEntity extends ControlEntitySchema {
     }
 
     public void setDoorOpen(UUID tardisID, Boolean bool, Player source) {
+        if(source.getLevel().isClientSide()) return;
         TARDIS tardis = TARDISManager.getInstance().findTARDIS(tardisID);
         if(tardis.getInterior().getInteriorDoorPos() == null) {return;}
         InteriorDoorBlockEntity door = (InteriorDoorBlockEntity) level.getBlockEntity(tardis.getInterior().getInteriorDoorPos());

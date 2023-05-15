@@ -11,8 +11,10 @@ import com.duzo.tardis.tardis.TARDIS;
 import com.duzo.tardis.tardis.animation.ConsoleAnimation;
 import com.duzo.tardis.tardis.animation.impl.BorealisAnimation;
 import com.duzo.tardis.tardis.consoles.ConsoleSchema;
+import com.duzo.tardis.tardis.consoles.Consoles;
 import com.duzo.tardis.tardis.consoles.EnumRotorState;
 import com.duzo.tardis.tardis.consoles.impl.BorealisConsoleSchema;
+import com.duzo.tardis.tardis.consoles.impl.HudolinConsoleSchema;
 import com.duzo.tardis.tardis.controls.control_entities.ControlEntitySchema;
 import com.duzo.tardis.tardis.controls.control_entities.impl.*;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
@@ -49,6 +51,7 @@ public class ConsoleBlockEntity extends BlockEntity {
     SharedValues sharedValues = SharedValues.getInstance();
     public ConsoleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        //this.schema = Consoles.get("borealis_console");
     }
 
     public ConsoleBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -56,7 +59,11 @@ public class ConsoleBlockEntity extends BlockEntity {
     }
 
     public ConsoleSchema<?> getSchema() {
-        return new BorealisConsoleSchema();
+        return new HudolinConsoleSchema();
+    }
+
+    public void setSchema(ConsoleSchema<?> consoleSchema) {
+        this.schema = consoleSchema;
     }
 
     public void setTARDIS(TARDIS tardis) {

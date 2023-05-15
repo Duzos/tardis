@@ -57,6 +57,11 @@ public class Network {
                 .encoder(UpdateLeverPulledS2CPacket::encode)
                 .consumerMainThread(UpdateLeverPulledS2CPacket::handle)
                 .add();
+        net.messageBuilder(ChangeConsoleC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ChangeConsoleC2SPacket::decode)
+                .encoder(ChangeConsoleC2SPacket::encode)
+                .consumerMainThread(ChangeConsoleC2SPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

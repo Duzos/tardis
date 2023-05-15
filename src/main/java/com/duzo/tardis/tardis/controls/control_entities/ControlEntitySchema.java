@@ -65,6 +65,7 @@ public abstract class ControlEntitySchema extends AmbientCreature {
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.entityData.set(DATA_ID_FLAGS, pCompound.getByte("ControlFlags"));
@@ -88,6 +89,7 @@ public abstract class ControlEntitySchema extends AmbientCreature {
         }*/
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putByte("ControlFlags", this.entityData.get(DATA_ID_FLAGS));

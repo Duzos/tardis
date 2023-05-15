@@ -2,6 +2,7 @@ package com.duzo.tardis.tardis.consoles.impl;
 
 import com.duzo.tardis.tardis.consoles.ConsoleSchema;
 import com.duzo.tardis.tardis.consoles.impl.models.BorealisConsoleModel;
+import com.duzo.tardis.tardis.consoles.impl.models.HudolinConsoleModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,16 +10,16 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.HashMap;
 
-public class BorealisConsoleSchema extends ConsoleSchema<BorealisConsoleModel> {
+public class HudolinConsoleSchema extends ConsoleSchema<HudolinConsoleModel> {
     private final HashMap<String, HashMap<Direction, Vec3>> positions = new HashMap<>();
 
-    public BorealisConsoleSchema() {
-        super("borealis_console", "console.tardis.borealis_console");
+    public HudolinConsoleSchema() {
+        super("hudolin_console", "console.tardis.hudolin_console");
     }
 
     @Override
-    protected BorealisConsoleModel model() {
-        return new BorealisConsoleModel(Minecraft.getInstance().getEntityModels().bakeLayer(BorealisConsoleModel.LAYER_LOCATION));
+    protected HudolinConsoleModel model() {
+        return new HudolinConsoleModel(Minecraft.getInstance().getEntityModels().bakeLayer(HudolinConsoleModel.LAYER_LOCATION));
     }
 
     private void generatePositions() {
@@ -61,10 +62,10 @@ public class BorealisConsoleSchema extends ConsoleSchema<BorealisConsoleModel> {
 
         // Handbrake
         map = new HashMap<>();
-        map.put(Direction.NORTH, new Vec3((1.08 * multipleOfX_NORTH) + addSubX_NORTH,1.05,1.08 * multipleOfZ_NORTH + addSubZ_NORTH));
-        map.put(Direction.SOUTH, new Vec3((1.08 * multipleOfX_SOUTH) + addSubX_SOUTH,1.05,1.08 * multipleOfZ_SOUTH + addSubZ_SOUTH));
-        map.put(Direction.WEST, new Vec3((1.08 * multipleOfX_WEST) + addSubX_WEST,1.05,1.08 * multipleOfZ_WEST + addSubZ_WEST));
-        map.put(Direction.EAST, new Vec3((1.08 * multipleOfX_EAST) + addSubX_EAST,1.05,1.08 * multipleOfZ_EAST + addSubZ_EAST));
+        map.put(Direction.NORTH, new Vec3((0.2335 * multipleOfX_NORTH) + addSubX_NORTH,0.95,-(0.375 * multipleOfZ_NORTH + addSubZ_NORTH)));
+        map.put(Direction.SOUTH, new Vec3((0.5 * multipleOfX_SOUTH) + addSubX_SOUTH,1,-0.3 * multipleOfZ_SOUTH + addSubZ_SOUTH));
+        map.put(Direction.WEST, new Vec3(-(0.3 * multipleOfX_WEST) + addSubX_WEST,1,0.5 * multipleOfZ_WEST + addSubZ_WEST));
+        map.put(Direction.EAST, new Vec3(-(0.3 * multipleOfX_EAST) + addSubX_EAST,1,0.5 * multipleOfZ_EAST + addSubZ_EAST));
         this.positions.put("Handbrake",map);
 
         // X Coordinate
@@ -101,10 +102,10 @@ public class BorealisConsoleSchema extends ConsoleSchema<BorealisConsoleModel> {
 
         // Door Control
         map = new HashMap<>();
-        map.put(Direction.NORTH, new Vec3((0.5 * multipleOfX_NORTH) + addSubX_NORTH,1,-(0.3 * multipleOfZ_NORTH + addSubZ_NORTH)));
-        map.put(Direction.SOUTH, new Vec3((0.5 * multipleOfX_SOUTH) + addSubX_SOUTH,1,-0.3 * multipleOfZ_SOUTH + addSubZ_SOUTH));
-        map.put(Direction.WEST, new Vec3(-(0.3 * multipleOfX_WEST) + addSubX_WEST,1,0.5 * multipleOfZ_WEST + addSubZ_WEST));
-        map.put(Direction.EAST, new Vec3(-(0.3 * multipleOfX_EAST) + addSubX_EAST,1,0.5 * multipleOfZ_EAST + addSubZ_EAST));
+        map.put(Direction.NORTH, new Vec3((1.08 * multipleOfX_NORTH) + addSubX_NORTH,1.05,1.08 * multipleOfZ_NORTH + addSubZ_NORTH));
+        map.put(Direction.SOUTH, new Vec3((1.08 * multipleOfX_SOUTH) + addSubX_SOUTH,1.05,1.08 * multipleOfZ_SOUTH + addSubZ_SOUTH));
+        map.put(Direction.WEST, new Vec3((1.08 * multipleOfX_WEST) + addSubX_WEST,1.05,1.08 * multipleOfZ_WEST + addSubZ_WEST));
+        map.put(Direction.EAST, new Vec3((1.08 * multipleOfX_EAST) + addSubX_EAST,1.05,1.08 * multipleOfZ_EAST + addSubZ_EAST));
         this.positions.put("Door Control",map);
 
         // Monitor

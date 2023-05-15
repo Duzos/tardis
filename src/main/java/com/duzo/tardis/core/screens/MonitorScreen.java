@@ -2,11 +2,13 @@ package com.duzo.tardis.core.screens;
 
 import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.network.Network;
+import com.duzo.tardis.network.packets.ChangeConsoleC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -17,14 +19,16 @@ public class MonitorScreen extends Screen {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(TARDISMod.MODID,"textures/gui/borealis_monitor.png");
     private Player player;
     private UUID tardisID;
+    private BlockPos consolePosition;
     protected int imageWidth = 256;
     protected int imageHeight = 128;
     private Button confirm,exteriorChangeUp, exteriorChangeDown;
 
-    public MonitorScreen(Component component, UUID tardisID, Player player) {
+    public MonitorScreen(Component component, UUID tardisID, Player player, BlockPos pos) {
         super(component);
         this.tardisID = tardisID;
         this.player = player;
+        this.consolePosition = pos;
 
         if (this.minecraft == null) {
             this.minecraft = this.getMinecraft();
@@ -58,11 +62,7 @@ public class MonitorScreen extends Screen {
     }
 
     private void pressChangeExteriorButton(boolean isUp) {
-        if(isUp) {
-            //Network.sendToServer(new SendHumanoidChatC2SPacket(this.humanoid.getUUID(), this.chatBox.getValue()));
-        } else {
-            //Network.sendToServer(new SendHumanoidChatC2SPacket(this.humanoid.getUUID(), this.chatBox.getValue()));
-        }
+        Network.sendToServer(new ChangeConsoleC2SPacket(this.consolePosition, this.tardisID, isUp));
     }
 
     @Override

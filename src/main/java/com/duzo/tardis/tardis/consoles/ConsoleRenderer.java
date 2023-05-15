@@ -19,10 +19,6 @@ public class ConsoleRenderer implements BlockEntityRenderer<ConsoleBlockEntity> 
 
     public ModelPart model;
 
-    public float twirlAmount;
-
-    private static final ResourceLocation texture = new ResourceLocation(TARDISMod.MODID, "textures/tardis/console/borealis_console.png");
-
     public ConsoleRenderer(BlockEntityRendererProvider.Context ctx) {
         model = ctx.bakeLayer(BorealisConsoleModel.LAYER_LOCATION);
     }

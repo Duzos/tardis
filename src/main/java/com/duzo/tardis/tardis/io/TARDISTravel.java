@@ -37,6 +37,7 @@ public class TARDISTravel {
     private TARDIS tardis;
     private STATE state;
     private AbsoluteBlockPos destination;
+    private AbsoluteBlockPos previousDestination;
     private Direction direction = Direction.NORTH;
     private boolean handbrakeOn;
     ConsoleBlockEntity.SharedValues sharedValues = ConsoleBlockEntity.SharedValues.getInstance();
@@ -79,14 +80,18 @@ public class TARDISTravel {
         return testingPos.above();
     }
 
-    public static BlockPos getRandomPosInRange(BlockPos pos, int range) {
+    public static BlockPos getRandomPosInRange(BlockPos pos, int range, boolean isRandomiser) {
         Random random = new Random();
 
         int xChange = random.nextInt(-range, range);
         int yChange = random.nextInt(-range, range);
         int zChange = random.nextInt(-range, 0);
 
-        return new BlockPos(pos.getX() + xChange, pos.getY() + yChange, pos.getZ() + zChange);
+        if(isRandomiser) {
+            return new BlockPos(pos.getX() + xChange, pos.getY(), pos.getZ() + zChange);
+        } else {
+            return new BlockPos(pos.getX() + xChange, pos.getY() + yChange, pos.getZ() + zChange);
+        }
     }
 
     public void setDirection(Direction newDirection, boolean newSetDirection, AbsoluteBlockPos pos) {
@@ -115,6 +120,14 @@ public class TARDISTravel {
 
     public AbsoluteBlockPos getDestination() {
         return this.destination;
+    }
+
+    public AbsoluteBlockPos getPreviousDestination() {
+        return this.previousDestination;
+    }
+
+    public void setPreviousDestination() {
+        this.previousDestination = this.tardis.getPosition();
     }
 
     private boolean canTakeoff() {
@@ -183,7 +196,7 @@ public class TARDISTravel {
 
         this.runAnimations();
 
-        this.setDestination(new AbsoluteBlockPos(this.tardis.getPosition().getDimension(),getRandomPosInRange(this.tardis.getPosition(), 10)),true);
+        this.setDestination(new AbsoluteBlockPos(this.tardis.getPosition().getDimension(),getRandomPosInRange(this.tardis.getPosition(), 10, false)),true);
 
         // Timer code for waiting for sound to finish
         TARDISTravel travel = this;

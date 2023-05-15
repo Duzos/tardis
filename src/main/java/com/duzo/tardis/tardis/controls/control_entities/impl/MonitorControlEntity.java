@@ -27,15 +27,15 @@ public class MonitorControlEntity extends ControlEntitySchema {
         super(entity, level, tardisID, name, consoleBlockPos);
     }
 
-    public void openMonitorScreen(UUID tardisID, Player source) {
-        Minecraft.getInstance().setScreen(ClientEvents.createMonitorScreen(Component.translatable("screen.ait.borealis_monitor"), tardisID, source));
+    public void openMonitorScreen(UUID tardisID, Player source, BlockPos pos) {
+        Minecraft.getInstance().setScreen(ClientEvents.createMonitorScreen(Component.translatable("screen.ait.borealis_monitor"), tardisID, source, pos));
     }
 
     @Override
     public void runInteractions(Player pSource) {
         super.runInteractions(pSource);
         if (pSource.level.isClientSide) {
-            this.openMonitorScreen(this.tardisID, pSource);
+            this.openMonitorScreen(this.tardisID, pSource, this.consolePosition);
         }
         if (pSource.level.isClientSide) return;
 
