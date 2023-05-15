@@ -112,7 +112,7 @@ public class AreaDeletionThread implements Runnable {
                     for (y = y; y <= secondCorner.getY(); y++) {
                         z = firstCorner.getZ();
                         for (z = z; z >= secondCorner.getZ(); z--) {
-                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) return;
+                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) continue;
                             level.removeBlock(new BlockPos(x,y,z),false);
                         }
                     }
@@ -123,7 +123,7 @@ public class AreaDeletionThread implements Runnable {
                     for (y = y; y <= secondCorner.getY(); y++) {
                         z = firstCorner.getZ();
                         for (z = z; z >= secondCorner.getZ(); z--) {
-                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) return;
+                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) continue;
                             level.removeBlock(new BlockPos(x,y,z),false);
                         }
                     }
@@ -136,7 +136,7 @@ public class AreaDeletionThread implements Runnable {
                     for (y = y; y <= secondCorner.getY(); y++) {
                         z = firstCorner.getZ();
                         for (z = z; z <= secondCorner.getZ(); z++) {
-                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) return;
+                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) continue;
                             level.removeBlock(new BlockPos(x,y,z),false);
                         }
                     }
@@ -147,7 +147,7 @@ public class AreaDeletionThread implements Runnable {
                     for (y = y; y <= secondCorner.getY(); y++) {
                         z = firstCorner.getZ();
                         for (z = z; z <= secondCorner.getZ(); z++) {
-                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) return;
+                            if (level.getBlockState(new BlockPos(x,y,z)).isAir()) continue;
                             level.removeBlock(new BlockPos(x,y,z),false);
                         }
                     }
