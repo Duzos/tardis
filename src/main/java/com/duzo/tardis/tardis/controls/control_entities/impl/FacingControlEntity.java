@@ -29,12 +29,11 @@ public class FacingControlEntity extends ControlEntitySchema {
         if (pSource.level.isClientSide) return;
 
         if (!this.getControlName().equals("Exterior Facing")) return;
+        if(this.consolePosition == null) return;
 
-        if (this.consolePosition != null) {
-            ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
-            console.getTARDIS().getTravel().setDirection(console.getTARDIS().getTravel().getDirection().getClockWise(), true,null);
-            pSource.displayClientMessage(Component.translatable("Facing: " + console.getTARDIS().getTravel().getDirection().toString().toUpperCase()).setStyle(Style.EMPTY), true);
-            this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_COW_BELL, SoundSource.MASTER, 1.25f, 5f);
-        }
+        ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
+        console.getTARDIS().getTravel().setDirection(console.getTARDIS().getTravel().getDirection().getClockWise(), true,null);
+        pSource.displayClientMessage(Component.translatable("Facing: " + console.getTARDIS().getTravel().getDirection().toString().toUpperCase()).setStyle(Style.EMPTY), true);
+        this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_COW_BELL, SoundSource.MASTER, 1.25f, 5f);
     }
 }

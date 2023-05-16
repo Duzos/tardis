@@ -30,13 +30,11 @@ public class RandomizerControlEntity extends ControlEntitySchema {
         if (pSource.level.isClientSide) return;
 
         if (!this.getControlName().equals("Randomizer")) return;
-
+        if(this.consolePosition == null) return;
         this.updateCoordinates();
-        if (this.consolePosition != null) {
-            ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
-            this.setDest(TARDISTravel.getRandomPosInRange(console.getTARDIS().getPosition(),console.getIncrement(), true), false);
-            pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
-            this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_DIDGERIDOO, SoundSource.MASTER, 1.25f, 5f);
-        }
+        ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
+        this.setDest(TARDISTravel.getRandomPosInRange(console.getTARDIS().getPosition(),console.getIncrement(), true), false);
+        pSource.displayClientMessage(Component.translatable(" X: " + this.x + " Y: " + this.y + " Z: " + this.z).setStyle(Style.EMPTY), true);
+        this.level.playSound(null, this.blockPosition(), SoundEvents.NOTE_BLOCK_DIDGERIDOO, SoundSource.MASTER, 1.25f, 5f);
     }
 }

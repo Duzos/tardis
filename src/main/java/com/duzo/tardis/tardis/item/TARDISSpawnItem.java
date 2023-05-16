@@ -28,7 +28,7 @@ public abstract class TARDISSpawnItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        AbsoluteBlockPos absolutePos = new AbsoluteBlockPos(level,pos);
+        AbsoluteBlockPos absolutePos = new AbsoluteBlockPos(level,context.getPlayer().getDirection().getOpposite(), pos);
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
 

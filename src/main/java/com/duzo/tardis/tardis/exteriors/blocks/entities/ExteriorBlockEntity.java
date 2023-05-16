@@ -17,6 +17,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -143,8 +144,8 @@ public class ExteriorBlockEntity extends BlockEntity {
             TARDISManager.getInstance().findTARDIS(this.tardisUUID).updateBlockEntity();
         }
 
-        if(player instanceof Player && this.doorOpen()) {
-            this.getTARDIS().getInterior().teleportToDoor((Player) player);
+        if(player instanceof ServerPlayer && this.doorOpen()) {
+            this.getTARDIS().getInterior().teleportToDoor((ServerPlayer) player);
         }
         this.syncToClient();
     }

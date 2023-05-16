@@ -61,9 +61,9 @@ public class DoorControlEntity extends ControlEntitySchema {
         if (pSource.level.isClientSide) return;
 
         if(!this.getControlName().equals("Door Control")) return;
-
+        if(this.consolePosition == null) return;
         this.setDoorOpen(this.tardisID, pSource.isCrouching(), pSource);
-        if(this.consolePosition != null && !level.isClientSide()) {
+        if(!level.isClientSide()) {
             ConsoleBlockEntity console = (ConsoleBlockEntity) level.getBlockEntity(this.consolePosition);
             assert console != null;
             console.setDoorControl();
