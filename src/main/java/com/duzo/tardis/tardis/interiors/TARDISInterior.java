@@ -10,7 +10,6 @@ import com.duzo.tardis.tardis.manager.TARDISManager;
 import com.duzo.tardis.tardis.structures.TARDISStructureGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TARDISInterior {
@@ -28,7 +26,7 @@ public class TARDISInterior {
     private BlockPos interiorDoorPos;
 
     public TARDISInterior(TARDISInteriorSchema schema) {this.schema =schema;}
-    public TARDISInterior(CompoundTag tag,TARDISInteriorSchema schema) {
+    public TARDISInterior(CompoundTag tag, TARDISInteriorSchema schema) {
         this.schema = schema;
         this.loadCorners(tag);
     }
@@ -99,6 +97,12 @@ public class TARDISInterior {
 
         TeleportHelper helper = new TeleportHelper(player.getUUID(),new AbsoluteBlockPos(this.getInteriorDimension(),doorDirection,this.getOffsetDoorPosition()));
         helper.teleport((ServerLevel) player.getLevel());
+    }
+
+    public void delete() {
+        TARDISStructureGenerator.InteriorGenerator generator = new TARDISStructureGenerator.InteriorGenerator(this.tardis, (ServerLevel) this.getInteriorDimension(),this.getSchema());
+        generator.deleteInterior();
+        this.interiorCornerPositions = null;
     }
 
     public void generate() {

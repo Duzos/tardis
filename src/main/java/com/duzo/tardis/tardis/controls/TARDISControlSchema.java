@@ -8,9 +8,11 @@ import com.duzo.tardis.tardis.doors.TARDISInteriorDoors;
 import com.duzo.tardis.tardis.doors.blocks.InteriorDoorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.AnimationState;
 
 public abstract class TARDISControlSchema<T extends TARDISControlModelSchema> {
     private final String id;
@@ -30,6 +32,7 @@ public abstract class TARDISControlSchema<T extends TARDISControlModelSchema> {
     public String getName() {
         return this.getName();
     }
+    public AnimationState getAnimationToBeRan(ControlBlockEntity control) {return null;}
 
     public void render(ControlBlockEntity entity, PoseStack stack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
         this.model().renderWithEntity(entity, stack, vertexConsumer, packedLight, packedOverlay, 1, 1, 1, 1);

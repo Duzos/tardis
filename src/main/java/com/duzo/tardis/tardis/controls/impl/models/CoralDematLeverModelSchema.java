@@ -106,6 +106,11 @@ public class CoralDematLeverModelSchema extends TARDISControlModelSchema {
 		stack.popPose();
 	}
 
+	@Override
+	public ModelPart root() {
+		return null;
+	}
+
 
 	@Override
 	public void setupAnim(Entity p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {

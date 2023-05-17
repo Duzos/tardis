@@ -4,9 +4,11 @@ import com.duzo.tardis.TARDISMod;
 import com.duzo.tardis.tardis.controls.TARDISControlModelSchema;
 import com.duzo.tardis.tardis.controls.blocks.ControlBlockEntity;
 import com.duzo.tardis.tardis.controls.blocks.basics.DematControlBlockEntity;
+import com.duzo.tardis.tardis.controls.impl.ToyotaDematLeverSchema;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.animation.definitions.FrogAnimation;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.NotNull;
 
 public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(TARDISMod.MODID, "toyota_demat_lever"), "main");
@@ -22,11 +25,13 @@ public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
     private final ModelPart base;
     private final ModelPart lever;
     private final ModelPart bb_main;
+    private final ModelPart root;
 
     public ToyotaDematLeverModelSchema(ModelPart root) {
         this.base = root.getChild("base");
         this.lever = root.getChild("lever");
         this.bb_main = root.getChild("bb_main");
+        this.root = root;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -99,7 +104,10 @@ public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
         stack.mulPose(Vector3f.YN.rotationDegrees(180.0f));
 
         if (entity instanceof DematControlBlockEntity) {
-            lever.xRot = (float) Math.toRadians(((DematControlBlockEntity) entity).pulled() ? -55f : 55f);
+//            lever.xRot = (float) Math.toRadians(((DematControlBlockEntity) entity).pulled() ? -55f : 55f);
+            if (((DematControlBlockEntity) entity).pulled()) {
+                this.animate(entity.getSchema().getAnimationToBeRan(entity), ToyotaDematLeverSchema.LEVER_DOWN,1f);
+            }
         }
 
         super.renderWithEntity(entity,stack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
@@ -119,9 +127,13 @@ public class ToyotaDematLeverModelSchema extends TARDISControlModelSchema {
         stack.popPose();
     }
 
+    @Override
+    public @NotNull ModelPart root() {
+        return this.root;
+    }
+
 
     @Override
     public void setupAnim(Entity p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_, float p_102623_) {
-
     }
 }

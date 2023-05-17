@@ -32,6 +32,11 @@ public class TARDISStructureGenerator {
 
 //            this.tardis.setInterior(this.interior);
         }
+
+        public void deleteInterior() {
+            AreaDeletionThread deleter = new AreaDeletionThread(this.tardis.getInterior().getInteriorCornerPositions());
+            deleter.run();
+        }
     }
     private TARDISStructure structure;
     private String structureName;
