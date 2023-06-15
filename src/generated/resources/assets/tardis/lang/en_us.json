@@ -1,0 +1,23 @@
+{
+  "block.tardis.copper_demat_lever": "Copper Lever",
+  "block.tardis.coral_demat_lever": "Coral Lever",
+  "block.tardis.coral_door_block": "Coral Door",
+  "block.tardis.coral_rotor": "Coral Rotor",
+  "block.tardis.eighth_rotor": "Eighth Rotor",
+  "block.tardis.invisible_rotor": "Invisible Rotor",
+  "block.tardis.toyota_demat_lever": "Toyota Lever",
+  "block.tardis.war_door_block": "War Door",
+  "block.tardis.war_rotor": "War Rotor",
+  "item.tardis.baker_tardis_item": "TARDIS",
+  "item.tardis.copper_tardis_item": "TARDIS",
+  "item.tardis.coral_tardis_item": "TARDIS",
+  "item.tardis.hartnell_tardis_item": "TARDIS",
+  "item.tardis.hartnell_tt_tardis_item": "TARDIS",
+  "item.tardis.hellbent_tardis_item": "TARDIS",
+  "item.tardis.remote_item": "Stattenheim Remote",
+  "item.tardis.second_tardis_item": "TARDIS",
+  "item.tardis.third_tardis_item": "TARDIS",
+  "item.tardis.toyota_tardis_item": "TARDIS",
+  "item.tardis.war_tardis_item": "TARDIS",
+  "itemGroup.tardis_tab": "Box Mod"
+}
