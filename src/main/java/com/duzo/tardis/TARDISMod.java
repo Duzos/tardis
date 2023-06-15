@@ -2,6 +2,7 @@ package com.duzo.tardis;
 
 import com.duzo.tardis.config.TARDISModClientConfigs;
 import com.duzo.tardis.config.TARDISModCommonConfigs;
+import com.duzo.tardis.core.events.CommonEvents;
 import com.duzo.tardis.core.init.*;
 import com.duzo.tardis.core.world.dimension.DimensionsInit;
 import com.duzo.tardis.network.Network;
@@ -79,6 +80,7 @@ public class TARDISMod {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TARDISModCommonConfigs.SPEC, "tardis-common.toml");
 
         // Register ourselves for server and other game events we are interested in
+        MinecraftForge.EVENT_BUS.register(new CommonEvents());
         MinecraftForge.EVENT_BUS.register(this);
     }
 
